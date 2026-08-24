@@ -1,0 +1,501 @@
+module: neuro
+title: "Neurotransmisión, cognición y productividad"
+goals: [cognition, health]
+description: >
+  Variantes en enzimas de degradación de catecolaminas (COMT, MAOA/B, DBH), receptores y transportadores
+  de dopamina, serotonina, GABA, acetilcolina y endocannabinoides, y factores de plasticidad (BDNF, KIBRA).
+  Modulan memoria de trabajo, tolerancia al estrés, respuesta a estimulantes/nootrópicos y ansiedad.
+  La mayoría son efectos pequeños (impact 1); sólo COMT, BDNF, MAOA, DRD2/ANKK1, FAAH, DBH, OPRM1 y KIBRA
+  alcanzan impact 2 en homocigotos. Todos los alelos en hebra + de GRCh37 (verificados vía Ensembl/VEP).
+
+variants:
+  - id: COMT_V158M
+    gene: COMT
+    rsid: rs4680
+    name: "Val158Met (c.472G>A)"
+    effect_allele: A
+    other_allele: G
+    direction: mixed
+    genotypes:
+      AA: {phenotype: "Met/Met ('worrier'): COMT ~25-40 % de actividad → más dopamina prefrontal tónica; mejor memoria de trabajo basal, peor rendimiento bajo estrés, más sensibilidad al dolor y a estimulantes/cafeína, ansiedad ↑", impact: 2}
+      AG: {phenotype: "Val/Met: actividad intermedia; fenotipo intermedio y más flexible", impact: 1}
+      GG: {phenotype: "Val/Val ('warrior'): COMT rápida → menos dopamina prefrontal; rinde mejor bajo estrés/dolor, peor en tareas de memoria de trabajo; más beneficio cognitivo de estimulantes y de inhibidores de COMT", impact: 2}
+    effect_size: "Actividad enzimática 3-4× menor en Met/Met; efecto sobre cognición d≈0.1-0.2 (meta-análisis, pequeño); efecto robusto sobre dolor/opioides y respuesta a tolcapona/anfetamina"
+    evidence: A
+    mechanism: "Met hace la enzima termolábil; COMT es la vía principal de aclaramiento de dopamina en corteza prefrontal (pocos DAT), por lo que modula la curva U-invertida dopamina-rendimiento"
+    levers:
+      - "Met/Met: evitar sobrecarga de donantes de metilo (SAMe, metilfolato/metil-B12 altos pueden aumentar irritabilidad); magnesio, L-teanina 200 mg, ejercicio aeróbico; cafeína moderada; no añadir tirosina sin necesidad"
+      - "Met/Met: estimulantes (metilfenidato/anfetamina) y cafeína con más efectos adversos; para foco preferir L-teanina+cafeína baja dosis, mindfulness; estradiol inhibe COMT (mujeres Met/Met: más sintomáticas en fase folicular)"
+      - "Val/Val: L-tirosina 500-2000 mg antes de tareas exigentes bajo estrés/privación de sueño; mayor respuesta cognitiva a estimulantes; el té verde (EGCG) inhibe COMT levemente; tolcapona experimental (hepatotóxico, no recomendable)"
+      - "Val/Val: tolera mejor metilfolato/SAMe; puede beneficiarse de más cafeína/ejercicio intenso"
+      - "Ambos: el genotipo COMT condiciona interpretación de MAOA, DBH y DRD2 (ver combinaciones)"
+    caveats: "Efectos cognitivos pequeños y dependientes de contexto (estrés, sexo, edad, carga de la tarea); no tipificar personalidad por un SNP. Interactúa con rs4818/rs4633 (haplotipos de expresión)."
+    refs: ["PMID:8807664", "PMID:11381111", "PMID:15048648"]
+
+  - id: MAOA_R297R
+    gene: MAOA
+    rsid: rs6323
+    name: "T941G (Arg297Arg, EcoRV); G = alta actividad, T = baja actividad"
+    effect_allele: T
+    other_allele: G
+    direction: mixed
+    genotypes:
+      T: {phenotype: "Varón hemicigoto T: MAO-A de baja actividad → degradación más lenta de serotonina, noradrenalina y dopamina; más reactividad emocional/agresividad bajo estrés en algunos estudios, mayor sensibilidad a tiramina y a inhibidores de MAO", impact: 2}
+      G: {phenotype: "Varón hemicigoto G: MAO-A de alta actividad; niveles monoaminérgicos más bajos; menor respuesta placebo y posible mayor riesgo de depresión en algunas cohortes", impact: 1}
+      TT: {phenotype: "Mujer TT: baja actividad MAO-A (ambos alelos)", impact: 2}
+      GT: {phenotype: "Mujer GT: actividad intermedia (inactivación X aleatoria → mosaico)", impact: 0}
+      GG: {phenotype: "Mujer GG: alta actividad MAO-A", impact: 1}
+    effect_size: "Diferencia de actividad plaquetaria/fibroblastos ~1.5-2× entre alelos; marcador parcial del uVNTR (MAOA-L/H); efectos conductuales pequeños y dependientes de ambiente (maltrato infantil)"
+    evidence: B
+    mechanism: "Variante sinónima del exón 8 en LD con el uVNTR promotor; el alelo G se asocia a mayor expresión/actividad de MAO-A"
+    levers:
+      - "Baja actividad (T): cuidado con suplementos/fármacos que elevan serotonina (5-HTP, triptófano, SAMe, hierba de San Juan, ISRS juntos) y con tiramina si usa IMAO; riboflavina (MAO es FAD-dependiente); ejercicio y regulación del estrés"
+      - "Baja actividad (T): curcumina, quercetina y rhodiola inhiben MAO-A → efectos más notables; evitar apilarlos"
+      - "Alta actividad (G): si ánimo bajo, valorar 5-HTP/triptófano o rhodiola (inhibidor MAO-A suave); B6/P5P; luz de mañana"
+      - "Ambos: los efectos dependen mucho del entorno (estrés crónico) → priorizar sueño y exposición social"
+    caveats: "Gen ligado al X: varones tienen un solo alelo (clave de una letra; 23andMe puede mostrarlo como doble letra). El marcador clásico es el uVNTR, no genotipado por chips; rs6323 es un proxy imperfecto. Orientación plus confirmada en SNPedia."
+    refs: []
+
+  - id: MAOB_intron13
+    gene: MAOB
+    rsid: rs1799836
+    name: "Intrón 13 A/G (c.1348-36A>G); A = T y G = C en hebra +"
+    effect_allele: C
+    other_allele: T
+    direction: mixed
+    genotypes:
+      C: {phenotype: "Varón hemicigoto C (G lit.): menor expresión/actividad de MAO-B en la mayoría de estudios → más dopamina/feniletilamina; posible menor riesgo de Parkinson y ligera mayor 'emocionalidad negativa'", impact: 1}
+      T: {phenotype: "Varón hemicigoto T (A lit.): mayor actividad MAO-B (referencia)", impact: 0}
+      CC: {phenotype: "Mujer CC: menor actividad MAO-B", impact: 1}
+      CT: {phenotype: "Mujer CT: intermedia", impact: 0}
+      TT: {phenotype: "Mujer TT: mayor actividad MAO-B", impact: 0}
+    effect_size: "Diferencias de actividad plaquetaria/cerebral modestas (~10-30 %); asociaciones clínicas débiles"
+    evidence: C
+    mechanism: "Variante intrónica asociada a eficiencia de splicing y expresión de MAO-B, enzima que degrada dopamina (junto a COMT) y feniletilamina en glía"
+    levers:
+      - "Baja actividad (C): selegilina/rasagilina y suplementos con feniletilamina tendrán efecto más marcado; precaución al combinar"
+      - "Alta actividad (T): si apatía/anhedonia, discutir con médico; riboflavina suficiente"
+    caveats: "Gen ligado al X: claves de una letra en varones. La dirección funcional del alelo está discutida (estudios en plaquetas y cerebro discrepan); impacto mínimo."
+    refs: []
+
+  - id: ANKK1_Taq1A
+    gene: ANKK1
+    rsid: rs1800497
+    name: "Taq1A (Glu713Lys en ANKK1; A1 = A)"
+    effect_allele: A
+    other_allele: G
+    direction: risk
+    genotypes:
+      AA: {phenotype: "A1/A1: densidad de receptores D2 estriatales ~30 % menor; menor sensibilidad a recompensa, más búsqueda de estímulos, mayor riesgo de adicciones/obesidad y peor aprendizaje por evitación de errores; respuesta atípica a agonistas/antagonistas D2", impact: 2}
+      AG: {phenotype: "A1/A2: densidad D2 reducida (~15 %); efectos intermedios", impact: 1}
+      GG: {phenotype: "A2/A2: referencia", impact: 0}
+    effect_size: "Disponibilidad D2 (PET) −30 % en A1; OR ~1.2-1.4 para dependencia de alcohol/nicotina (meta-análisis); ~35 % de europeos portan A1"
+    evidence: B
+    mechanism: "Variante missense en ANKK1, en LD con reguladores de DRD2; reduce la expresión de D2 estriatal → señal dopaminérgica fásica reducida, menor sensibilidad a castigo"
+    levers:
+      - "A1: estructurar recompensas externas (micro-metas, gamificación), evitar hiperpalatables/azúcar y juego; ejercicio intenso regular aumenta D2"
+      - "A1: mayor riesgo de uso compulsivo de estimulantes/nicotina; evitar automedicación dopaminérgica; bupropión y naltrexona pueden funcionar distinto (discutir con médico)"
+      - "A1: sueño suficiente (la privación reduce D2 aún más); L-tirosina sólo puntual"
+      - "Analítica: nada específico; considerar cribado de conducta adictiva/tabaco"
+    caveats: "Efecto de tamaño pequeño a moderado; muchos falsos titulares ('gen de la adicción'). A1 = alelo A en hebra + (23andMe)."
+    refs: []
+
+  - id: DRD2_C957T
+    gene: DRD2
+    rsid: rs6277
+    name: "C957T (Pro319Pro); 957T = A en hebra +"
+    effect_allele: A
+    other_allele: G
+    direction: mixed
+    genotypes:
+      AA: {phenotype: "957TT: mayor disponibilidad D2 estriatal y menor extraestriatal (PET); mejor memoria de trabajo/aprendizaje por refuerzo en varios estudios; menor afinidad por antipsicóticos", impact: 1}
+      AG: {phenotype: "CT: intermedio", impact: 0}
+      GG: {phenotype: "957CC: menor D2 estriatal; peor rendimiento en algunas tareas de memoria de trabajo; asociado a ansiedad y a respuesta distinta a antipsicóticos", impact: 1}
+    effect_size: "Disponibilidad D2 estriatal TT > CC (~10-20 %); efectos cognitivos pequeños"
+    evidence: B
+    mechanism: "Variante sinónima que altera la estabilidad del ARNm y el plegamiento → cambia la densidad regional de D2"
+    levers:
+      - "CC: mismas estrategias de recompensa estructurada que A1 de Taq1A; ejercicio; evitar privación de sueño"
+      - "TT: nada específico; posible mejor respuesta a entrenamiento cognitivo basado en feedback"
+    caveats: "Interpretar junto a Taq1A (haplotipo DRD2); efectos pequeños."
+    refs: []
+
+  - id: DRD4_521CT
+    gene: DRD4
+    rsid: rs1800955
+    name: "Promotor −521C/T"
+    effect_allele: T
+    other_allele: C
+    direction: mixed
+    genotypes:
+      TT: {phenotype: "−521TT: menor transcripción de DRD4 (~40 % in vitro, no replicado por todos); asociación débil con menor búsqueda de novedad", impact: 1}
+      CT: {phenotype: "Intermedio", impact: 0}
+      CC: {phenotype: "−521CC: mayor expresión; asociado a mayor búsqueda de novedad/impulsividad (meta-análisis, efecto pequeño)", impact: 1}
+    effect_size: "Búsqueda de novedad d≈0.1-0.15 (meta-análisis Munafò 2008); la repetición VNTR de 48 pb (7R) no se lee en chips"
+    evidence: C
+    mechanism: "Variante promotora que modula la expresión del receptor D4 (prefrontal); D4 regula la integración de señales dopaminérgicas en tareas de atención"
+    levers:
+      - "CC: entornos con variedad/novedad programada ayudan a sostener atención; precaución con conductas de riesgo"
+      - "Sin palancas farmacológicas específicas; considerarlo sólo como contexto"
+    caveats: "El marcador clásico de DRD4 (7R) no está en chips; rs1800955 es un sustituto débil. Efecto pequeño."
+    refs: []
+
+  - id: SLC6A3_rs27072
+    gene: SLC6A3
+    rsid: rs27072
+    name: "DAT1 3'UTR (c.*328G>A; A lit. = T en hebra +)"
+    effect_allele: T
+    other_allele: C
+    direction: risk
+    genotypes:
+      TT: {phenotype: "Homocigoto menor: asociado en algunos estudios a TDAH/impulsividad y a diferente respuesta a metilfenidato (en LD con el haplotipo 10R/6R)", impact: 1}
+      CT: {phenotype: "Heterocigoto: sin efecto claro", impact: 0}
+      CC: {phenotype: "Referencia", impact: 0}
+    effect_size: "OR ~1.2 para TDAH en algunos estudios, no replicado consistentemente; TT ~3-4 % de europeos"
+    evidence: C
+    mechanism: "Variante en 3'UTR del transportador de dopamina (DAT), en desequilibrio de ligamiento con el VNTR 40 pb; podría modular la estabilidad del ARNm y la densidad de DAT estriatal"
+    levers:
+      - "Si hay rasgos de inatención: ejercicio aeróbico (aumenta DAT/dopamina estriatal), sueño, estructura externa"
+      - "Respuesta a metilfenidato/anfetamina es individual; no dosificar por este SNP"
+    caveats: "El VNTR DAT1 no se lee en chips; evidencia débil. Incluido sólo como contexto."
+    refs: []
+
+  - id: BDNF_V66M
+    gene: BDNF
+    rsid: rs6265
+    name: "Val66Met (c.196G>A)"
+    effect_allele: T
+    other_allele: C
+    direction: risk
+    genotypes:
+      TT: {phenotype: "Met/Met (~4 % de europeos): secreción dependiente de actividad de BDNF ↓ ~30 %; menor volumen hipocampal y peor memoria episódica en promedio; menor respuesta plástica a ejercicio/entrenamiento; más vulnerabilidad a estrés y mayor riesgo de ansiedad/depresión con adversidad", impact: 2}
+      CT: {phenotype: "Val/Met (~30 %): secreción de BDNF algo reducida; efectos cognitivos pequeños, más dependientes de contexto", impact: 1}
+      CC: {phenotype: "Val/Val: referencia; mayor plasticidad dependiente de actividad (también mayor rumiación en algunos estudios)", impact: 0}
+    effect_size: "Secreción regulada de BDNF −18-30 %; memoria episódica d≈0.1-0.2 en meta-análisis; respuesta de plasticidad motora a ejercicio/tDCS reducida en Met"
+    evidence: A
+    mechanism: "Met66 en el prodominio altera el tráfico intracelular y la secreción regulada de BDNF en sinapsis → menos LTP dependiente de actividad"
+    levers:
+      - "Met: ejercicio aeróbico e intervalos (HIIT) 3-5×/semana (eleva BDNF periférico; en Met conviene mayor volumen/intensidad), entrenamiento de fuerza"
+      - "Met: omega-3 DHA/EPA 1-2 g/d, restricción calórica/ayuno intermitente (aumenta BDNF), sueño profundo; curcumina 500-1000 mg/d (fitosoma) y extracto de Hericium/melena de león como apoyo con evidencia preliminar"
+      - "Met: exposición a sol/vitamina D adecuada; limitar alcohol y azúcar (deprimen BDNF)"
+      - "Met: agonistas TrkB experimentales (7,8-dihidroxiflavona) sin evidencia humana sólida → no recomendados fuera de investigación"
+      - "Met: aprendizaje espaciado y recuperación activa (la memoria se beneficia más de la repetición distribuida)"
+    caveats: "El efecto poblacional es pequeño; Met también se asocia a mejor función en algunos contextos (p.ej. menos rumiación, mejor toma de decisiones bajo incertidumbre). Met = T en hebra + (gen en hebra −)."
+    refs: ["PMID:12553913"]
+
+  - id: KIBRA_rs17070145
+    gene: WWC1
+    rsid: rs17070145
+    name: "KIBRA intrón 9 C/T"
+    effect_allele: T
+    other_allele: C
+    direction: beneficial
+    genotypes:
+      TT: {phenotype: "TT: mejor memoria episódica (recuerdo libre a 5 min y 24 h ~25 % más palabras en el estudio original) y menor activación hipocampal compensatoria", impact: 2}
+      CT: {phenotype: "CT: ventaja de memoria intermedia/igual a TT en la mayoría de réplicas (efecto dominante del T)", impact: 1}
+      CC: {phenotype: "CC: memoria episódica algo peor en promedio; mayor riesgo relativo de deterioro cognitivo tardío en algunos estudios", impact: 1}
+    effect_size: "d≈0.2-0.3 para memoria episódica en meta-análisis (portadores T vs CC); ~55 % de europeos portan T"
+    evidence: B
+    mechanism: "KIBRA es una proteína postsináptica que interactúa con PKMζ/dendrina y regula el tráfico de receptores AMPA (consolidación de memoria)"
+    levers:
+      - "CC: priorizar estrategias de codificación (espaciado, recuperación activa, sueño post-aprendizaje), ejercicio aeróbico; omega-3 y control vascular (HTA, glucosa) protegen la memoria"
+      - "CC: nootrópicos con evidencia para memoria episódica en adultos sanos son escasos (Bacopa monnieri 300 mg/d 12 semanas tiene algunos RCT positivos)"
+    caveats: "Alelo beneficioso T; efecto pequeño-moderado y replicado, pero no determina capacidad de memoria. Orientación plus."
+    refs: ["PMID:17053149"]
+
+  - id: CHRNA4_C1545T
+    gene: CHRNA4
+    rsid: rs1044396
+    name: "C1545T (Ser543Ser); 1545T = A en hebra +"
+    effect_allele: A
+    other_allele: G
+    direction: beneficial
+    genotypes:
+      AA: {phenotype: "TT (lit.): en varios estudios, mayor eficiencia de orientación atencional visuoespacial y mayor beneficio de las pistas espaciales; asociación con dependencia de nicotina inconsistente", impact: 1}
+      AG: {phenotype: "Intermedio", impact: 0}
+      GG: {phenotype: "CC (lit.): referencia (peor rendimiento atencional en algunos estudios, mejor en otros)", impact: 0}
+    effect_size: "Efectos pequeños en tareas de atención (Parasuraman/Greenwood); no replicado en todos los trabajos"
+    evidence: C
+    mechanism: "Variante sinónima de la subunidad α4 del receptor nicotínico (α4β2), en LD con variantes reguladoras de expresión; receptores α4β2 median la atención colinérgica"
+    levers:
+      - "Si atención baja: colina (alfa-GPC/CDP-colina 250-500 mg/d), ejercicio; evitar nicotina como 'nootrópico' (dependencia)"
+      - "Contexto para respuesta a agonistas nicotínicos (vareniclina) y galantamina; efecto clínico no demostrado"
+    caveats: "Evidencia limitada y direccional inconsistente; impacto mínimo. T lit. = A en hebra + (gen en hebra −)."
+    refs: []
+
+  - id: SNAP25_rs363050
+    gene: SNAP25
+    rsid: rs363050
+    name: "Intrón 1 (c.-63-21820G>A)"
+    effect_allele: G
+    other_allele: A
+    direction: risk
+    genotypes:
+      GG: {phenotype: "GG: menor actividad transcripcional de SNAP-25 in vitro; asociación con CI/memoria de trabajo más bajos en algunas cohortes (efecto ≤2-3 puntos)", impact: 1}
+      AG: {phenotype: "Intermedio", impact: 0}
+      AA: {phenotype: "Referencia", impact: 0}
+    effect_size: "≈2-3 puntos de CI en estudios familiares holandeses; no replicado a escala GWAS"
+    evidence: C
+    mechanism: "SNAP-25 es una proteína SNARE de la exocitosis de neurotransmisores; el alelo G se asocia a menor expresión"
+    levers:
+      - "Sin palanca específica; magnesio y omega-3 como apoyo general a la transmisión sináptica"
+    caveats: "Efecto muy pequeño; incluido como contexto. Orientación plus."
+    refs: []
+
+  - id: TPH2_703GT
+    gene: TPH2
+    rsid: rs4570625
+    name: "Promotor −703G/T"
+    effect_allele: T
+    other_allele: G
+    direction: mixed
+    genotypes:
+      TT: {phenotype: "TT: mayor reactividad de la amígdala a estímulos emocionales y más rasgos ansiosos/impulsivos en varios estudios de imagen; posible menor síntesis de serotonina central", impact: 1}
+      GT: {phenotype: "Intermedio", impact: 0}
+      GG: {phenotype: "Referencia", impact: 0}
+    effect_size: "Efectos pequeños en neuroimagen (d≈0.3) y no consistentes en fenotipos clínicos; TT ~5 % de europeos"
+    evidence: C
+    mechanism: "TPH2 es la enzima limitante de la síntesis de serotonina neuronal; −703 está en un elemento regulador del promotor"
+    levers:
+      - "TT: técnicas de regulación emocional (mindfulness, TCC), ejercicio, sueño; triptófano/5-HTP sólo bajo supervisión si ánimo bajo"
+      - "Ferritina, B6 y hierro adecuados (cofactores de TPH2: BH4/hierro)"
+    caveats: "Funcionalidad transcripcional discutida; impacto mínimo."
+    refs: []
+
+  - id: GAD1_rs3749034
+    gene: GAD1
+    rsid: rs3749034
+    name: "5'UTR (c.-147G>A)"
+    effect_allele: A
+    other_allele: G
+    direction: risk
+    genotypes:
+      AA: {phenotype: "AA: menor expresión de GAD67 en corteza prefrontal (post-mortem) y menor GABA cortical en algunos estudios; asociación débil con esquizofrenia de inicio precoz y ansiedad", impact: 1}
+      AG: {phenotype: "Intermedio", impact: 0}
+      GG: {phenotype: "Referencia", impact: 0}
+    effect_size: "Asociaciones modestas, sin réplica a escala GWAS; AA ~5 % de europeos"
+    evidence: C
+    mechanism: "GAD67 sintetiza GABA a partir de glutamato; el alelo A se asocia a menor expresión"
+    levers:
+      - "AA: P5P (B6 activa) como cofactor de GAD; magnesio, taurina, L-teanina; ejercicio; evitar benzodiacepinas crónicas"
+    caveats: "Evidencia limitada; impacto mínimo."
+    refs: []
+
+  - id: GABRA2_rs279858
+    gene: GABRA2
+    rsid: rs279858
+    name: "Lys132Lys (sinónima); G lit. = C en hebra +"
+    effect_allele: C
+    other_allele: T
+    direction: risk
+    genotypes:
+      CC: {phenotype: "GG (lit.): mayor riesgo de dependencia de alcohol (OR ~1.3) y respuesta subjetiva distinta al alcohol/benzodiacepinas; más impulsividad en algunos estudios", impact: 1}
+      CT: {phenotype: "Heterocigoto: riesgo ligeramente aumentado", impact: 1}
+      TT: {phenotype: "AA (lit.): referencia", impact: 0}
+    effect_size: "OR ~1.2-1.4 para dependencia de alcohol (COGA y réplicas); efecto sobre respuesta a alcohol replicado"
+    evidence: B
+    mechanism: "Subunidad α2 del receptor GABA-A (diana de alcohol y benzodiacepinas); el haplotipo de riesgo altera la expresión/activación en amígdala y núcleo accumbens"
+    levers:
+      - "Portadores C: límites estrictos con alcohol (menor efecto sedante subjetivo → más consumo); precaución con benzodiacepinas y Z-drugs"
+      - "Alternativas para ansiedad: TCC, ejercicio, magnesio, L-teanina"
+    caveats: "Riesgo modesto; el alelo G de la literatura corresponde a C en hebra + (gen en hebra −)."
+    refs: ["PMID:15024690"]
+
+  - id: NRG1_rs35753505
+    gene: NRG1
+    rsid: rs35753505
+    name: "SNP8NRG221533 (promotor, T/C)"
+    effect_allele: C
+    other_allele: T
+    direction: risk
+    genotypes:
+      CC: {phenotype: "CC: alelo de riesgo del haplotipo HapICE de esquizofrenia (OR ~1.1-1.2); asociado a menor integridad de sustancia blanca y peor rendimiento en algunas tareas de atención", impact: 1}
+      CT: {phenotype: "Heterocigoto: efecto mínimo", impact: 0}
+      TT: {phenotype: "Referencia", impact: 0}
+    effect_size: "OR ~1.1-1.2 en meta-análisis; no significativo en GWAS a gran escala"
+    evidence: C
+    mechanism: "Variante reguladora de neuregulina-1 (mielinización, señalización ErbB4 en interneuronas)"
+    levers:
+      - "Sin palanca específica; omega-3 DHA y evitar cannabis (interacción con riesgo psicótico en portadores)"
+    caveats: "Evidencia débil; impacto mínimo; no es un test de esquizofrenia."
+    refs: ["PMID:12145742"]
+
+  - id: CACNA1C_rs1006737
+    gene: CACNA1C
+    rsid: rs1006737
+    name: "Intrón 3 (G/A)"
+    effect_allele: A
+    other_allele: G
+    direction: risk
+    genotypes:
+      AA: {phenotype: "AA: mayor expresión de CaV1.2; riesgo ligeramente aumentado de trastorno bipolar/esquizofrenia (OR ~1.15 por alelo) y mayor reactividad de amígdala/hipocampo", impact: 1}
+      AG: {phenotype: "Heterocigoto: riesgo ligeramente aumentado", impact: 0}
+      GG: {phenotype: "Referencia", impact: 0}
+    effect_size: "OR 1.1-1.2 por alelo (GWAS replicado); efecto cognitivo pequeño"
+    evidence: A
+    mechanism: "Variante intrónica que aumenta la expresión del canal de calcio tipo L CaV1.2 en cerebro; modula plasticidad y ritmos circadianos"
+    levers:
+      - "AA: higiene de sueño/ritmos regulares (CaV1.2 y circadianidad); evitar privación de sueño y estimulantes en exceso"
+      - "Contexto si se plantean bloqueantes de canales de calcio (nimodipino, isradipino) en psiquiatría experimental"
+    caveats: "Riesgo poblacional pequeño aunque bien replicado; impacto mínimo a nivel individual."
+    refs: ["PMID:18711365"]
+
+  - id: OXTR_rs53576
+    gene: OXTR
+    rsid: rs53576
+    name: "Intrón 3 (A/G)"
+    effect_allele: A
+    other_allele: G
+    direction: risk
+    genotypes:
+      AA: {phenotype: "AA: en algunos estudios menor empatía/sensibilidad social, mayor reactividad al estrés y menor beneficio del apoyo social; meta-análisis grandes no lo confirman", impact: 1}
+      AG: {phenotype: "Heterocigoto: sin efecto claro", impact: 0}
+      GG: {phenotype: "GG: referencia ('prosocial' en literatura popular)", impact: 0}
+    effect_size: "d≈0.1 y no replicado en meta-análisis; AA ~12 % de europeos"
+    evidence: C
+    mechanism: "Variante intrónica del receptor de oxitocina; posible efecto sobre metilación/expresión de OXTR"
+    levers:
+      - "Sin palanca específica; contacto social, ejercicio y sueño regulan la señalización oxitocinérgica en cualquier genotipo"
+    caveats: "Uno de los SNPs más sobreinterpretados; impacto mínimo."
+    refs: []
+
+  - id: SLC6A4_rs25531
+    gene: SLC6A4
+    rsid: rs25531
+    name: "A/G dentro de 5-HTTLPR (L_A vs L_G); G lit. = C en hebra +"
+    effect_allele: C
+    other_allele: T
+    direction: risk
+    genotypes:
+      CC: {phenotype: "L_G/L_G (raro): expresión baja del transportador de serotonina, equivalente funcional a S/S", impact: 1}
+      CT: {phenotype: "Un alelo L_G: expresión reducida (funciona como S)", impact: 1}
+      TT: {phenotype: "Sin L_G: la expresión depende del 5-HTTLPR (L/S) que el chip no lee", impact: 0}
+    effect_size: "L_G reduce la transcripción a niveles de S; la asociación 5-HTTLPR×estrés→depresión es controvertida (meta-análisis discrepantes)"
+    evidence: C
+    mechanism: "SNP dentro del inserto repetido del promotor de SLC6A4; el alelo G crea un sitio AP-2 que reduce la expresión"
+    levers:
+      - "Portadores C: mayor sensibilidad a estrés/adversidad en algunos estudios → priorizar regulación del estrés, ejercicio, sueño; posible mayor tasa de efectos adversos con ISRS (discutir con médico)"
+      - "Verificar con genotipado específico de 5-HTTLPR antes de sacar conclusiones"
+    caveats: "Sólo captura parcialmente el 5-HTTLPR; la llamada de rs25531 en chips es poco fiable por la región repetitiva. Alelo G lit. = C en hebra +. Impacto mínimo."
+    refs: ["PMID:16642436"]
+
+  - id: FAAH_C385A
+    gene: FAAH
+    rsid: rs324420
+    name: "C385A (Pro129Thr)"
+    effect_allele: A
+    other_allele: C
+    direction: mixed
+    genotypes:
+      AA: {phenotype: "Thr/Thr (~4-5 % de europeos): FAAH ~50 % menos estable → anandamida ↑; menos ansiedad/mayor extinción del miedo, mayor umbral de dolor, más sociabilidad; pero mayor riesgo de obesidad/sobrepeso y de consumo problemático de drogas en algunos estudios", impact: 2}
+      AC: {phenotype: "Pro/Thr (~35 %): niveles de anandamida intermedios; menos reactividad de amígdala al miedo", impact: 1}
+      CC: {phenotype: "Pro/Pro: referencia (FAAH de actividad normal)", impact: 0}
+    effect_size: "Proteína FAAH reducida ~50 % en portadores A; anandamida plasmática ↑; efectos conductuales pequeños-moderados, replicados en ratón humanizado"
+    evidence: B
+    mechanism: "Thr129 hace la enzima más susceptible a degradación; menor hidrólisis de anandamida y otras N-aciletanolaminas"
+    levers:
+      - "Portadores A: más sensibilidad a CBD/inhibidores de FAAH y efectos más marcados del cannabis; el 'subidón del corredor' (endocannabinoide) más accesible con ejercicio aeróbico"
+      - "Portadores A: vigilar peso/apetito (tono endocannabinoide ↑) y uso de sustancias"
+      - "CC: PEA (palmitoiletanolamida 600-1200 mg/d) u omega-3 (elevan anandamida/2-AG) para dolor/ansiedad tienen más recorrido"
+    caveats: "Asociaciones psicológicas replicadas pero de tamaño modesto; no equivale a 'ansiolítico natural'."
+    refs: ["PMID:12060782", "PMID:25731744"]
+
+  - id: CNR1_rs1049353
+    gene: CNR1
+    rsid: rs1049353
+    name: "G1359A (Thr453Thr); A lit. = T en hebra +"
+    effect_allele: T
+    other_allele: C
+    direction: mixed
+    genotypes:
+      TT: {phenotype: "AA (lit.): asociado en algunos estudios a menor riesgo de obesidad/mejor perfil metabólico y a peor respuesta antidepresiva/mayor reactividad al estrés; direccionalidad inconsistente", impact: 1}
+      CT: {phenotype: "Heterocigoto: sin efecto claro", impact: 0}
+      CC: {phenotype: "Referencia", impact: 0}
+    effect_size: "Efectos pequeños e inconsistentes; TT ~8 % de europeos"
+    evidence: C
+    mechanism: "Variante sinónima del receptor CB1, posible efecto sobre expresión/estabilidad del ARNm"
+    levers:
+      - "Sin palanca específica; contexto al valorar cannabis/CBD o inhibidores del apetito"
+    caveats: "Evidencia débil; impacto mínimo."
+    refs: []
+
+  - id: HTR2A_1438GA
+    gene: HTR2A
+    rsid: rs6311
+    name: "Promotor −1438G/A (en LD con T102C rs6313); A lit. = T en hebra +"
+    effect_allele: T
+    other_allele: C
+    direction: mixed
+    genotypes:
+      TT: {phenotype: "−1438AA: mayor actividad del promotor y expresión de 5-HT2A; asociado a mejor respuesta a ISRS en algunos estudios, mayor riesgo de anorexia/TOC en otros; más efectos adversos con antipsicóticos atípicos (inconsistente)", impact: 1}
+      CT: {phenotype: "Heterocigoto: intermedio", impact: 0}
+      CC: {phenotype: "−1438GG: referencia; menor expresión 5-HT2A", impact: 0}
+    effect_size: "Asociaciones farmacogenéticas pequeñas y poco replicadas"
+    evidence: C
+    mechanism: "Variante promotora que modula la transcripción del receptor 5-HT2A (diana de psicodélicos, antipsicóticos atípicos y mirtazapina)"
+    levers:
+      - "Contexto para farmacogenética de ISRS/antipsicóticos; sin palanca de estilo de vida específica"
+    caveats: "rs6311 y rs6313 están en LD casi completo (A-1438 con T102); incluido sólo uno. Impacto mínimo."
+    refs: []
+
+  - id: HTR1A_C1019G
+    gene: HTR1A
+    rsid: rs6295
+    name: "Promotor −1019C/G; G lit. = C en hebra +"
+    effect_allele: C
+    other_allele: G
+    direction: risk
+    genotypes:
+      CC: {phenotype: "−1019GG (lit.): anula la represión por Deaf-1/NUDR → más autorreceptores 5-HT1A en rafe → menor liberación serotoninérgica; asociado a depresión/ansiedad, suicidio y peor respuesta a ISRS en varios estudios (meta-análisis mixtos)", impact: 1}
+      CG: {phenotype: "Heterocigoto: intermedio", impact: 0}
+      GG: {phenotype: "−1019CC (lit.): referencia", impact: 0}
+    effect_size: "OR ~1.2-1.5 para depresión en algunos meta-análisis; otros nulos; ~25 % de europeos son GG (lit.)"
+    evidence: C
+    mechanism: "El alelo G impide la unión del represor Deaf-1 al promotor → sobreexpresión de autorreceptores 5-HT1A presinápticos"
+    levers:
+      - "CC (GG lit.): mayor sensibilidad a estrés crónico; ejercicio, luz, mindfulness; pindolol/buspirona tienen lógica farmacológica pero no hay guía clínica"
+      - "Posible menor respuesta a ISRS → informar al prescriptor si hay depresión resistente"
+    caveats: "SNP C/G ambiguo: la literatura usa la hebra del gen (−); en hebra + (23andMe) el alelo de riesgo 'G' aparece como C. Orientación deducida por HGVS/strand (gen en hebra −) y SNPedia (orientation minus)."
+    refs: ["PMID:14534255"]
+
+  - id: DBH_1021CT
+    gene: DBH
+    rsid: rs1611115
+    name: "Promotor −1021C/T"
+    effect_allele: T
+    other_allele: C
+    direction: mixed
+    genotypes:
+      TT: {phenotype: "TT (~4-5 %): actividad plasmática de dopamina-β-hidroxilasa muy baja (−50-60 %) → ratio dopamina/noradrenalina ↑; asociado a más síntomas de TDAH/impulsividad en algunos estudios, menor TA/hipotensión ortostática leve, y mayor sensibilidad a disulfiram/ cocaína", impact: 2}
+      CT: {phenotype: "CT: actividad DBH intermedia (−25-30 %)", impact: 1}
+      CC: {phenotype: "CC: DBH normal", impact: 0}
+    effect_size: "Explica 35-50 % de la varianza de la actividad DBH plasmática (uno de los efectos cis más grandes conocidos); efectos clínicos pequeños"
+    evidence: A
+    mechanism: "Variante promotora que reduce la transcripción de DBH, enzima que convierte dopamina en noradrenalina en vesículas"
+    levers:
+      - "TT/CT: cobre y vitamina C suficientes (cofactores de DBH); medir cobre/ceruloplasmina si fatiga"
+      - "TT: más sensibilidad a estimulantes dopaminérgicos y a agonistas; hipotensión ortostática → hidratación/sal si síntomas; evitar disulfiram"
+      - "Útil junto con COMT/MAOA para interpretar tolerancia a estrés y respuesta a cafeína"
+    caveats: "El efecto enzimático es robusto; los efectos psiquiátricos son pequeños."
+    refs: ["PMID:11170900"]
+
+  - id: OPRM1_A118G
+    gene: OPRM1
+    rsid: rs1799971
+    name: "A118G (Asn40Asp)"
+    effect_allele: G
+    other_allele: A
+    direction: mixed
+    genotypes:
+      GG: {phenotype: "Asp/Asp (~2 %): menor expresión de receptor µ; mayor necesidad de opioides para analgesia (+20-30 %), mayor sensibilidad al rechazo social, mayor respuesta placentera al alcohol; posible mejor respuesta a naltrexona (discutido)", impact: 2}
+      AG: {phenotype: "Asn/Asp (~20-25 %): efectos intermedios; dosis de opioides algo mayores", impact: 1}
+      AA: {phenotype: "Asn/Asn: referencia", impact: 0}
+    effect_size: "Dosis de opioides postoperatorios +~20 % en portadores G (meta-análisis); efectos en adicción/social pequeños"
+    evidence: B
+    mechanism: "Pérdida de un sitio de N-glicosilación en el dominio extracelular → menor expresión/señalización del receptor µ-opioide"
+    levers:
+      - "Portadores G: informar al anestesista/médico del dolor (puede requerir más opioide; mayor riesgo de náuseas según estudios); alternativas multimodales"
+      - "Portadores G: mayor recompensa por alcohol → límites claros; naltrexona es opción a discutir"
+      - "Regulación del dolor/ánimo: ejercicio, contacto social (sistema opioide endógeno)"
+    caveats: "Efectos moderados y dependientes de contexto; incluido aquí por su relación con recompensa/dolor."
+    refs: ["PMID:9689128"]

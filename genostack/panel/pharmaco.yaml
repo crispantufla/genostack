@@ -1,0 +1,612 @@
+module: pharmaco
+title: "Farmacogenómica"
+goals: [pharmaco, health]
+description: >
+  Variantes individuales con impacto sobre dosis, eficacia o toxicidad de fármacos de uso común
+  (anticoagulantes, estatinas, antidepresivos, opioides, IBP, inmunosupresores, quimioterápicos,
+  antibióticos, anestésicos). Los fenotipos metabolizadores (CYP2C19, CYP2C9, CYP2D6, SLCO1B1, DPYD,
+  TPMT, NAT2) se calculan como diplotipo en haplotypes.yaml; aquí cada SNP lleva impacto propio moderado.
+  CYP1A2*1F (rs762551) está en sleep_caffeine; ABCG2 rs2231142 (urato) en vitamins — también reduce el
+  aclaramiento de rosuvastatina/alopurinol (dosis máxima 20 mg rosuvastatina si homocigoto). Alelos en hebra + GRCh37.
+
+variants:
+  - id: VKORC1_1639GA
+    gene: VKORC1
+    rsid: rs9923231
+    name: "-1639G>A (T en hebra + = A, alelo de sensibilidad a warfarina)"
+    effect_allele: T
+    other_allele: C
+    direction: risk
+    genotypes:
+      TT: {phenotype: "-1639AA: alta sensibilidad a warfarina/acenocumarol — dosis ~50 % de la estándar; mayor riesgo de INR supraterapéutico al inicio", impact: 3}
+      CT: {phenotype: "-1639GA: sensibilidad intermedia — dosis ~25-30 % menor", impact: 2}
+      CC: {phenotype: "-1639GG: sensibilidad normal (dosis estándar o mayor)", impact: 0}
+    effect_size: "Explica ~25-30 % de la varianza de dosis de warfarina; dosis media GG 6-7 mg/d, GA 4-5, AA 3"
+    evidence: A
+    mechanism: "Menor expresión hepática de VKORC1 (diana de cumarínicos) → menos enzima que inhibir"
+    levers:
+      - "Si se inicia warfarina/acenocumarol: algoritmo de dosis con genotipo (warfarindosing.org; CPIC) combinando VKORC1 + CYP2C9 + CYP4F2; INR más frecuente las primeras 2 semanas"
+      - "Alternativa: anticoagulantes directos (apixabán, rivaroxabán) no dependen de VKORC1"
+      - "Vitamina K dietética estable; informar al médico del genotipo"
+    caveats: "VKORC1 en hebra −: T (hebra +) = -1639A. Acenocumarol y fenprocumón se comportan igual"
+    refs: ["PMID:15930419", "PMID:28198005"]
+
+  - id: CYP4F2_V433M
+    gene: CYP4F2
+    rsid: rs2108622
+    name: "Val433Met (*3)"
+    effect_allele: T
+    other_allele: C
+    direction: mixed
+    genotypes:
+      TT: {phenotype: "Met/Met: menor degradación de vitamina K1 → requiere dosis de warfarina ~15-20 % mayor", impact: 1}
+      CT: {phenotype: "Portador Met433: dosis de warfarina ~8-10 % mayor", impact: 1}
+      CC: {phenotype: "Referencia", impact: 0}
+    effect_size: "+~1 mg/semana de warfarina por alelo T; explica 1-2 % de la varianza"
+    evidence: A
+    mechanism: "CYP4F2 oxida vitamina K1; la variante reduce la enzima → más vitamina K hepática"
+    levers:
+      - "Incluir en algoritmo de dosis de cumarínicos (CPIC lo recomienda de forma opcional, nivel B)"
+    caveats: "Efecto pequeño; sólo relevante con VKORC1/CYP2C9"
+    refs: ["PMID:18250228", "PMID:28198005"]
+
+  - id: CYP2C9_star2
+    gene: CYP2C9
+    rsid: rs1799853
+    name: "CYP2C9*2 Arg144Cys (430C>T)"
+    effect_allele: T
+    other_allele: C
+    direction: risk
+    genotypes:
+      TT: {phenotype: "*2/*2: actividad ~50 %; dosis de warfarina ~-30-40 %, AINEs (celecoxib, ibuprofeno, meloxicam) con mayor exposición; fenitoína ↓ dosis", impact: 2}
+      CT: {phenotype: "*1/*2 (ver diplotipo): actividad ~70-80 %; warfarina ~-20 %", impact: 1}
+      CC: {phenotype: "Sin *2", impact: 0}
+    effect_size: "Aclaramiento de S-warfarina −30 % por alelo; OR sangrado ~1.5-2 en portadores"
+    evidence: A
+    mechanism: "Variante con actividad catalítica reducida; el diplotipo completo (con *3) define el fenotipo"
+    levers:
+      - "Warfarina: algoritmo genético; AINEs: empezar con la dosis más baja, preferir naproxeno/aspirina (no CYP2C9) si *2/*2 o *2/*3"
+      - "Fenitoína, glipizida/glimepirida, losartán (profármaco, menos eficaz), siponimod: ajustar según CPIC"
+    caveats: "Impacto final en haplotypes.yaml (CYP2C9)"
+    refs: ["PMID:32189324", "PMID:28198005"]
+
+  - id: CYP2C9_star3
+    gene: CYP2C9
+    rsid: rs1057910
+    name: "CYP2C9*3 Ile359Leu (1075A>C)"
+    effect_allele: C
+    other_allele: A
+    direction: risk
+    genotypes:
+      CC: {phenotype: "*3/*3: metabolizador lento — actividad ~5-10 %; warfarina −70-80 % (≈1 mg/d), riesgo alto de toxicidad por fenitoína, AINEs, sulfonilureas", impact: 3}
+      AC: {phenotype: "*1/*3 (ver diplotipo): actividad ~50-60 %; warfarina −30-40 %; AINEs y fenitoína con precaución", impact: 2}
+      AA: {phenotype: "Sin *3", impact: 0}
+    effect_size: "*3 reduce el aclaramiento de S-warfarina ~80-90 % por alelo; celecoxib AUC ×2-3 en *1/*3"
+    evidence: A
+    mechanism: "Variante con actividad muy reducida sobre la mayoría de sustratos de CYP2C9"
+    levers:
+      - "Ver CYP2C9_star2; siponimod contraindicado en *3/*3; fenitoína: reducir 25-50 % dosis de inicio"
+    caveats: "Impacto final en haplotypes.yaml"
+    refs: ["PMID:32189324", "PMID:28198005"]
+
+  - id: CYP2D6_star4
+    gene: CYP2D6
+    rsid: rs3892097
+    name: "CYP2D6*4 (1846G>A, defecto de splicing; T en hebra + = A)"
+    effect_allele: T
+    other_allele: C
+    direction: risk
+    genotypes:
+      TT: {phenotype: "*4/*4: metabolizador lento CYP2D6 — codeína/tramadol ineficaces, tamoxifeno menos eficaz, antidepresivos tricíclicos/venlafaxina/paroxetina y metoprolol con exposición ×3-5", impact: 3}
+      CT: {phenotype: "Portador *4 (~25 % europeos): actividad reducida (IM si el otro alelo es *10/*41; NM si *1)", impact: 1}
+      CC: {phenotype: "Sin *4", impact: 0}
+    effect_size: "*4 = alelo nulo más frecuente en europeos (~20 %); *4/*4 ≈ 5-7 % de europeos son PM"
+    evidence: A
+    mechanism: "Splicing aberrante → proteína no funcional; CYP2D6 metaboliza ~25 % de los fármacos"
+    levers:
+      - "PM: evitar codeína, tramadol (sin efecto analgésico); ondansetrón OK; tamoxifeno → considerar inhibidor de aromatasa; reducir 50 % nortriptilina/amitriptilina, paroxetina/fluvoxamina; atomoxetina ajustar"
+      - "Sin CNV ni *5 (deleción) el fenotipo es parcial: si hay dudas clínicas, genotipado CYP2D6 completo"
+    caveats: "No detecta duplicaciones (UM) ni *5; ver regla CYP2D6 en haplotypes.yaml. Presencia en arrays variable (SNPedia: v3)"
+    refs: ["PMID:33387367", "PMID:27997040"]
+
+  - id: CYP2D6_star10
+    gene: CYP2D6
+    rsid: rs1065852
+    name: "CYP2D6*10 Pro34Ser (100C>T; A en hebra + = T)"
+    effect_allele: A
+    other_allele: G
+    direction: risk
+    genotypes:
+      AA: {phenotype: "*10/*10 (frecuente en Asia Oriental): metabolizador intermedio; exposición ↑ a tricíclicos, tamoxifeno menos activo", impact: 2}
+      AG: {phenotype: "Portador 100C>T: alelo de actividad reducida (*10) — o parte del haplotipo *4 si rs3892097 también es T", impact: 1}
+      GG: {phenotype: "Sin *10", impact: 0}
+    effect_size: "*10: actividad ~30-50 % (valor de actividad 0.25 en CPIC)"
+    evidence: A
+    mechanism: "Enzima inestable con menor afinidad por sustratos"
+    levers:
+      - "Ver CYP2D6_star4; ajustar dosis de ISRS/tricíclicos, tamoxifeno según CPIC"
+    caveats: "El 100C>T también está en *4: interpretar junto a rs3892097"
+    refs: ["PMID:33387367"]
+
+  - id: CYP2D6_star41
+    gene: CYP2D6
+    rsid: rs28371725
+    name: "CYP2D6*41 (2988G>A, splicing parcial; T en hebra + = A)"
+    effect_allele: T
+    other_allele: C
+    direction: risk
+    genotypes:
+      TT: {phenotype: "*41/*41: metabolizador intermedio (actividad ~50 %)", impact: 2}
+      CT: {phenotype: "Portador *41 (~9 % europeos): actividad reducida; IM si el otro alelo es nulo (*4)", impact: 1}
+      CC: {phenotype: "Sin *41", impact: 0}
+    effect_size: "*41: valor de actividad 0.5 en CPIC"
+    evidence: A
+    mechanism: "Variante intrónica que reduce splicing normal → menos enzima funcional"
+    levers:
+      - "Ver CYP2D6_star4"
+    caveats: "Ver regla CYP2D6 en haplotypes.yaml"
+    refs: ["PMID:33387367"]
+
+  - id: CYP3A5_star3
+    gene: CYP3A5
+    rsid: rs776746
+    name: "CYP3A5*3 (6986A>G; C en hebra + = *3 no expresor, T = *1 expresor)"
+    effect_allele: T
+    other_allele: C
+    direction: mixed
+    genotypes:
+      TT: {phenotype: "*1/*1: expresor de CYP3A5 — tacrolimus requiere dosis 1.5-2× para alcanzar niveles; mayor aclaramiento de algunos sustratos CYP3A", impact: 2}
+      CT: {phenotype: "*1/*3: expresor intermedio — tacrolimus dosis inicial 1.5-2× la estándar (CPIC)", impact: 2}
+      CC: {phenotype: "*3/*3: no expresor (fenotipo habitual en europeos, ~85 %) — dosis estándar de tacrolimus", impact: 0}
+    effect_size: "Expresores: niveles valle de tacrolimus ~50 % menores con la misma dosis"
+    evidence: A
+    mechanism: "*3 crea un sitio de splicing críptico → proteína truncada; *1 mantiene la enzima"
+    levers:
+      - "Si trasplante/tacrolimus: dosis inicial 0.3 mg/kg/d (vs 0.2) y monitorización de niveles (CPIC)"
+      - "Posible menor respuesta a otros sustratos CYP3A (midazolam, algunos estatinas) en expresores"
+    caveats: "La referencia GRCh37 lleva *3 (C); *1 (T) es el 'variante' en europeos pero ancestral. Frecuente en ancestría africana (~70 % expresores)"
+    refs: ["PMID:25801146"]
+
+  - id: CYP3A4_star22
+    gene: CYP3A4
+    rsid: rs35599367
+    name: "CYP3A4*22 (intrón 6, expresión reducida)"
+    effect_allele: A
+    other_allele: G
+    direction: risk
+    genotypes:
+      AA: {phenotype: "*22/*22 (raro): expresión CYP3A4 muy reducida — exposición alta a simvastatina/atorvastatina, tacrolimus, quetiapina, midazolam", impact: 2}
+      AG: {phenotype: "Portador *22 (~5-7 % europeos): CYP3A4 ~-30-40 %; mayor respuesta/efectos adversos con simvastatina, atorvastatina (dosis más baja), tacrolimus (−30 % dosis)", impact: 2}
+      GG: {phenotype: "Sin *22", impact: 0}
+    effect_size: "AUC simvastatina ×1.5-2; tacrolimus dosis −30 %; mejor reducción de LDL con estatinas CYP3A4"
+    evidence: B
+    mechanism: "Variante intrónica que reduce el ARNm hepático de CYP3A4"
+    levers:
+      - "Estatinas: preferir rosuvastatina/pravastatina (no CYP3A4) o dosis bajas de atorva/simva; vigilar mialgias"
+      - "Tacrolimus, quetiapina, ciclosporina, ticagrelor: esperar niveles más altos"
+    caveats: "Sólo en 23andMe v5; interacción con inhibidores CYP3A4 (zumo de pomelo, claritromicina, azoles) se amplifica"
+    refs: ["PMID:20386561"]
+
+  - id: CYP2B6_star6
+    gene: CYP2B6
+    rsid: rs3745274
+    name: "CYP2B6*6 Gln172His (516G>T)"
+    effect_allele: T
+    other_allele: G
+    direction: risk
+    genotypes:
+      TT: {phenotype: "*6/*6 (~6 % europeos, 20 % africanos): metabolizador lento — efavirenz niveles ×2-3 (toxicidad SNC), metadona y bupropión con exposición mayor, ketamina/propofol ligeramente prolongados", impact: 2}
+      GT: {phenotype: "Portador *6: metabolizador intermedio; efavirenz y metadona con exposición algo mayor", impact: 1}
+      GG: {phenotype: "Sin *6", impact: 0}
+    effect_size: "Efavirenz AUC ×2.5-3 en *6/*6 (CPIC: reducir a 400 mg o menos); bupropión hidroxilación −50 %"
+    evidence: A
+    mechanism: "Splicing aberrante y menor expresión de CYP2B6"
+    levers:
+      - "Efavirenz: 400 mg (o 200) en *6/*6; metadona: titular lento, vigilar QT; bupropión: posible menor eficacia (menos hidroxibupropión activo)"
+      - "Ketamina (subanestésica): metabolismo algo más lento — empezar con dosis bajas"
+    caveats: "Presente en 23andMe v1-v4 (v5 no listado en SNPedia)"
+    refs: ["PMID:30843436"]
+
+  - id: SLCO1B1_star5
+    gene: SLCO1B1
+    rsid: rs4149056
+    name: "SLCO1B1*5 Val174Ala (521T>C)"
+    effect_allele: C
+    other_allele: T
+    direction: risk
+    genotypes:
+      CC: {phenotype: "*5/*5 (~2 %): función de OATP1B1 muy reducida — simvastatina 80 mg OR miopatía ~17; exposición alta a atorvastatina, pitavastatina, pravastatina, rosuvastatina (menor)", impact: 3}
+      CT: {phenotype: "*1/*5 (~25 %): función reducida — OR miopatía con simvastatina ×4.5; ajustar elección/dosis de estatina", impact: 2}
+      TT: {phenotype: "Función normal", impact: 0}
+    effect_size: "AUC simvastatina ácida ×2-3 en CC; OR miopatía 4.5 (CT), 16.9 (CC) con simvastatina 80 mg (SEARCH)"
+    evidence: A
+    mechanism: "Menor captación hepática de estatinas (y metotrexato, repaglinida, irinotecán) → más fármaco en músculo"
+    levers:
+      - "Evitar simvastatina >20 mg y atorvastatina >40 mg; preferir rosuvastatina ≤20 mg, pravastatina, fluvastatina o pitavastatina (CPIC 2022)"
+      - "CoQ10 100-200 mg/d si mialgias (evidencia mixta); medir CK si síntomas; vitamina D suficiente"
+      - "Alternativas no estatina si intolerancia: ezetimiba, ácido bempedoico, PCSK9i/inclisirán"
+      - "Metotrexato (altas dosis) y repaglinida: exposición mayor"
+    caveats: "*5 también forma parte de *15 y *17; la regla en haplotypes.yaml resume el fenotipo"
+    refs: ["PMID:18650507", "PMID:35152405"]
+
+  - id: DPYD_star2A
+    gene: DPYD
+    rsid: rs3918290
+    name: "DPYD*2A (c.1905+1G>A, IVS14+1; T en hebra + = A)"
+    effect_allele: T
+    other_allele: C
+    direction: risk
+    genotypes:
+      TT: {phenotype: "*2A/*2A: deficiencia completa de DPD — 5-FU/capecitabina CONTRAINDICADOS (toxicidad letal)", impact: 4}
+      CT: {phenotype: "Portador *2A (~1 %): deficiencia parcial de DPD — riesgo de toxicidad grave/mortal con 5-FU/capecitabina; dosis inicial −50 % (CPIC, EMA)", impact: 4}
+      CC: {phenotype: "Sin *2A", impact: 0}
+    effect_size: "Valor de actividad 0; portadores: OR toxicidad grado ≥3 ~5-10"
+    evidence: A
+    mechanism: "Salto de exón 14 → enzima dihidropirimidina deshidrogenasa inactiva; DPD degrada >80 % del 5-FU"
+    levers:
+      - "Comunicar SIEMPRE antes de fluoropirimidinas (5-FU, capecitabina, tegafur); EMA exige genotipado/fenotipado DPYD previo"
+      - "Heterocigoto: dosis −50 % y escalada guiada por toxicidad; homocigoto: fármaco alternativo"
+      - "Confirmar con fenotipado (uracilo plasmático) o secuenciación si se va a tratar"
+    caveats: "Ver regla DPYD en haplotypes.yaml; un array sólo cubre 4 variantes de las muchas de DPYD (resultado normal ≠ ausencia de deficiencia)"
+    refs: ["PMID:29152729"]
+
+  - id: DPYD_D949V
+    gene: DPYD
+    rsid: rs67376798
+    name: "c.2846A>T Asp949Val (A en hebra + = T de la nomenclatura)"
+    effect_allele: A
+    other_allele: T
+    direction: risk
+    genotypes:
+      AA: {phenotype: "Homocigoto D949V: actividad DPD ~25 % — fluoropirimidinas con reducción drástica o evitar", impact: 4}
+      AT: {phenotype: "Portador D949V (~0.5-1 %): actividad reducida (valor 0.5) — dosis inicial de 5-FU/capecitabina −50 %", impact: 4}
+      TT: {phenotype: "Sin variante", impact: 0}
+    effect_size: "Valor de actividad 0.5; OR toxicidad grave ~3-4"
+    evidence: A
+    mechanism: "Variante missense que reduce la actividad catalítica de DPD"
+    levers:
+      - "Ver DPYD_star2A"
+    caveats: "DPYD en hebra −: el alelo de riesgo es A en hebra + (T en la nomenclatura c.2846A>T)"
+    refs: ["PMID:29152729"]
+
+  - id: DPYD_I560S
+    gene: DPYD
+    rsid: rs55886062
+    name: "DPYD*13 c.1679T>G Ile560Ser (C en hebra + = G)"
+    effect_allele: C
+    other_allele: A
+    direction: risk
+    genotypes:
+      CC: {phenotype: "*13/*13: deficiencia completa de DPD — fluoropirimidinas contraindicadas", impact: 4}
+      AC: {phenotype: "Portador *13 (~0.1 %): deficiencia parcial — 5-FU/capecitabina dosis −50 %", impact: 4}
+      AA: {phenotype: "Sin *13", impact: 0}
+    effect_size: "Valor de actividad 0"
+    evidence: A
+    mechanism: "Missense con pérdida total de actividad DPD"
+    levers:
+      - "Ver DPYD_star2A"
+    caveats: "Muy raro; en arrays de consumo los alelos raros tienen más falsos positivos: confirmar antes de actuar"
+    refs: ["PMID:29152729"]
+
+  - id: DPYD_HapB3
+    gene: DPYD
+    rsid: rs56038477
+    name: "HapB3 tag c.1236G>A (E412E; en LD con c.1129-5923C>G rs75017182)"
+    effect_allele: T
+    other_allele: C
+    direction: risk
+    genotypes:
+      TT: {phenotype: "HapB3/HapB3: actividad DPD ~50 % — dosis de fluoropirimidinas −50 % al menos", impact: 4}
+      CT: {phenotype: "Portador HapB3 (~2-5 % europeos, el alelo DPYD deficiente más frecuente): actividad reducida (valor 0.5) — 5-FU/capecitabina dosis inicial −25-50 %", impact: 4}
+      CC: {phenotype: "Sin HapB3", impact: 0}
+    effect_size: "Valor de actividad 0.5; OR toxicidad grave ~1.6-2.5"
+    evidence: A
+    mechanism: "La variante intrónica rs75017182 crea un sitio de splicing críptico → parte del ARNm no funcional"
+    levers:
+      - "Ver DPYD_star2A; el SNP causal es rs75017182 (si el array lo tiene, es equivalente)"
+    caveats: "rs56038477 es tag sinónimo en LD casi completo con rs75017182; sólo en 23andMe v5"
+    refs: ["PMID:29152729"]
+
+  - id: TPMT_star2
+    gene: TPMT
+    rsid: rs1800462
+    name: "TPMT*2 Ala80Pro (238G>C; G en hebra + = C)"
+    effect_allele: G
+    other_allele: C
+    direction: risk
+    genotypes:
+      GG: {phenotype: "*2/*2: deficiencia de TPMT — azatioprina/6-MP/tioguanina: dosis 10 % o evitar (mielosupresión letal)", impact: 4}
+      CG: {phenotype: "Portador *2 (~0.5 %): actividad intermedia — tiopurinas dosis inicial 30-80 % (CPIC)", impact: 3}
+      CC: {phenotype: "Sin *2", impact: 0}
+    effect_size: "Heterocigotos: actividad TPMT ~50 %, riesgo de leucopenia ×4; homocigotos: deficiencia completa"
+    evidence: A
+    mechanism: "Proteína inestable degradada rápidamente → menor metilación de tiopurinas → más 6-TGN citotóxico"
+    levers:
+      - "Antes de azatioprina (EII, AR, lupus, trasplante) o 6-MP: genotipo TPMT+NUDT15 o actividad enzimática; ajustar dosis y hemograma semanal al inicio"
+      - "Evitar alopurinol concomitante sin ajuste (bloquea XO, más tiopurina hacia TPMT)"
+    caveats: "TPMT en hebra −: G (hebra +) = 238C. Ver regla TPMT en haplotypes.yaml"
+    refs: ["PMID:30447069"]
+
+  - id: TPMT_star3B
+    gene: TPMT
+    rsid: rs1800460
+    name: "TPMT*3B Ala154Thr (460G>A; T en hebra + = A)"
+    effect_allele: T
+    other_allele: C
+    direction: risk
+    genotypes:
+      TT: {phenotype: "Homocigoto (casi siempre *3A/*3A junto a rs1142345): deficiencia de TPMT — tiopurinas 10 % dosis o evitar", impact: 4}
+      CT: {phenotype: "Portador (habitualmente *3A si también rs1142345 C; ~4 % europeos): actividad intermedia — tiopurinas dosis −30-70 %", impact: 3}
+      CC: {phenotype: "Sin *3B", impact: 0}
+    effect_size: "*3A (460A+719G) es el alelo deficiente más frecuente en europeos (~4 %)"
+    evidence: A
+    mechanism: "Missense que desestabiliza la proteína"
+    levers:
+      - "Ver TPMT_star2"
+    caveats: "Casi siempre en cis con rs1142345 (*3A); contar ambos como un solo alelo si ambos son heterocigotos (ver haplotypes.yaml)"
+    refs: ["PMID:30447069"]
+
+  - id: TPMT_star3C
+    gene: TPMT
+    rsid: rs1142345
+    name: "TPMT*3C Tyr240Cys (719A>G; C en hebra + = G)"
+    effect_allele: C
+    other_allele: T
+    direction: risk
+    genotypes:
+      CC: {phenotype: "Homocigoto *3C (o *3A/*3A): deficiencia de TPMT — tiopurinas 10 % dosis o evitar", impact: 4}
+      CT: {phenotype: "Portador *3C/*3A: actividad intermedia — tiopurinas dosis −30-70 %", impact: 3}
+      TT: {phenotype: "Sin *3C", impact: 0}
+    effect_size: "*3C aislado: alelo deficiente más frecuente en ancestría africana/asiática"
+    evidence: A
+    mechanism: "Missense que desestabiliza la proteína"
+    levers:
+      - "Ver TPMT_star2"
+    caveats: "Si rs1800460 también es heterocigoto, lo más probable es *3A (un solo alelo), no *3B/*3C (dos)"
+    refs: ["PMID:30447069"]
+
+  - id: NUDT15_R139C
+    gene: NUDT15
+    rsid: rs116855232
+    name: "NUDT15*3 Arg139Cys (c.415C>T)"
+    effect_allele: T
+    other_allele: C
+    direction: risk
+    genotypes:
+      TT: {phenotype: "*3/*3: deficiencia de NUDT15 — mielosupresión precoz grave con tiopurinas; dosis 10 % o evitar", impact: 4}
+      CT: {phenotype: "Portador (~10 % Asia Oriental, ~1 % europeos): actividad intermedia — tiopurinas dosis −30-50 %, hemograma estrecho; también alopecia", impact: 3}
+      CC: {phenotype: "Sin variante", impact: 0}
+    effect_size: "OR leucopenia precoz ~7 (het), casi 100 % en homocigotos; independiente de TPMT"
+    evidence: A
+    mechanism: "NUDT15 desfosforila los metabolitos activos TGTP; su déficit aumenta la incorporación de tioguanina al ADN"
+    levers:
+      - "Genotipar TPMT y NUDT15 antes de azatioprina/6-MP (CPIC 2018); combinar ambos"
+    caveats: "Sólo en 23andMe v5"
+    refs: ["PMID:30447069"]
+
+  - id: UGT1A1_star28_tag
+    gene: UGT1A1
+    rsid: rs887829
+    name: "Tag de UGT1A1*28 (TA7; -364C>T en LD casi completo con (TA)7)"
+    effect_allele: T
+    other_allele: C
+    direction: risk
+    genotypes:
+      TT: {phenotype: "Probable *28/*28 (síndrome de Gilbert, ~10 % europeos): bilirrubina indirecta ↑; irinotecán toxicidad (neutropenia/diarrea, reducir dosis), atazanavir ictericia, belinostat, pazopanib, nilotinib hiperbilirrubinemia; paradójicamente menor riesgo cardiovascular", impact: 2}
+      CT: {phenotype: "Probable *1/*28: glucuronidación ~30 % menor; Gilbert leve con ayuno/estrés", impact: 1}
+      CC: {phenotype: "Referencia", impact: 0}
+    effect_size: "UGT1A1 actividad ~30 % en *28/*28; OR neutropenia grave con irinotecán ≥200 mg/m² ~3-4"
+    evidence: A
+    mechanism: "El promotor con 7 repeticiones TA reduce la transcripción de UGT1A1 (glucuronidación de bilirrubina y SN-38)"
+    levers:
+      - "Irinotecán: dosis −30 % si *28/*28 (CPIC/FDA); atazanavir: considerar alternativa; belinostat reducir dosis"
+      - "Gilbert: bilirrubina alta benigna — informar para evitar estudios innecesarios; evitar ayunos prolongados antes de analíticas"
+      - "Posible mayor sensibilidad a paracetamol en sobredosis; moléculas glucuronidadas por UGT1A1 (raloxifeno, ezetimiba, estradiol) con exposición algo mayor"
+    caveats: "Tag SNP (r² ~0.99 con (TA)7 en europeos, menor en africanos donde también hay *37 y *36); no detecta *6 (rs4148323, asiáticos)"
+    refs: ["PMID:26417955"]
+
+  - id: HLA_B5701_tag
+    gene: HCP5 (tag HLA-B*57:01)
+    rsid: rs2395029
+    name: "Tag de HLA-B*57:01 (G)"
+    effect_allele: G
+    other_allele: T
+    direction: risk
+    genotypes:
+      GG: {phenotype: "Probable HLA-B*57:01 homocigoto: ABACAVIR CONTRAINDICADO (hipersensibilidad potencialmente mortal); también flucloxacilina (hepatitis colestásica) y pazopanib hepatotoxicidad", impact: 4}
+      GT: {phenotype: "Probable portador HLA-B*57:01 (~6 % europeos): abacavir contraindicado; flucloxacilina riesgo ×80 de hepatitis (absoluto 1/500); alopurinol OK (ese es B*58:01)", impact: 4}
+      TT: {phenotype: "Probable B*57:01 negativo", impact: 0}
+    effect_size: "Sensibilidad/especificidad del tag ~100 %/99 % en europeos; hipersensibilidad a abacavir en ~50 % de portadores"
+    evidence: A
+    mechanism: "B*57:01 presenta péptidos alterados por abacavir → activación masiva de CD8+"
+    levers:
+      - "Informar al médico: nunca abacavir (Triumeq, Kivexa, Ziagen); confirmar con tipado HLA-B*57:01 si se plantea"
+      - "Evitar flucloxacilina si hay alternativa; vigilar hígado con pazopanib"
+      - "Asociado también a control espontáneo del VIH ('elite controllers')"
+    caveats: "Tag SNP; r² con B*57:01 menor en ancestría africana/asiática (confirmar por tipado)"
+    refs: ["PMID:24561393"]
+
+  - id: HLA_A3101_tag
+    gene: HLA-A (tag HLA-A*31:01)
+    rsid: rs1061235
+    name: "Tag de HLA-A*31:01 (T)"
+    effect_allele: T
+    other_allele: A
+    direction: risk
+    genotypes:
+      TT: {phenotype: "Probable HLA-A*31:01 homocigoto: carbamazepina — riesgo alto de hipersensibilidad (DRESS, exantema, SJS/TEN)", impact: 3}
+      AT: {phenotype: "Probable portador HLA-A*31:01 (~2-5 % europeos): carbamazepina riesgo de hipersensibilidad 26 % vs 4 %; CPIC recomienda evitar si no se ha usado antes; precaución con oxcarbazepina/fenitoína", impact: 3}
+      AA: {phenotype: "Probable A*31:01 negativo", impact: 0}
+    effect_size: "OR hipersensibilidad a carbamazepina ~9-12 en europeos y japoneses"
+    evidence: A
+    mechanism: "Presentación de carbamazepina/metabolitos por HLA-A*31:01 a células T"
+    levers:
+      - "Antes de carbamazepina (epilepsia, neuralgia del trigémino, bipolar): tipado HLA-A*31:01 (y B*15:02 si ancestría asiática); alternativas: lamotrigina, levetiracetam, valproato"
+    caveats: "A/T: SNP ambiguo de hebra — verificado en SNPedia (orientación +, T = proxy de A*31:01) y ClinVar (FwdALT=T). Tag, no tipado HLA. HLA-B*15:02 (asiáticos) no tiene tag fiable en arrays"
+    refs: ["PMID:21428769", "PMID:29392710"]
+
+  - id: F5_Leiden
+    gene: F5
+    rsid: rs6025
+    name: "Factor V Leiden Arg506Gln (1691G>A; T en hebra + = A = Leiden)"
+    effect_allele: T
+    other_allele: C
+    direction: risk
+    genotypes:
+      TT: {phenotype: "Leiden homocigoto: riesgo de trombosis venosa ×50-80; anticonceptivos combinados y THS orales contraindicados", impact: 4}
+      CT: {phenotype: "Portador Leiden (~5 % europeos): riesgo de TVP/TEP ×3-7 (absoluto ~0.5 %/año); ×30 con anticonceptivos estrogénicos; riesgo en embarazo, cirugía, vuelos largos", impact: 3}
+      CC: {phenotype: "Sin Leiden", impact: 0}
+    effect_size: "OR TEV 4-7 heterocigoto, 50-80 homocigoto; 20-25 % de los pacientes con TVP son portadores"
+    evidence: A
+    mechanism: "Factor Va resistente a inactivación por proteína C activada → estado protrombótico"
+    levers:
+      - "Evitar anticonceptivos/THS con estrógenos orales (preferir DIU-LNG, progestágeno solo, estrógeno transdérmico a dosis baja sólo si imprescindible)"
+      - "Profilaxis antitrombótica en cirugía, inmovilización, embarazo/puerperio (HBPM según hematología); hidratación y movimiento en vuelos >4 h, medias de compresión"
+      - "Si trombosis: informar (influye duración de anticoagulación en homocigotos/compuestos con F2 20210A); testosterona exógena aumenta riesgo"
+      - "Confirmar con PCR clínica antes de decisiones médicas"
+    caveats: "La referencia GRCh37 porta el alelo Leiden (T) — no confundir 'ref' con 'normal'. SNPedia lo lista en orientación −"
+    refs: ["PMID:7514752"]
+
+  - id: F2_G20210A
+    gene: F2
+    rsid: rs1799963
+    name: "Protrombina G20210A (3'UTR)"
+    effect_allele: A
+    other_allele: G
+    direction: risk
+    genotypes:
+      AA: {phenotype: "Homocigoto (raro): protrombina muy elevada; riesgo de trombosis venosa muy alto", impact: 4}
+      AG: {phenotype: "Portador 20210A (~2 % europeos): protrombina +30 %; riesgo de TEV ×2-3, ×15 con anticonceptivos combinados; compuesto con F5 Leiden multiplica", impact: 3}
+      GG: {phenotype: "Sin variante", impact: 0}
+    effect_size: "OR TEV 2-3 heterocigoto; doble heterocigoto F5/F2 OR ~20"
+    evidence: A
+    mechanism: "Mayor eficiencia del procesamiento del ARNm → más protrombina circulante"
+    levers:
+      - "Mismas medidas que F5 Leiden; evitar estrógenos orales; profilaxis perioperatoria"
+    caveats: "23andMe lo genotipa bajo el identificador interno i3002432 (no rs1799963): el parser debe mapear ambos"
+    refs: ["PMID:8916933"]
+
+  - id: G6PD_A_minus
+    gene: G6PD
+    rsid: rs1050828
+    name: "G6PD A- Val68Met (202G>A; T en hebra + = A); ligado al X"
+    effect_allele: T
+    other_allele: C
+    direction: risk
+    genotypes:
+      T: {phenotype: "Varón hemicigoto A-: deficiencia de G6PD (clase III, actividad ~10-15 %) — hemólisis con primaquina, tafenoquina, dapsona, rasburicasa, nitrofurantoína, azul de metileno, sulfonamidas, habas, naftalina", impact: 4}
+      TT: {phenotype: "Mujer homocigota: deficiencia de G6PD — mismas precauciones", impact: 4}
+      CT: {phenotype: "Mujer heterocigota: actividad variable (30-80 %, lionización) — puede hemolizar con oxidantes fuertes; medir actividad antes de primaquina/rasburicasa", impact: 2}
+      C: {phenotype: "Varón normal", impact: 0}
+      CC: {phenotype: "Mujer normal", impact: 0}
+    effect_size: "A- (con 376G) explica la mayoría de deficiencias en ancestría africana (10-15 % varones)"
+    evidence: A
+    mechanism: "Enzima inestable → eritrocitos sin NADPH suficiente para regenerar glutatión → hemólisis oxidativa"
+    levers:
+      - "Lista de fármacos a evitar (CPIC 2022): primaquina, tafenoquina, rasburicasa, pegloticasa, dapsona, azul de metileno, nitrofurantoína; precaución con sulfonamidas, quinolonas, ácido ascórbico i.v. altas dosis, dosis altas de aspirina"
+      - "Evitar habas, naftalina; cuidado con henna; confirmar con actividad enzimática cuantitativa"
+      - "La deficiencia protege de malaria; ocasionalmente hemólisis con infecciones/cetoacidosis"
+    caveats: "Cromosoma X: varones una sola letra. El 202A se asocia a deficiencia cuando va con 376G (rs1050829 C), casi siempre"
+    refs: ["PMID:24787449", "PMID:36049896"]
+
+  - id: G6PD_Mediterranean
+    gene: G6PD
+    rsid: rs5030868
+    name: "G6PD Mediterráneo Ser188Phe (563C>T; A en hebra + = T); ligado al X"
+    effect_allele: A
+    other_allele: G
+    direction: risk
+    genotypes:
+      A: {phenotype: "Varón hemicigoto: deficiencia grave de G6PD (clase II, actividad <10 %) — hemólisis grave con oxidantes y favismo; mismas contraindicaciones que A- pero más severas", impact: 4}
+      AA: {phenotype: "Mujer homocigota: deficiencia grave", impact: 4}
+      AG: {phenotype: "Mujer heterocigota: actividad variable; medir antes de fármacos oxidantes", impact: 2}
+      G: {phenotype: "Varón normal", impact: 0}
+      GG: {phenotype: "Mujer normal", impact: 0}
+    effect_size: "Variante más frecuente en cuenca mediterránea, Oriente Medio e India (1-10 % varones según región)"
+    evidence: A
+    mechanism: "Enzima con actividad residual mínima"
+    levers:
+      - "Ver G6PD_A_minus; evitar estrictamente habas (favismo) y los fármacos listados"
+    caveats: "Cromosoma X. Un resultado normal en estas dos variantes no descarta deficiencia por otras (>200 variantes)"
+    refs: ["PMID:24787449", "PMID:36049896"]
+
+  - id: BCHE_atypical
+    gene: BCHE
+    rsid: rs1799807
+    name: "BCHE atípica (A) Asp70Gly (209A>G; C en hebra + = G)"
+    effect_allele: C
+    other_allele: T
+    direction: risk
+    genotypes:
+      CC: {phenotype: "Atípica homocigota (~1/3.000): apnea prolongada (horas) tras succinilcolina o mivacurio — informar a anestesia", impact: 4}
+      CT: {phenotype: "Portador atípico (~4 %): colinesterasa plasmática ~60 % — bloqueo por succinilcolina algo prolongado (minutos); sinergia con la variante K (rs1803274) y con inhibidores (neostigmina, organofosforados)", impact: 2}
+      TT: {phenotype: "Normal", impact: 0}
+    effect_size: "Homocigotos: bloqueo ×5-10 en duración; heterocigotos: +~30-50 %"
+    evidence: A
+    mechanism: "Menor afinidad de la butirilcolinesterasa por ésteres de colina (succinilcolina, mivacurio, cocaína, procaína)"
+    levers:
+      - "Informar al anestesista antes de cirugía; alternativa rocuronio + sugammadex; medir colinesterasa plasmática y número de dibucaína si duda"
+      - "Mayor sensibilidad a cocaína y a organofosforados (pesticidas)"
+    caveats: "Variante K (rs1803274, ~15 %) agrava el fenotipo pero sola es leve; no incluida"
+    refs: []
+
+  - id: CYP2C19_star2_single
+    gene: CYP2C19
+    rsid: rs4244285
+    name: "CYP2C19*2 (681G>A, splicing)"
+    effect_allele: A
+    other_allele: G
+    direction: risk
+    genotypes:
+      AA: {phenotype: "*2/*2: metabolizador lento — ver regla CYP2C19 (clopidogrel ineficaz, IBP más potentes, citalopram/escitalopram/sertralina dosis −50 %, voriconazol ↑)", impact: 2}
+      AG: {phenotype: "Portador *2 (~30 % europeos): metabolizador intermedio si el otro alelo es *1 — clopidogrel respuesta reducida", impact: 1}
+      GG: {phenotype: "Sin *2", impact: 0}
+    effect_size: "*2: alelo nulo (sin actividad); PM ≈ 2-3 % europeos, 13-15 % Asia Oriental"
+    evidence: A
+    mechanism: "Sitio críptico de splicing → proteína truncada"
+    levers:
+      - "El fenotipo y las palancas completas están en la regla CYP2C19 de haplotypes.yaml"
+    caveats: "Impacto bajo aquí para no duplicar; *3 (rs4986893, asiáticos) se cuenta en la regla"
+    refs: ["PMID:35034351", "PMID:37032427"]
+
+  - id: CYP2C19_star17_single
+    gene: CYP2C19
+    rsid: rs12248560
+    name: "CYP2C19*17 (-806C>T, ganancia de expresión)"
+    effect_allele: T
+    other_allele: C
+    direction: mixed
+    genotypes:
+      TT: {phenotype: "*17/*17: metabolizador ultrarrápido — IBP menos eficaces (omeprazol/lansoprazol: dosis ×2 o esomeprazol/rabeprazol), citalopram/escitalopram/sertralina menor respuesta, voriconazol niveles bajos; clopidogrel respuesta normal/alta", impact: 2}
+      CT: {phenotype: "Portador *17 (~20 % europeos): metabolizador rápido si el otro es *1 — efecto leve sobre IBP/ISRS; *2/*17 ≈ intermedio", impact: 1}
+      CC: {phenotype: "Sin *17", impact: 0}
+    effect_size: "Exposición a omeprazol −40 % en *17/*17; escitalopram −35 %"
+    evidence: A
+    mechanism: "Variante promotora que aumenta la transcripción de CYP2C19"
+    levers:
+      - "Ver regla CYP2C19 en haplotypes.yaml"
+    caveats: "Impacto bajo aquí; el diplotipo define el fenotipo"
+    refs: ["PMID:32770672", "PMID:37032427"]
+
+  - id: MT_RNR1_1555AG
+    gene: MT-RNR1
+    rsid: rs267606617
+    name: "m.1555A>G (ARNr 12S mitocondrial)"
+    effect_allele: G
+    other_allele: A
+    direction: risk
+    genotypes:
+      G: {phenotype: "m.1555G: sordera neurosensorial irreversible tras UNA dosis de aminoglucósidos (gentamicina, amikacina, tobramicina, estreptomicina, neomicina) — EVITAR salvo riesgo vital", impact: 4}
+      GG: {phenotype: "m.1555G (homoplásmico): mismas precauciones", impact: 4}
+      AG: {phenotype: "Heteroplasmia m.1555A/G: riesgo probable — evitar aminoglucósidos", impact: 4}
+      A: {phenotype: "Normal", impact: 0}
+      AA: {phenotype: "Normal", impact: 0}
+    effect_size: "Penetrancia de ototoxicidad tras aminoglucósidos cercana al 100 % en portadores; prevalencia ~1/500"
+    evidence: A
+    mechanism: "El ARNr 12S mutado se parece al bacteriano → los aminoglucósidos se unen y destruyen las células ciliadas"
+    levers:
+      - "Anotar alergia/contraindicación a aminoglucósidos en la historia clínica y pulsera; alternativas: betalactámicos, quinolonas"
+      - "Informar a familiares por línea materna (herencia mitocondrial); audiometría basal"
+      - "Evitar también aminoglucósidos tópicos/óticos en oído con tímpano perforado"
+    caveats: "ADN mitocondrial: clave de una letra en 23andMe (v5 lo incluye). m.1494C>T (rs267606619) es otra variante con el mismo efecto, no incluida"
+    refs: ["PMID:34032273", "PMID:7689389"]

@@ -1,0 +1,311 @@
+module: sleep_caffeine
+title: "Sueño, cronotipo y cafeína"
+goals: [energy, cognition, health]
+description: >
+  Metabolismo de la cafeína (CYP1A2, AHR), sensibilidad a adenosina (ADORA2A, ADA), genes reloj y
+  cronotipo (CLOCK, PER2, PER3, RGS16, CRY1, BHLHE41/DEC2), melatonina-glucosa (MTNR1B) e insomnio/
+  piernas inquietas (MEIS1). Permite ajustar horarios de cafeína, luz, cena y sueño al genotipo.
+  Todos los alelos en hebra + de GRCh37 (verificados vía Ensembl/VEP y GWAS Catalog).
+
+variants:
+  - id: CYP1A2_163CA
+    gene: CYP1A2
+    rsid: rs762551
+    name: "CYP1A2*1F −163C>A (intrón 1)"
+    effect_allele: C
+    other_allele: A
+    direction: risk
+    genotypes:
+      CC: {phenotype: "Metabolizador lento de cafeína (~10 %): enzima poco inducible; vida media de cafeína más larga; café >2-3 tazas/d asociado a más riesgo de infarto/hipertensión y peor rendimiento deportivo con cafeína en algunos estudios", impact: 2}
+      AC: {phenotype: "Metabolizador intermedio (~45 %): inducibilidad reducida; cafeína de tarde afecta más al sueño", impact: 1}
+      AA: {phenotype: "Metabolizador rápido (*1F/*1F, ~45 %): alta inducibilidad (más en fumadores); cafeína se elimina más rápido; mayor beneficio ergogénico", impact: 0}
+    effect_size: "Diferencia de aclaramiento ~1.5-2× entre AA y CC en fumadores/inducidos (mucho menor sin inducción); OR infarto ~1.4-2 en portadores C con ≥3 tazas/d (Cornelis 2006)"
+    evidence: B
+    mechanism: "Variante intrónica que reduce la inducibilidad de CYP1A2, enzima que metaboliza >90 % de la cafeína (y clozapina, olanzapina, melatonina)"
+    levers:
+      - "C (lento): cafeína ≤200 mg/d y última toma ≥8-10 h antes de acostarse; evitar >2 tazas/d si hipertensión; considerar descafeinado/té verde por la tarde"
+      - "C (lento): ojo con interacciones: fluvoxamina, ciprofloxacino y anticonceptivos orales inhiben CYP1A2 (cafeína dura aún más); tabaco y crucíferas la inducen"
+      - "A (rápido): cafeína 3-6 mg/kg pre-entreno tiene más efecto ergogénico; aun así cortar 6-8 h antes de dormir"
+      - "Ambos: la melatonina exógena también se metaboliza por CYP1A2 → lentos pueden necesitar dosis más bajas (0.3-0.5 mg)"
+    caveats: "El efecto de −163C>A sobre la farmacocinética basal es modesto; el genotipo explica sólo parte de la variabilidad. Sensibilidad subjetiva depende también de ADORA2A."
+    refs: ["PMID:10233211", "PMID:16522833"]
+
+  - id: CYP1A2_1C
+    gene: CYP1A2
+    rsid: rs2069514
+    name: "CYP1A2*1C −3860G>A"
+    effect_allele: A
+    other_allele: G
+    direction: risk
+    genotypes:
+      AA: {phenotype: "*1C/*1C: menor inducibilidad y actividad CYP1A2 (raro en europeos, ~20 % de alelos en Asia oriental)", impact: 2}
+      AG: {phenotype: "Portador *1C: actividad CYP1A2 algo reducida", impact: 1}
+      GG: {phenotype: "Referencia", impact: 0}
+    effect_size: "Actividad reducida ~20-40 % en fumadores japoneses; en europeos MAF ~2 %"
+    evidence: B
+    mechanism: "Variante del promotor distal que reduce la transcripción/inducción de CYP1A2"
+    levers:
+      - "Mismas palancas que CYP1A2 lento: limitar cafeína, horario temprano, cuidado con fármacos sustrato (clozapina, olanzapina, teofilina)"
+    caveats: "Raro en población europea; el informe lo mostrará sólo si el chip lo incluye."
+    refs: []
+
+  - id: CYP1A_rs2472297
+    gene: CYP1A1-CYP1A2
+    rsid: rs2472297
+    name: "Intergénico CYP1A1/CYP1A2 (C/T)"
+    effect_allele: T
+    other_allele: C
+    direction: beneficial
+    genotypes:
+      TT: {phenotype: "TT: mayor expresión de CYP1A2 → aclaramiento más rápido de cafeína (metabolitos plasmáticos ↓) y mayor consumo habitual de café/té (+0.1-0.3 tazas/d por alelo)", impact: 1}
+      CT: {phenotype: "CT: aclaramiento algo más rápido; consumo algo mayor", impact: 1}
+      CC: {phenotype: "CC: referencia (metabolismo más lento dentro de este locus)", impact: 0}
+    effect_size: "Señal más fuerte de GWAS de consumo de café; efecto sobre cafeína plasmática equivalente a ~0.3 SD por alelo; T ~21 % en europeos"
+    evidence: A
+    mechanism: "Variante reguladora intergénica que aumenta la expresión de CYP1A2 (y CYP1A1); la gente con aclaramiento rápido 'compensa' bebiendo más café"
+    levers:
+      - "CC: cafeína dura más → horario más temprano; combinar con rs762551 para estimar fenotipo global"
+      - "TT: puede necesitar más cafeína para el mismo efecto; evitar escalada >400 mg/d"
+    caveats: "Independiente de rs762551 (LD bajo); ambos se suman. No predice sensibilidad subjetiva (ADORA2A)."
+    refs: ["PMID:21490707", "PMID:21357676"]
+
+  - id: AHR_rs4410790
+    gene: AHR
+    rsid: rs4410790
+    name: "AHR (T/C); proxy de rs6968865"
+    effect_allele: T
+    other_allele: C
+    direction: mixed
+    genotypes:
+      TT: {phenotype: "TT: menor inducción de CYP1A2 vía receptor de hidrocarburos aromáticos → niveles de cafeína más altos por dosis y menor consumo habitual de café (−0.1-0.15 tazas/d por alelo)", impact: 1}
+      CT: {phenotype: "CT: intermedio", impact: 0}
+      CC: {phenotype: "CC: mayor inducción de CYP1A2; aclaramiento más rápido y mayor consumo de café", impact: 1}
+    effect_size: "Efecto sobre consumo ~0.1 tazas/d por alelo; sobre metabolitos de cafeína ~0.2-0.3 SD; T ~38 % en europeos"
+    evidence: A
+    mechanism: "AHR es el factor de transcripción que induce CYP1A1/CYP1A2 en respuesta a xenobióticos (humo, crucíferas, carne a la brasa); la variante modula esa inducción"
+    levers:
+      - "TT: cafeína más persistente → dosis menores y más temprano; especialmente si además rs762551 C"
+      - "CC: cafeína se va más rápido; la inducción por tabaco/crucíferas acentúa aún más"
+    caveats: "rs6968865 (A/T, ambiguo en hebra) está en LD casi completo con éste (T de rs6968865 ≈ C de rs4410790); se omite para evitar errores de orientación."
+    refs: ["PMID:21490707", "PMID:21357676"]
+
+  - id: ADORA2A_1083TC
+    gene: ADORA2A
+    rsid: rs5751876
+    name: "1083T>C / 1976C>T (Tyr361Tyr)"
+    effect_allele: T
+    other_allele: C
+    direction: mixed
+    genotypes:
+      TT: {phenotype: "TT (~20 %): más ansiedad, palpitaciones y nerviosismo tras 150 mg de cafeína (dos estudios controlados); más insomnio inducido por cafeína según algunos; tienden a consumir menos cafeína", impact: 2}
+      CT: {phenotype: "CT: sensibilidad intermedia", impact: 1}
+      CC: {phenotype: "CC: menos ansiedad con cafeína; en un estudio (Rétey 2007) los CC se autodescribían como más sensibles al efecto de la cafeína sobre el sueño y mostraron mayor efecto EEG", impact: 1}
+    effect_size: "Ansiedad tras cafeína: diferencia ~0.5 SD TT vs resto (Alsene 2003; Childs 2008); asociación con insomnio por cafeína replicada parcialmente"
+    evidence: B
+    mechanism: "Variante sinónima del receptor de adenosina A2A (diana de la cafeína) en LD con variantes reguladoras de expresión; modula la respuesta ansiogénica/alertante a la cafeína"
+    levers:
+      - "TT: cafeína ≤100-150 mg por toma, nunca en ayunas ni con estrés agudo; L-teanina 200 mg junto a la cafeína reduce la ansiedad; evitar pre-entrenos cargados"
+      - "TT: si ansiedad basal, valorar descafeinado/matcha; magnesio"
+      - "CC: tolera mejor la cafeína como ergogénico, pero vigilar efecto sobre latencia/profundidad de sueño (cortar ≥8 h antes)"
+      - "Todos: en privación de sueño, la cafeína no sustituye el déficit de sueño profundo (ADA/ADORA2A modulan la presión homeostática)"
+    caveats: "Efecto sobre ansiedad bien replicado; efecto sobre sueño discutido (direccionalidad variable entre estudios). Orientación plus confirmada en SNPedia."
+    refs: ["PMID:12825092", "PMID:18305461"]
+
+  - id: ADA_G22A
+    gene: ADA
+    rsid: rs73598374
+    name: "G22A (Asp8Asn); 22A = T en hebra +"
+    effect_allele: T
+    other_allele: C
+    direction: mixed
+    genotypes:
+      TT: {phenotype: "Asn/Asn (muy raro): actividad de adenosina desaminasa muy reducida → más adenosina; sueño más profundo y mayor somnolencia diurna", impact: 2}
+      CT: {phenotype: "Asp/Asn (~8-10 %): actividad ADA −20-30 %; más sueño de ondas lentas (+~30 min de SWS/ delta EEG), menor vigilancia en privación de sueño, mayor sensibilidad a la cafeína", impact: 2}
+      CC: {phenotype: "Asp/Asp: referencia", impact: 0}
+    effect_size: "Portadores A: SWS +25-30 %, potencia delta ↑, peor atención sostenida tras 40 h de vigilia (Rétey 2005; Bachmann 2012)"
+    evidence: B
+    mechanism: "Menor degradación de adenosina → mayor presión homeostática de sueño (proceso S) y mayor intensidad del sueño profundo"
+    levers:
+      - "Portadores T: respetan mejor 7.5-8.5 h de sueño (toleran peor la privación); siestas cortas eficaces; evitar cafeína por la tarde (más efecto)"
+      - "Portadores T: la somnolencia diurna es esperable → luz intensa matinal, ejercicio matutino; no forzar con estimulantes altos"
+      - "CC: sueño algo menos profundo; apoyar SWS con ejercicio, temperatura fresca, glicina 3 g o magnesio nocturno"
+    caveats: "Muestras pequeñas pero replicadas por el mismo grupo (Landolt). El ClinVar lo marca 'patogénico' por su relación con alozimas ADA2, pero la variante heterocigota es benigna (~5 % europeos)."
+    refs: ["PMID:21734253"]
+
+  - id: CLOCK_3111TC
+    gene: CLOCK
+    rsid: rs1801260
+    name: "3111T>C (3'UTR); 3111C = G en hebra +"
+    effect_allele: G
+    other_allele: A
+    direction: risk
+    genotypes:
+      GG: {phenotype: "3111CC (~7 %): tendencia vespertina (retraso de fase ~20-40 min), menor duración de sueño, más insomnio en trastornos del ánimo y mayor riesgo de obesidad con dieta hipercalórica en algunos estudios", impact: 1}
+      AG: {phenotype: "Portador C: tendencia ligeramente vespertina", impact: 1}
+      AA: {phenotype: "3111TT: referencia", impact: 0}
+    effect_size: "Vespertinidad: efecto pequeño y no replicado en todos los estudios (meta-análisis con heterogeneidad); no significativo en GWAS de cronotipo"
+    evidence: C
+    mechanism: "Variante del 3'UTR de CLOCK que podría alterar la estabilidad del ARNm del activador central del reloj circadiano"
+    levers:
+      - "Portadores G: luz brillante al despertar (≥10 000 lux 20-30 min), evitar luz azul 2 h antes de dormir, melatonina 0.3-0.5 mg 4-5 h antes de la hora de dormir deseada para adelantar fase"
+      - "Cenar temprano y no picar de noche (interacción con obesidad en portadores C)"
+    caveats: "Evidencia débil y sobreinterpretada; impacto mínimo. El alelo C de la literatura = G en hebra + (gen en hebra −)."
+    refs: ["PMID:9703588"]
+
+  - id: PER2_rs35333999
+    gene: PER2
+    rsid: rs35333999
+    name: "Val903Ile (c.2707G>A; 'V1205M' en otra numeración)"
+    effect_allele: T
+    other_allele: C
+    direction: beneficial
+    genotypes:
+      TT: {phenotype: "TT (raro): fuerte tendencia matutina", impact: 1}
+      CT: {phenotype: "Portador T (~8 %): tendencia matutina (OR ~1.2 para 'persona de mañana'), fase circadiana algo adelantada", impact: 1}
+      CC: {phenotype: "Referencia", impact: 0}
+    effect_size: "Uno de los efectos más fuertes por SNP común en GWAS de cronotipo (OR ~1.2 por alelo); aun así minutos, no horas"
+    evidence: A
+    mechanism: "Variante missense en PER2 (componente del bucle de retroalimentación negativa del reloj); variantes de PER2 más severas causan síndrome de fase adelantada familiar"
+    levers:
+      - "Portadores T: aprovechar la mañana para el trabajo exigente; cuidado con el adelanto excesivo de fase en edad avanzada (luz vespertina moderada ayuda)"
+      - "CC: sin acción específica"
+    caveats: "Cronotipo poligénico: un SNP explica una fracción mínima. Alelo A de la literatura (gen en hebra −) = T en hebra +."
+    refs: ["PMID:26835600", "PMID:30696823"]
+
+  - id: PER3_rs228697
+    gene: PER3
+    rsid: rs228697
+    name: "Pro864Ala (c.2590C>G; 'P415A' en literatura antigua)"
+    effect_allele: G
+    other_allele: C
+    direction: risk
+    genotypes:
+      GG: {phenotype: "GG (~1 %): tendencia vespertina marcada / riesgo de síndrome de fase retrasada en estudios japoneses y europeos", impact: 1}
+      CG: {phenotype: "Portador G (~18 %): ligera tendencia vespertina", impact: 1}
+      CC: {phenotype: "Referencia", impact: 0}
+    effect_size: "OR ~1.5-2 para vespertinidad/DSPD en estudios de asociación pequeños; no concluyente en GWAS"
+    evidence: C
+    mechanism: "Variante missense en PER3 en el dominio de interacción con CRY; el VNTR PER3 (4/5 repeticiones) de la literatura no se lee en chips"
+    levers:
+      - "Portadores G: luz matinal, horarios regulares, melatonina baja dosis temprana si retraso de fase; evitar cafeína tras el mediodía"
+    caveats: "SNP C/G ambiguo: gen PER3 en hebra +, por lo que C/G de la literatura coincide con hebra +; verificado por HGVS. Evidencia limitada."
+    refs: []
+
+  - id: RGS16_rs516134
+    gene: RGS16
+    rsid: rs516134
+    name: "Cerca de RGS16 (intrón RNASEL)"
+    effect_allele: C
+    other_allele: T
+    direction: beneficial
+    genotypes:
+      CC: {phenotype: "CC (muy raro): fuerte tendencia matutina", impact: 1}
+      CT: {phenotype: "Portador C (~5 %): tendencia matutina (OR ~1.2 en GWAS de 23andMe/UK Biobank)", impact: 1}
+      TT: {phenotype: "Referencia (cronotipo no modificado por este locus)", impact: 0}
+    effect_size: "OR ~1.2 por alelo C para 'persona de mañana'; locus principal en los primeros GWAS de cronotipo"
+    evidence: A
+    mechanism: "RGS16 regula la señalización de proteínas G en el núcleo supraquiasmático (cAMP) y controla la fase del reloj; variante reguladora"
+    levers:
+      - "Portadores C: mismo consejo que PER2 matutino; planificar tareas cognitivas exigentes por la mañana"
+    caveats: "Dirección del alelo tomada del GWAS Catalog (Hu 2016, Jones 2019); efecto pequeño."
+    refs: ["PMID:26835600", "PMID:30696823"]
+
+  - id: MTNR1B_rs10830963
+    gene: MTNR1B
+    rsid: rs10830963
+    name: "Intrón 1 (C/G)"
+    effect_allele: G
+    other_allele: C
+    direction: risk
+    genotypes:
+      GG: {phenotype: "GG (~8 %): mayor expresión de receptor MT2 en islotes → glucosa en ayunas +0.14 mmol/L, secreción de insulina ↓, riesgo T2D ×1.2; peor tolerancia a glucosa si se cena tarde o se toma melatonina cerca de comer; fase de melatonina más tardía/larga", impact: 2}
+      CG: {phenotype: "Portador G (~40 %): glucosa en ayunas +0.07 mmol/L, riesgo T2D ×1.1; mismo efecto de la cena tardía", impact: 1}
+      CC: {phenotype: "Referencia", impact: 0}
+    effect_size: "Glucosa ayunas +0.07 mmol/L por alelo (GWAS muy replicado); OR T2D ~1.1 por alelo; en estudios de cena tardía, tolerancia a la glucosa claramente peor en portadores G"
+    evidence: A
+    mechanism: "Variante reguladora que aumenta MTNR1B en células β: la melatonina inhibe la secreción de insulina; con melatonina alta (noche) y comida, hiperglucemia postprandial"
+    levers:
+      - "Portadores G: cenar ≥3 h antes de acostarse y evitar carbohidratos refinados de noche; no comer tras tomar melatonina"
+      - "Portadores G: melatonina suplementaria ≥2 h separada de la última comida; dosis baja (0.3-1 mg)"
+      - "Portadores G: HbA1c/glucosa en ayunas anual; ejercicio postcena (paseo 15 min) mejora la glucemia"
+      - "Turnos de noche: especialmente perjudiciales para portadores G (comer con melatonina alta)"
+    caveats: "SNP C/G: orientación verificada por HGVS (gen en hebra +; G = alelo de riesgo en GWAS en hebra +). Efecto metabólico real pero modesto."
+    refs: ["PMID:19060907"]
+
+  - id: BHLHE41_P385R
+    gene: BHLHE41
+    rsid: rs121912617
+    name: "DEC2 Pro385Arg (c.1151C>G; 'P385R'); Arg = C en hebra +"
+    effect_allele: C
+    other_allele: G
+    direction: mixed
+    genotypes:
+      CC: {phenotype: "Homocigoto (no descrito): 'durmiente corto' natural", impact: 2}
+      CG: {phenotype: "Portador (extremadamente raro): fenotipo familiar de sueño corto natural (~6 h) sin déficit, más resistencia a privación de sueño (replicado en ratón)", impact: 2}
+      GG: {phenotype: "Referencia (la inmensa mayoría)", impact: 0}
+    effect_size: "Portadores duermen ~6.25 h vs 8.1 h de familiares no portadores (una familia + modelos animales)"
+    evidence: C
+    mechanism: "DEC2 reprime la transcripción de CLOCK/BMAL1 y orexina; la variante reduce esa represión → mayor orexina y menor necesidad de sueño"
+    levers:
+      - "Portador: no forzar 8 h si no hay somnolencia diurna; validar con actigrafía. No portador: no asumir que 'se puede con 6 h'"
+    caveats: "Variante ultra-rara (<0.01 %); sólo aparecerá si el chip la incluye y es real (confirmar por secuenciación, las llamadas raras en chips tienen falsos positivos). Orientación: gen en hebra −, C (+) = Arg."
+    refs: ["PMID:19679812"]
+
+  - id: MEIS1_rs113851554
+    gene: MEIS1
+    rsid: rs113851554
+    name: "Intrón 8 (G/T)"
+    effect_allele: T
+    other_allele: G
+    direction: risk
+    genotypes:
+      TT: {phenotype: "TT (raro): riesgo alto de síndrome de piernas inquietas (OR ~4) e insomnio; sueño más corto y de peor calidad", impact: 3}
+      GT: {phenotype: "Portador T (~10 %): riesgo de piernas inquietas ×2, insomnio ×1.2, peor calidad de sueño", impact: 2}
+      GG: {phenotype: "Referencia", impact: 0}
+    effect_size: "OR ~2 por alelo para SPI (mayor efecto genético conocido); OR ~1.15-1.2 para insomnio en UK Biobank/23andMe"
+    evidence: A
+    mechanism: "Variante reguladora de MEIS1 (desarrollo/homeostasis de hierro en ganglios basales); baja ferritina cerebral precipita el SPI"
+    levers:
+      - "Portadores T: pedir ferritina y saturación de transferrina; mantener ferritina >75 µg/L (hierro oral en días alternos o IV si <30-50 con síntomas de SPI)"
+      - "Portadores T: evitar antihistamínicos sedantes, antidopaminérgicos y ISRS si empeoran piernas inquietas; cafeína/alcohol nocturnos agravan"
+      - "Magnesio nocturno, ejercicio moderado regular; si SPI clínico: agonistas α2δ (gabapentina/pregabalina) preferidos sobre dopaminérgicos (aumentación)"
+    caveats: "Riesgo relativo alto pero el SPI es frecuente y tratable; el insomnio es poligénico. Verificar que el chip incluye el SNP (MAF ~5-6 % en europeos)."
+    refs: ["PMID:17637780", "PMID:28604731"]
+
+  - id: NPSR1_N107I
+    gene: NPSR1
+    rsid: rs324981
+    name: "Asn107Ile (A/T)"
+    effect_allele: T
+    other_allele: A
+    direction: mixed
+    genotypes:
+      TT: {phenotype: "Ile/Ile (~20 %): receptor de neuropéptido S ~10× más sensible → mayor alerta/vigilia; asociado a acostarse más tarde y dormir algo menos, y a más ansiedad/pánico en algunos estudios", impact: 1}
+      AT: {phenotype: "Asn/Ile: intermedio", impact: 0}
+      AA: {phenotype: "Asn/Asn: referencia", impact: 0}
+    effect_size: "Hora de acostarse ~10-15 min más tarde en TT (Framingham); OR pánico ~1.2-1.4 (inconsistente)"
+    evidence: C
+    mechanism: "Ile107 aumenta la potencia del neuropéptido S sobre su receptor (vigilia y ansiólisis/ansiogénesis según circuito)"
+    levers:
+      - "TT: rutina de desconexión nocturna más larga; evitar cafeína vespertina; técnicas de relajación si ansiedad"
+    caveats: "SNP A/T ambiguo: gen NPSR1 en hebra +, por lo que A/T de la literatura coincide con la hebra +; verificado por HGVS (T = Ile). Evidencia limitada."
+    refs: []
+
+  - id: CRY1_DSPD
+    gene: CRY1
+    rsid: rs184039278
+    name: "c.1657+3A>C (variante de splicing 'CRY1Δ11'); C (gen) = G en hebra +"
+    effect_allele: G
+    other_allele: T
+    direction: risk
+    genotypes:
+      GG: {phenotype: "Homocigoto (excepcional): síndrome de fase de sueño retrasada familiar", impact: 3}
+      GT: {phenotype: "Portador (~0.5 %): CRY1 con ganancia de función (exón 11 perdido) → periodo circadiano ~30 min más largo; fase de sueño retrasada 2-4 h (DSPD familiar, penetrancia alta)", impact: 3}
+      TT: {phenotype: "Referencia", impact: 0}
+    effect_size: "Retraso de fase de 2-4 h y periodo +~0.5 h en portadores (familias turcas y cohortes europeas)"
+    evidence: B
+    mechanism: "Salto del exón 11 produce un CRY1 más potente como represor de CLOCK/BMAL1 → alarga el periodo del reloj"
+    levers:
+      - "Portadores: cronoterapia: luz brillante al despertar y oscuridad estricta de noche, melatonina 0.5 mg 5-6 h antes del inicio deseado de sueño, horarios fijos incluso fines de semana; adaptar horario laboral si es posible"
+    caveats: "Rara; puede no estar en el chip. Alelo C de la literatura (gen en hebra −) = G en hebra +."
+    refs: ["PMID:28388406"]

@@ -1,0 +1,561 @@
+module: inflammation_gut
+title: "Inflamación, inmunidad e intestino"
+goals: [health, energy]
+description: >
+  Variantes comunes que modulan el tono inflamatorio basal (IL-6, IL-1β, TNF, IL-10, CRP),
+  la susceptibilidad a enfermedad inflamatoria intestinal, celiaquía y autoinmunidad,
+  y la tolerancia a lactosa, histamina y alcohol. Todos los alelos en hebra + GRCh37.
+
+variants:
+  - id: IL6_174GC
+    gene: IL6
+    rsid: rs1800795
+    name: "-174G>C (promotor)"
+    effect_allele: C
+    other_allele: G
+    direction: mixed
+    genotypes:
+      CC: {phenotype: "-174CC: transcripción basal de IL-6 algo menor en reposo, pero respuesta a estímulo y CRP variable según estudio", impact: 1}
+      CG: {phenotype: "Heterocigoto -174GC: sin efecto claro", impact: 0}
+      GG: {phenotype: "-174GG: genotipo de referencia (casi fijo fuera de Europa)", impact: 0}
+    effect_size: "Diferencias de IL-6 circulante pequeñas (<10 %) e inconsistentes entre cohortes"
+    evidence: C
+    mechanism: "SNP del promotor de IL6 que altera la unión de factores de transcripción; efecto dependiente del contexto inflamatorio"
+    levers:
+      - "Medir PCR-us e IL-6 si hay síntomas inflamatorios; no actuar sólo por genotipo"
+      - "Omega-3 EPA/DHA 2-3 g/d y ejercicio regular reducen IL-6 independientemente del genotipo"
+    caveats: "Hebra +: C = -174C, G = -174G. Efecto clínico débil y dirección discutida; tratar como informativo"
+    refs: ["PMID:9769329"]
+
+  - id: IL1B_511
+    gene: IL1B
+    rsid: rs16944
+    name: "-511C>T (promotor; A en hebra + = -511T)"
+    effect_allele: A
+    other_allele: G
+    direction: risk
+    genotypes:
+      AA: {phenotype: "-511TT: mayor producción de IL-1β tras estímulo; asociado a gastritis/úlcera por H. pylori y artrosis", impact: 1}
+      AG: {phenotype: "Heterocigoto: efecto intermedio leve", impact: 0}
+      GG: {phenotype: "-511CC: referencia", impact: 0}
+    effect_size: "IL-1β inducida ~1.5-2× en TT vs CC en estudios ex vivo; OR enfermedad ~1.2-1.5"
+    evidence: B
+    mechanism: "Variante promotora en desequilibrio con el haplotipo de alta expresión de IL1B"
+    levers:
+      - "Si dispepsia/antecedente de H. pylori: test de aliento y erradicación (mayor riesgo de gastritis atrófica en TT)"
+      - "Curcumina 500-1000 mg/d (fitosoma) y omega-3 atenúan señalización IL-1β"
+    caveats: "IL1B está en hebra −: el alelo A de hebra + corresponde al -511T de la literatura"
+    refs: []
+
+  - id: IL1B_3954
+    gene: IL1B
+    rsid: rs1143634
+    name: "+3954C>T (A en hebra + = T)"
+    effect_allele: A
+    other_allele: G
+    direction: risk
+    genotypes:
+      AA: {phenotype: "+3954TT: secreción de IL-1β hasta 2-4× mayor ex vivo; mayor riesgo de periodontitis", impact: 1}
+      AG: {phenotype: "Heterocigoto: secreción aumentada leve", impact: 1}
+      GG: {phenotype: "Referencia", impact: 0}
+    effect_size: "Secreción IL-1β ×2-4 en TT (in vitro); OR periodontitis ~1.5"
+    evidence: B
+    mechanism: "Variante sinónima en exón 5 asociada a mayor secreción de IL-1β (haplotipo)"
+    levers:
+      - "Higiene periodontal estricta y revisión dental; periodontitis eleva inflamación sistémica"
+      - "Omega-3 + aspirina a dosis bajas sólo bajo indicación médica en periodontitis"
+    caveats: "Hebra −: A (hebra +) = T de la literatura"
+    refs: ["PMID:1601027"]
+
+  - id: IL10_1082
+    gene: IL10
+    rsid: rs1800896
+    name: "-1082G>A (T en hebra + = -1082A, productor bajo)"
+    effect_allele: T
+    other_allele: C
+    direction: risk
+    genotypes:
+      TT: {phenotype: "-1082AA: productor bajo de IL-10 (antiinflamatoria); tono inflamatorio basal mayor", impact: 1}
+      CT: {phenotype: "-1082GA: productor intermedio", impact: 0}
+      CC: {phenotype: "-1082GG: productor alto de IL-10", impact: 0}
+    effect_size: "IL-10 inducida ~30-50 % menor en AA vs GG"
+    evidence: B
+    mechanism: "Haplotipo promotor (ATA) con menor transcripción de IL10"
+    levers:
+      - "Resolver fuentes crónicas de inflamación (sueño, periodontitis, adiposidad visceral) pesa más que el genotipo"
+      - "Probióticos (L. rhamnosus GG, B. longum) y fibra fermentable elevan IL-10 intestinal"
+    caveats: "IL10 en hebra −: T (hebra +) = A de la literatura, C = G"
+    refs: ["PMID:9295102"]
+
+  - id: TNF_308
+    gene: TNF
+    rsid: rs1800629
+    name: "-308G>A (TNF2)"
+    effect_allele: A
+    other_allele: G
+    direction: risk
+    genotypes:
+      AA: {phenotype: "TNF2/TNF2: mayor transcripción de TNF-α; asociado a autoinmunidad (parte vía LD con HLA-DR3/B8)", impact: 2}
+      AG: {phenotype: "Portador TNF2: transcripción de TNF algo mayor", impact: 1}
+      GG: {phenotype: "Referencia", impact: 0}
+    effect_size: "Transcripción ×2 en ensayos reporter; OR ~1.3-1.6 para varias enfermedades inflamatorias"
+    evidence: B
+    mechanism: "Variante promotora que aumenta actividad transcripcional; en LD con haplotipo ancestral 8.1 del MHC"
+    levers:
+      - "Si síntomas articulares/digestivos persistentes: PCR-us, VSG, calprotectina fecal"
+      - "Omega-3 2-4 g/d, curcumina; mejor respuesta a anti-TNF en algunos estudios (AR, EII)"
+    caveats: "El efecto puede reflejar el haplotipo HLA extendido, no el SNP en sí"
+    refs: ["PMID:9096369"]
+
+  - id: CRP_rs1205
+    gene: CRP
+    rsid: rs1205
+    name: "3'UTR 1846G>A (T = alelo de CRP bajo)"
+    effect_allele: T
+    other_allele: C
+    direction: mixed
+    genotypes:
+      TT: {phenotype: "CRP basal ~30-40 % menor por genética: la PCR-us subestima la inflamación real", impact: 1}
+      CT: {phenotype: "CRP basal ~20 % menor", impact: 0}
+      CC: {phenotype: "Referencia", impact: 0}
+    effect_size: "-20 % CRP por alelo T; sin efecto causal en riesgo coronario (aleatorización mendeliana)"
+    evidence: A
+    mechanism: "Variante del 3'UTR que reduce expresión de CRP; CRP es marcador, no causa, de aterosclerosis"
+    levers:
+      - "Interpretar PCR-us con cautela (umbrales 1/3 mg/L pueden infravalorar riesgo); usar también fibrinógeno, IL-6 o ferritina"
+    caveats: "Interpretativo: no indica menor inflamación, sólo menor señal de CRP"
+    refs: ["PMID:19567438"]
+
+  - id: IL23R_R381Q
+    gene: IL23R
+    rsid: rs11209026
+    name: "R381Q (1142G>A)"
+    effect_allele: A
+    other_allele: G
+    direction: beneficial
+    genotypes:
+      AA: {phenotype: "Gln381 homocigoto (raro): fuerte protección frente a Crohn, psoriasis, espondiloartritis", impact: 2}
+      AG: {phenotype: "Portador Gln381: riesgo de Crohn/psoriasis/EA ~2-3× menor", impact: 1}
+      GG: {phenotype: "Referencia", impact: 0}
+    effect_size: "OR Crohn 0.26-0.45 por alelo A; psoriasis OR ~0.5"
+    evidence: A
+    mechanism: "Pérdida parcial de función del receptor de IL-23 → menor señalización Th17"
+    levers:
+      - "Informativo: menor riesgo autoinmune Th17; sin acción específica"
+    caveats: "Protector, no exime de EII por otras causas"
+    refs: ["PMID:17068223"]
+
+  - id: NOD2_R702W
+    gene: NOD2
+    rsid: rs2066844
+    name: "R702W (SNP8, 2104C>T)"
+    effect_allele: T
+    other_allele: C
+    direction: risk
+    genotypes:
+      TT: {phenotype: "Homocigoto R702W: riesgo de Crohn ileal ×15-20", impact: 3}
+      CT: {phenotype: "Portador R702W: riesgo de Crohn ×2-3; penetrancia baja (<5 %)", impact: 2}
+      CC: {phenotype: "Referencia", impact: 0}
+    effect_size: "OR ~2.4 heterocigoto; 17 homocigoto/compuesto (con G908R o 1007fs)"
+    evidence: A
+    mechanism: "Menor reconocimiento de muramil-dipéptido → defensa antibacteriana innata alterada en íleon (células de Paneth)"
+    levers:
+      - "Si síntomas digestivos: calprotectina fecal, ferritina, B12 (ileítis); consultar gastroenterología"
+      - "Evitar tabaco (multiplica riesgo de Crohn); vitamina D >30 ng/mL; fibra soluble"
+      - "Sumar con rs2066845 y rs2066847: dos alelos de riesgo cualesquiera = riesgo alto"
+    caveats: "Penetrancia baja; ~15 % de pacientes Crohn europeos llevan una de las 3 variantes"
+    refs: ["PMID:11385576", "PMID:11385577"]
+
+  - id: NOD2_G908R
+    gene: NOD2
+    rsid: rs2066845
+    name: "G908R (SNP12, 2722G>C)"
+    effect_allele: C
+    other_allele: G
+    direction: risk
+    genotypes:
+      CC: {phenotype: "Homocigoto G908R: riesgo de Crohn ×15-20", impact: 3}
+      CG: {phenotype: "Portador G908R: riesgo de Crohn ×2-3", impact: 2}
+      GG: {phenotype: "Referencia", impact: 0}
+    effect_size: "OR ~2.5 heterocigoto; >15 homocigoto/compuesto"
+    evidence: A
+    mechanism: "Ver NOD2_R702W"
+    levers:
+      - "Ver NOD2_R702W; combinar con las otras dos variantes NOD2"
+    caveats: "Frecuencia alélica ~1 % en Europa"
+    refs: ["PMID:11385576"]
+
+  - id: NOD2_1007fs
+    gene: NOD2
+    rsid: rs2066847
+    name: "1007fs / L1007fsinsC (SNP13, 3020insC)"
+    effect_allele: I
+    other_allele: D
+    direction: risk
+    genotypes:
+      II: {phenotype: "Homocigoto insC: riesgo de Crohn ×20-40, fenotipo ileal estenosante", impact: 4}
+      DI: {phenotype: "Portador insC: riesgo de Crohn ×3-4", impact: 2}
+      DD: {phenotype: "Referencia", impact: 0}
+    effect_size: "OR ~4 heterocigoto; 20-40 homocigoto"
+    evidence: A
+    mechanism: "Inserción C → proteína truncada sin dominio LRR: pérdida de función NOD2"
+    levers:
+      - "Ver NOD2_R702W; la variante de mayor efecto de las tres"
+    caveats: "Indel: 23andMe lo codifica como I (inserción = riesgo) / D; presente en v1-v4, incierto en v5. En la literatura aparece también como rs5743293"
+    refs: ["PMID:11385576", "PMID:11385577"]
+
+  - id: ATG16L1_T300A
+    gene: ATG16L1
+    rsid: rs2241880
+    name: "T300A (898A>G)"
+    effect_allele: G
+    other_allele: A
+    direction: risk
+    genotypes:
+      GG: {phenotype: "Ala300 homocigoto: autofagia bacteriana (xenofagia) menos eficiente; riesgo Crohn ×1.5-2", impact: 1}
+      AG: {phenotype: "Heterocigoto: riesgo leve", impact: 0}
+      AA: {phenotype: "Referencia", impact: 0}
+    effect_size: "OR ~1.3 por alelo G; ~1.7 GG vs AA"
+    evidence: A
+    mechanism: "Ala300 sensibiliza ATG16L1 a caspasa-3 → menor autofagia en células de Paneth"
+    levers:
+      - "Inductores de autofagia: ayuno intermitente, ejercicio, espermidina 1-6 mg/d (evidencia preliminar)"
+      - "Evitar tabaco; vitamina D adecuada"
+    caveats: "Alelo G muy común (~50 % en Europa); efecto por sí solo pequeño"
+    refs: ["PMID:17200669"]
+
+  - id: HLA_DQ2_5_tag
+    gene: HLA-DQA1/DQB1
+    rsid: rs2187668
+    name: "Tag SNP de HLA-DQ2.5 (DQA1*05:01-DQB1*02:01)"
+    effect_allele: T
+    other_allele: C
+    direction: risk
+    genotypes:
+      TT: {phenotype: "Probable DQ2.5 homocigoto: riesgo de celiaquía más alto (~5-10× sobre población); ~25 % de celíacos", impact: 3}
+      CT: {phenotype: "Probable portador DQ2.5: riesgo de celiaquía ~2-3 %; condición casi necesaria (con DQ8) pero no suficiente", impact: 2}
+      CC: {phenotype: "Sin DQ2.5 (si además no hay DQ8, celiaquía muy improbable, VPN >99 %)", impact: 0}
+    effect_size: ">90 % de celíacos portan DQ2.5; riesgo absoluto portadores ~2-3 %, homocigotos DQ2.5 ~10 %"
+    evidence: A
+    mechanism: "DQ2.5 presenta péptidos de gliadina desamidados a linfocitos T CD4+"
+    levers:
+      - "Si síntomas digestivos, anemia ferropénica, osteopenia o autoinmunidad tiroidea: anti-tTG IgA + IgA total SIN retirar gluten antes"
+      - "Familiares de primer grado de celíacos: cribado serológico periódico"
+      - "No iniciar dieta sin gluten sólo por el genotipo (el 30-40 % de europeos lo llevan)"
+    caveats: "Es un tag SNP (r²~0.9 con DQ2.5 en europeos), NO tipado HLA; no detecta DQ2.2 (rs2395182/rs7775228/rs4713586)"
+    refs: ["PMID:18509540"]
+
+  - id: HLA_DQ8_tag
+    gene: HLA-DQB1
+    rsid: rs7454108
+    name: "Tag SNP de HLA-DQ8 (DQB1*03:02)"
+    effect_allele: C
+    other_allele: T
+    direction: risk
+    genotypes:
+      CC: {phenotype: "Probable DQ8 homocigoto: riesgo de celiaquía y diabetes tipo 1 aumentado", impact: 2}
+      CT: {phenotype: "Probable portador DQ8: ~5-10 % de celíacos; riesgo absoluto ~1 %; si además DQ2.5 (rs2187668 T) riesgo mayor", impact: 1}
+      TT: {phenotype: "Sin DQ8", impact: 0}
+    effect_size: "DQ8 explica la mayoría de celíacos DQ2-negativos; DQ2/DQ8 juntos VPN >99 %"
+    evidence: A
+    mechanism: "DQ8 presenta gliadina desamidada; también haplotipo de riesgo DR4-DQ8 en diabetes tipo 1"
+    levers:
+      - "Misma estrategia que DQ2.5: serología si clínica compatible; no retirar gluten sin diagnóstico"
+    caveats: "Tag SNP, no tipado HLA"
+    refs: ["PMID:18509540"]
+
+  - id: MCM6_13910
+    gene: MCM6
+    rsid: rs4988235
+    name: "-13910C>T (LCT enhancer; G en hebra + = C = no persistencia)"
+    effect_allele: G
+    other_allele: A
+    direction: risk
+    genotypes:
+      GG: {phenotype: "-13910CC: no persistencia de lactasa (hipolactasia del adulto) en ancestría europea; lactosa >12 g suele dar síntomas", impact: 2}
+      AG: {phenotype: "-13910CT: persistencia de lactasa (dominante); tolerancia normal", impact: 0}
+      AA: {phenotype: "-13910TT: persistencia de lactasa", impact: 0}
+    effect_size: "CC: actividad lactasa intestinal residual ~10 %; concordancia con test de aliento ~90 % en europeos"
+    evidence: A
+    mechanism: "El alelo T crea un enhancer que mantiene la expresión de LCT en el adulto"
+    levers:
+      - "Si GG y síntomas: lactasa exógena 6.000-9.000 FCC con lácteos; lácteos fermentados/curados (bajos en lactosa)"
+      - "Mantener calcio 1.000 mg/d y vitamina D si se reduce lácteo"
+      - "Test de aliento H2 con lactosa si duda; la microbiota puede compensar parcialmente"
+    caveats: "Válido para ancestría europea; en África/Oriente Medio otras variantes (-13907G, -13915G, -14010C) dan persistencia y no se detectan aquí"
+    refs: ["PMID:11788828"]
+
+  - id: MCM6_22018
+    gene: MCM6
+    rsid: rs182549
+    name: "-22018G>A (C en hebra + = G = no persistencia)"
+    effect_allele: C
+    other_allele: T
+    direction: risk
+    genotypes:
+      CC: {phenotype: "-22018GG: no persistencia de lactasa (concuerda con rs4988235 GG en europeos)", impact: 1}
+      CT: {phenotype: "Persistencia de lactasa", impact: 0}
+      TT: {phenotype: "Persistencia de lactasa", impact: 0}
+    effect_size: "LD casi completo con -13910; valor confirmatorio"
+    evidence: B
+    mechanism: "Segundo SNP del enhancer de LCT en desequilibrio con -13910"
+    levers:
+      - "Ver MCM6_13910; si discordancia entre ambos, fiarse de rs4988235"
+    caveats: "Redundante con rs4988235; impacto bajo para no duplicar"
+    refs: ["PMID:11788828"]
+
+  - id: AOC1_T16M
+    gene: AOC1
+    rsid: rs10156191
+    name: "Thr16Met (47C>T)"
+    effect_allele: T
+    other_allele: C
+    direction: risk
+    genotypes:
+      TT: {phenotype: "Met16 homocigoto: actividad DAO sérica reducida; mayor propensión a intolerancia a histamina", impact: 1}
+      CT: {phenotype: "Portador Met16: DAO algo menor", impact: 1}
+      CC: {phenotype: "Referencia", impact: 0}
+    effect_size: "Actividad DAO sérica ~20-30 % menor en portadores; OR síntomas de intolerancia a histamina ~1.5-2"
+    evidence: C
+    mechanism: "Variante del péptido señal de la diamino-oxidasa → menor secreción/actividad enzimática"
+    levers:
+      - "Si síntomas (cefalea, urticaria, rinorrea, diarrea tras vino/queso/embutido): prueba de dieta baja en histamina 2-4 semanas"
+      - "DAO exógena 4,2 mg (0,3 mg HDU) antes de comidas ricas en histamina; cobre y B6 como cofactores"
+      - "Evitar inhibidores de DAO: alcohol, metamizol, AINEs, verapamilo, clavulánico, metoclopramida"
+      - "Medir DAO sérica (orientativo) y triptasa si urticaria"
+    caveats: "Evidencia limitada; la DAO sérica se correlaciona mal con síntomas. SNPedia/23andMe: presente en v3-v4, incierto en v5"
+    refs: ["PMID:21354760"]
+
+  - id: AOC1_S332F
+    gene: AOC1
+    rsid: rs1049742
+    name: "Ser332Phe (995C>T)"
+    effect_allele: T
+    other_allele: C
+    direction: risk
+    genotypes:
+      TT: {phenotype: "Phe332 homocigoto (raro): DAO reducida", impact: 1}
+      CT: {phenotype: "Portador Phe332: DAO algo menor", impact: 1}
+      CC: {phenotype: "Referencia", impact: 0}
+    effect_size: "DAO sérica ~20 % menor en portadores"
+    evidence: C
+    mechanism: "Cambio aminoacídico en AOC1 con menor actividad enzimática"
+    levers:
+      - "Ver AOC1_T16M"
+    caveats: "Frecuencia ~5 %; evidencia limitada"
+    refs: ["PMID:21354760"]
+
+  - id: AOC1_prom691
+    gene: AOC1
+    rsid: rs2052129
+    name: "-691G>T (promotor)"
+    effect_allele: T
+    other_allele: G
+    direction: risk
+    genotypes:
+      TT: {phenotype: "-691TT: menor actividad promotora y DAO sérica más baja", impact: 1}
+      GT: {phenotype: "Heterocigoto: efecto leve", impact: 0}
+      GG: {phenotype: "Referencia", impact: 0}
+    effect_size: "DAO sérica ~25 % menor en TT"
+    evidence: C
+    mechanism: "Menor transcripción de AOC1"
+    levers:
+      - "Ver AOC1_T16M; sumar alelos de riesgo de los tres SNPs AOC1"
+    caveats: "Evidencia limitada"
+    refs: ["PMID:21354760"]
+
+  - id: HNMT_T105I
+    gene: HNMT
+    rsid: rs11558538
+    name: "Thr105Ile (314C>T)"
+    effect_allele: T
+    other_allele: C
+    direction: risk
+    genotypes:
+      TT: {phenotype: "Ile105 homocigoto (raro): actividad HNMT ~50 %; menor degradación de histamina intracelular/SNC", impact: 1}
+      CT: {phenotype: "Portador Ile105: actividad HNMT reducida ~30 %", impact: 1}
+      CC: {phenotype: "Referencia", impact: 0}
+    effect_size: "Actividad y estabilidad enzimática reducidas (Ile105: ~50 % de Thr105)"
+    evidence: B
+    mechanism: "Menor N-metilación de histamina (vía principal fuera del intestino: SNC, bronquios, piel)"
+    levers:
+      - "Si síntomas de histaminosis con DAO normal: evitar inhibidores de HNMT (cloroquina, amodiaquina, metoprina) y exceso de histamina"
+      - "SAMe/metilación adecuada (B12, folato) como cofactor de HNMT"
+    caveats: "Asociación clínica inconsistente (asma, Parkinson). No figura en los chips 23andMe según SNPedia"
+    refs: []
+
+  - id: ALDH2_rs671
+    gene: ALDH2
+    rsid: rs671
+    name: "ALDH2*2 Glu504Lys (E487K)"
+    effect_allele: A
+    other_allele: G
+    direction: risk
+    genotypes:
+      AA: {phenotype: "ALDH2*2/*2: actividad ALDH2 casi nula; flushing intenso, intolerancia al alcohol; riesgo muy alto de cáncer esofágico si bebe", impact: 4}
+      AG: {phenotype: "ALDH2*1/*2: actividad ~10-40 %; flushing; riesgo de cáncer esofágico ×5-10 con consumo habitual; nitroglicerina menos eficaz", impact: 3}
+      GG: {phenotype: "Referencia", impact: 0}
+    effect_size: "Heterocigotos: acetaldehído ×5-10 tras alcohol; OR cáncer esofágico con consumo 7-12"
+    evidence: A
+    mechanism: "Subunidad dominante negativa: acumulación de acetaldehído (carcinógeno grupo 1)"
+    levers:
+      - "Minimizar o evitar alcohol; nunca 'beber a través' del flushing"
+      - "Si bebe: no fumar (sinergia), revisión ORL/endoscopia si disfagia"
+      - "Nitroglicerina sublingual menos eficaz; informar a cardiología"
+      - "Alda-1 (activador ALDH2) en investigación; no disponible"
+    caveats: "Frecuencia ~30-40 % en Asia Oriental, <1 % en Europa"
+    refs: ["PMID:19320537"]
+
+  - id: ADH1B_H48R
+    gene: ADH1B
+    rsid: rs1229984
+    name: "ADH1B*2 Arg48His (T en hebra + = His48)"
+    effect_allele: T
+    other_allele: C
+    direction: mixed
+    genotypes:
+      TT: {phenotype: "His48/His48 (ADH1B*2/*2): oxidación de etanol ~40-100× más rápida; pico de acetaldehído, flushing; fuerte protección frente a alcoholismo", impact: 2}
+      CT: {phenotype: "Portador *2: metabolismo rápido del alcohol; menor riesgo de dependencia, mayor sensación desagradable", impact: 1}
+      CC: {phenotype: "Arg48/Arg48 (*1/*1): referencia europea", impact: 0}
+    effect_size: "OR dependencia alcohólica ~0.3-0.5 por alelo His; si también ALDH2*2, acetaldehído muy alto"
+    evidence: A
+    mechanism: "Isoenzima β2 con Vmax muy superior → acetaldehído más rápido"
+    levers:
+      - "Consumo moderado o nulo; sinergia negativa con ALDH2*2 (cáncer esofágico)"
+    caveats: "ADH1B en hebra −: T (hebra +) = His48 (*2), C = Arg48 (*1). ~5 % en europeos, ~70 % en Asia Oriental"
+    refs: ["PMID:17718394"]
+
+  - id: TLR4_D299G
+    gene: TLR4
+    rsid: rs4986790
+    name: "Asp299Gly (896A>G)"
+    effect_allele: G
+    other_allele: A
+    direction: mixed
+    genotypes:
+      GG: {phenotype: "Gly299 homocigoto (raro): hiporrespuesta a LPS; mayor susceptibilidad a infección gramnegativa grave, menor inflamación crónica", impact: 1}
+      AG: {phenotype: "Portador Gly299: respuesta a endotoxina atenuada; posible menor aterosclerosis, mayor riesgo de sepsis gramnegativa", impact: 1}
+      AA: {phenotype: "Referencia", impact: 0}
+    effect_size: "Respuesta a LPS inhalado reducida; asociaciones clínicas con OR ~1.3-2 inconsistentes"
+    evidence: B
+    mechanism: "Cambio en el ectodominio de TLR4 que altera la señalización por LPS (co-segrega con Thr399Ile)"
+    levers:
+      - "Informativo; atención a infecciones urinarias/gramnegativas recurrentes"
+    caveats: "Efecto dependiente del contexto"
+    refs: ["PMID:10835634"]
+
+  - id: MBL2_codon54
+    gene: MBL2
+    rsid: rs1800450
+    name: "Codón 54 Gly54Asp (alelo B)"
+    effect_allele: T
+    other_allele: C
+    direction: risk
+    genotypes:
+      TT: {phenotype: "B/B: deficiencia de MBL (lectina de unión a manosa) — vía de las lectinas del complemento casi ausente; más infecciones respiratorias en infancia/inmunosupresión", impact: 2}
+      CT: {phenotype: "Portador B: MBL sérica reducida ~5-10×; relevante sólo con otra causa de inmunodeficiencia", impact: 1}
+      CC: {phenotype: "Referencia (ver también alelos C y D del exón 1, no incluidos)", impact: 0}
+    effect_size: "MBL sérica <100 ng/mL en B/B vs ~1.000-2.000 normal"
+    evidence: B
+    mechanism: "Variante estructural que impide la oligomerización de MBL"
+    levers:
+      - "Si infecciones recurrentes: medir MBL sérica, inmunoglobulinas, subclases IgG; vacunación al día (neumococo, gripe)"
+    caveats: "Deficiencia de MBL es muy común (~10 %) y habitualmente asintomática en adultos sanos"
+    refs: []
+
+  - id: HLA_B27_tag_rs4349859
+    gene: HLA-B (tag)
+    rsid: rs4349859
+    name: "Tag SNP de HLA-B*27 (Evans 2011)"
+    effect_allele: A
+    other_allele: G
+    direction: risk
+    genotypes:
+      AA: {phenotype: "Probable HLA-B27 homocigoto: riesgo de espondilitis anquilosante/uveítis más alto", impact: 3}
+      AG: {phenotype: "Probable portador HLA-B27: riesgo de espondiloartritis axial ~5 % (vs 0.2 %), uveítis anterior aguda, artritis reactiva", impact: 2}
+      GG: {phenotype: "Probable HLA-B27 negativo", impact: 0}
+    effect_size: "Sensibilidad ~98 %, especificidad ~99 % para B*27:05 en europeos; riesgo relativo EA ~50-100, absoluto ~5 %"
+    evidence: A
+    mechanism: "Presentación antigénica/plegamiento anómalo de B27 con respuesta IL-23/IL-17; interacción con ERAP1"
+    levers:
+      - "Si dolor lumbar inflamatorio (>3 meses, mejora con ejercicio, rigidez matutina) o uveítis: reumatología, RM sacroilíacas, confirmar HLA-B27 por tipado"
+      - "Ojo rojo doloroso con fotofobia = urgencia oftalmológica (uveítis)"
+    caveats: "Tag SNP, no tipado HLA; sólo en 23andMe v5 (no v4). Ver también rs13202464"
+    refs: ["PMID:21743469"]
+
+  - id: HLA_B27_tag_rs13202464
+    gene: HLA-B (tag)
+    rsid: rs13202464
+    name: "Tag SNP de HLA-B*27 (alternativo)"
+    effect_allele: G
+    other_allele: A
+    direction: risk
+    genotypes:
+      GG: {phenotype: "Probable HLA-B27 homocigoto", impact: 2}
+      AG: {phenotype: "Probable portador HLA-B27 (ver HLA_B27_tag_rs4349859)", impact: 2}
+      AA: {phenotype: "Probable HLA-B27 negativo", impact: 0}
+    effect_size: "Tag menos específico que rs4349859 (captura subtipos B27 incluidos no asociados)"
+    evidence: B
+    mechanism: "Ver HLA_B27_tag_rs4349859"
+    levers:
+      - "Ver HLA_B27_tag_rs4349859; si ambos tags discrepan, confirmar por tipado HLA"
+    caveats: "Tag SNP, presente en 23andMe v1-v5; menor especificidad"
+    refs: []
+
+  - id: PTPN22_R620W
+    gene: PTPN22
+    rsid: rs2476601
+    name: "R620W (1858C>T; A en hebra + = T)"
+    effect_allele: A
+    other_allele: G
+    direction: risk
+    genotypes:
+      AA: {phenotype: "Trp620 homocigoto (~1 %): riesgo de DM1, AR, tiroiditis, vitíligo, LES ×3-5", impact: 2}
+      AG: {phenotype: "Portador Trp620: riesgo de autoinmunidad ×1.5-2 (DM1, AR seropositiva, Graves/Hashimoto, vitíligo)", impact: 1}
+      GG: {phenotype: "Referencia", impact: 0}
+    effect_size: "OR ~1.8-2 por alelo para DM1 y AR; ~10 % de europeos portadores"
+    evidence: A
+    mechanism: "Ganancia de función de la fosfatasa Lyp → tolerancia de células T/B alterada"
+    levers:
+      - "Si fatiga, cambios de peso, artralgias: TSH, anti-TPO, ANA, factor reumatoide/anti-CCP según clínica"
+      - "Vitamina D suficiente; evitar tabaco (AR seropositiva)"
+    caveats: "PTPN22 en hebra −: A (hebra +) = 1858T. Presente en 23andMe v1-v4 según SNPedia; incierto en v5"
+    refs: ["PMID:15004560"]
+
+  - id: CTLA4_49AG
+    gene: CTLA4
+    rsid: rs231775
+    name: "+49A>G Thr17Ala"
+    effect_allele: G
+    other_allele: A
+    direction: risk
+    genotypes:
+      GG: {phenotype: "Ala17 homocigoto: menor expresión/función de CTLA-4; riesgo de Graves, Hashimoto, DM1 ×1.3-1.5", impact: 1}
+      AG: {phenotype: "Heterocigoto: efecto leve", impact: 0}
+      AA: {phenotype: "Referencia", impact: 0}
+    effect_size: "OR Graves ~1.4 (GG vs AA); DM1 ~1.2"
+    evidence: A
+    mechanism: "Menor freno inhibitorio de células T (CTLA-4 es el freno que bloquean los anti-CTLA-4)"
+    levers:
+      - "Si clínica tiroidea: TSH, T4L, anti-TPO, TRAb"
+    caveats: "Efecto pequeño; alelo G ~40-60 % según población"
+    refs: ["PMID:12724780"]
+
+  - id: FCGR2A_H131R
+    gene: FCGR2A
+    rsid: rs1801274
+    name: "His131Arg (A = His, G = Arg)"
+    effect_allele: G
+    other_allele: A
+    direction: mixed
+    genotypes:
+      GG: {phenotype: "Arg131/Arg131: baja afinidad por IgG2 → menor aclaramiento de bacterias encapsuladas (neumococo, meningococo) y de inmunocomplejos; peor respuesta a rituximab/trastuzumab; menor riesgo de Kawasaki", impact: 1}
+      AG: {phenotype: "His/Arg: intermedio", impact: 0}
+      AA: {phenotype: "His131/His131: alta afinidad IgG2; riesgo Kawasaki ligeramente mayor, mejor respuesta a anticuerpos terapéuticos IgG1", impact: 1}
+    effect_size: "OR infección neumocócica invasiva ~1.5-2 en RR; respuesta a rituximab en linfoma folicular mejor en HH"
+    evidence: B
+    mechanism: "Cambio en el dominio de unión a Fc de FcγRIIa"
+    levers:
+      - "GG: vacunación antineumocócica conjugada al día; informar si se plantean anticuerpos monoclonales IgG1"
+    caveats: "FCGR2A en hebra +: A = His131, G = Arg131 (SNPedia lo lista en orientación −)"
+    refs: []

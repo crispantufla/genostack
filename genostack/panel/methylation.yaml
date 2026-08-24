@@ -1,0 +1,299 @@
+module: methylation
+title: "Metilación / ciclo de un carbono"
+goals: [health, energy, cognition]
+description: >
+  Variantes que modulan el ciclo folato-metionina (MTHFR, MTRR, MTR, MTHFD1, SHMT1, BHMT, CBS),
+  la síntesis de fosfatidilcolina (PEMT), la absorción/transporte de folato y B12 (FOLH1, SLC19A1,
+  TCN2, FUT2). Determinan homocisteína, disponibilidad de SAMe y la forma óptima de suplementar
+  folato, B12 y colina. Todos los alelos en hebra + de GRCh37 (verificados vía Ensembl/VEP, HGVS).
+
+variants:
+  - id: MTHFR_C677T
+    gene: MTHFR
+    rsid: rs1801133
+    name: "C677T (Ala222Val); c.665C>T"
+    effect_allele: A
+    other_allele: G
+    direction: risk
+    genotypes:
+      AA: {phenotype: "677TT: enzima termolábil, actividad ~30 %; homocisteína ↑ (sobre todo si folato/riboflavina bajos)", impact: 3}
+      AG: {phenotype: "677CT: actividad ~65 %; homocisteína ligeramente ↑ con folato bajo", impact: 1}
+      GG: {phenotype: "677CC: actividad normal", impact: 0}
+    effect_size: "Actividad in vitro ~30 % (TT) / ~65 % (CT); homocisteína +20-25 % en TT con folato bajo; 5-MTHF plasmático ↓"
+    evidence: A
+    mechanism: "Sustitución Ala222Val en el dominio catalítico: pérdida de FAD, enzima termolábil → menos 5-metil-THF para remetilar homocisteína y generar SAMe"
+    levers:
+      - "Folato en forma L-metilfolato (5-MTHF) 400-1000 µg/d; evitar megadosis de ácido fólico sintético (ácido fólico no metabolizado)"
+      - "Riboflavina (B2) 1.6-5 mg/d: cofactor FAD; en TT con homocisteína alta la reduce ~20-40 % y baja la TA en hipertensos TT"
+      - "B12 (metil- o hidroxocobalamina) y B6 suficientes; colina/betaína como vía alternativa de remetilación"
+      - "Pedir homocisteína en ayunas, folato eritrocitario, B12/holoTC; objetivo homocisteína <10 µmol/L"
+      - "Limitar alcohol (deplecciona folato); verduras de hoja verde a diario"
+    caveats: "El efecto depende del estado de folato y B2: con folato adecuado el fenotipo casi desaparece. Alelo T en Ensembl aparece como A (gen en hebra −). No exagerar: TT es ~10 % de europeos y no es una enfermedad."
+    refs: ["PMID:7647779", "PMID:9545395"]
+
+  - id: MTHFR_A1298C
+    gene: MTHFR
+    rsid: rs1801131
+    name: "A1298C (Glu429Ala); c.1286A>C"
+    effect_allele: G
+    other_allele: T
+    direction: risk
+    genotypes:
+      GG: {phenotype: "1298CC: actividad ~60 %; efecto sobre homocisteína pequeño salvo con 677CT (compuesto)", impact: 1}
+      GT: {phenotype: "1298AC: actividad ~80-90 %; relevante sólo combinado con 677T", impact: 1}
+      TT: {phenotype: "1298AA: normal", impact: 0}
+    effect_size: "Actividad ~60 % en CC; homocisteína apenas cambia; heterocigosis compuesta 677CT/1298AC ≈ 677TT leve"
+    evidence: B
+    mechanism: "Cambio en el dominio regulador C-terminal (unión a SAMe), reduce actividad sin termolabilidad"
+    levers:
+      - "Si compuesto con 677T: mismas palancas que MTHFR C677T (L-metilfolato, B2, B12)"
+      - "Aislado (sin 677T): no requiere intervención específica; dieta rica en folato"
+      - "Medir homocisteína sólo si también porta 677T o hay síntomas"
+    caveats: "Efecto clínico aislado muy modesto; la mayoría de claims sobre 1298C (BH4, neurotransmisores) no tienen base sólida. Alelo C de la literatura = G en hebra +."
+    refs: ["PMID:9545395"]
+
+  - id: MTRR_A66G
+    gene: MTRR
+    rsid: rs1801394
+    name: "A66G (Ile22Met)"
+    effect_allele: G
+    other_allele: A
+    direction: risk
+    genotypes:
+      GG: {phenotype: "66GG: menor afinidad de MTRR por MTR; homocisteína ligeramente ↑ cuando B12 es baja", impact: 1}
+      AG: {phenotype: "Heterocigoto: efecto mínimo", impact: 0}
+      AA: {phenotype: "66AA: normal", impact: 0}
+    effect_size: "Afinidad por metionina sintasa ~4× menor in vitro; homocisteína +0.5-1 µmol/L en GG con B12 baja; alelo G es el mayoritario en europeos (~55 %)"
+    evidence: B
+    mechanism: "MTRR reactiva la metionina sintasa (MTR) reduciendo la cob(II)alamina; Ile22Met reduce la eficiencia de esa reactivación"
+    levers:
+      - "Asegurar B12 óptima (holoTC >50 pmol/L); metil- o hidroxocobalamina 500-1000 µg/d si baja"
+      - "Riboflavina: MTRR es una flavoproteína (FAD/FMN)"
+      - "Medir homocisteína y ácido metilmalónico si hay 677TT concomitante"
+    caveats: "Muy frecuente; efecto pequeño y dependiente de B12. Evidencia de riesgo (DTN, cardiovascular) inconsistente."
+    refs: []
+
+  - id: MTR_A2756G
+    gene: MTR
+    rsid: rs1805087
+    name: "A2756G (Asp919Gly)"
+    effect_allele: G
+    other_allele: A
+    direction: mixed
+    genotypes:
+      GG: {phenotype: "2756GG: metionina sintasa algo más activa; homocisteína ligeramente ↓ en la mayoría de estudios (mayor consumo de metil-B12)", impact: 1}
+      AG: {phenotype: "Heterocigoto: efecto mínimo", impact: 0}
+      AA: {phenotype: "2756AA: referencia", impact: 0}
+    effect_size: "Homocisteína −0.5 a −1 µmol/L por alelo G en meta-análisis; GG ~4 % de europeos"
+    evidence: B
+    mechanism: "Asp919Gly en el dominio de unión a cobalamina; parece aumentar la tasa de remetilación, con mayor demanda de B12"
+    levers:
+      - "Mantener B12 suficiente (el enzima consume metilcobalamina); holoTC y MMA si fatiga/neuropatía"
+      - "No requiere intervención por sí sola"
+    caveats: "Muchos paneles comerciales lo marcan como 'riesgo'; la evidencia apunta a neutro o ligeramente favorable para homocisteína."
+    refs: []
+
+  - id: MTHFD1_G1958A
+    gene: MTHFD1
+    rsid: rs2236225
+    name: "G1958A (Arg653Gln)"
+    effect_allele: A
+    other_allele: G
+    direction: risk
+    genotypes:
+      AA: {phenotype: "653QQ: menor estabilidad de la sintetasa trifuncional; mayor requerimiento de colina y folato; riesgo DTN/abruptio en madres", impact: 1}
+      AG: {phenotype: "Heterocigoto: efecto menor", impact: 0}
+      GG: {phenotype: "Normal", impact: 0}
+    effect_size: "AA ~20 % de europeos; OR ~1.5 para DTN en madres AA; mayor susceptibilidad a déficit de colina con dieta pobre"
+    evidence: B
+    mechanism: "Arg653Gln reduce la estabilidad térmica del dominio 10-formil-THF sintetasa → menos formil-THF para purinas y menos 5,10-metilen-THF"
+    levers:
+      - "Colina 450-550 mg/d (huevos, hígado, fosfatidilcolina/CDP-colina) para compensar la vía de un carbono"
+      - "Folato dietético/L-metilfolato adecuado, especialmente periconcepcional"
+      - "Betaína (TMG) 500-1500 mg/d si homocisteína elevada"
+    caveats: "Efecto individual pequeño; relevante sobre todo en embarazo y con baja ingesta de colina."
+    refs: ["PMID:12384833"]
+
+  - id: CBS_C699T
+    gene: CBS
+    rsid: rs234706
+    name: "C699T (Tyr233Tyr, sinónima)"
+    effect_allele: A
+    other_allele: G
+    direction: beneficial
+    genotypes:
+      AA: {phenotype: "699TT: asociado a homocisteína ligeramente más baja (mayor flujo por transulfuración); supuesta 'CBS up-regulation'", impact: 1}
+      AG: {phenotype: "Heterocigoto: sin efecto claro", impact: 0}
+      GG: {phenotype: "699CC: referencia", impact: 0}
+    effect_size: "Homocisteína −0.5 a −1 µmol/L en TT en algunos estudios; sin efecto en otros"
+    evidence: C
+    mechanism: "Variante sinónima; probable LD con variantes reguladoras que aumentan expresión/actividad de CBS (transulfuración de homocisteína a cistationina)"
+    levers:
+      - "Si homocisteína baja (<6) con fatiga: asegurar metionina/proteína y B6 (P5P) suficientes"
+      - "Ignorar protocolos de 'CBS upregulation' con restricción de azufre: no hay evidencia"
+    caveats: "Evidencia débil; el alelo T de la literatura = A en hebra +. Las restricciones de azufre/amonio que circulan en foros no están respaldadas."
+    refs: []
+
+  - id: BHMT_R239Q
+    gene: BHMT
+    rsid: rs3733890
+    name: "R239Q (G716A; 'G742A' en numeración antigua)"
+    effect_allele: A
+    other_allele: G
+    direction: mixed
+    genotypes:
+      AA: {phenotype: "239QQ: menor actividad de betaína-homocisteína metiltransferasa; mayor dependencia de la vía folato/B12 y de la ingesta de colina/betaína", impact: 1}
+      AG: {phenotype: "Heterocigoto: efecto mínimo", impact: 0}
+      GG: {phenotype: "Normal", impact: 0}
+    effect_size: "AA ~9 % de europeos; homocisteína en ayunas apenas cambia (la vía de BHMT compensa tras carga de metionina); asociado a menor riesgo de abruptio/DTN en algunos estudios"
+    evidence: C
+    mechanism: "BHMT remetila homocisteína usando betaína (derivada de colina) sobre todo en hígado y riñón; Arg239Gln reduce la actividad catalítica"
+    levers:
+      - "Betaína (TMG) 1-3 g/d o colina dietética si homocisteína post-carga alta"
+      - "Asegurar folato/B12 para que la vía MTR compense"
+    caveats: "Evidencia funcional limitada; direccionalidad clínica mixta."
+    refs: []
+
+  - id: SHMT1_C1420T
+    gene: SHMT1
+    rsid: rs1979277
+    name: "C1420T (Leu474Phe)"
+    effect_allele: A
+    other_allele: G
+    direction: mixed
+    genotypes:
+      AA: {phenotype: "1420TT: SHMT1 citosólica con localización nuclear alterada; folato eritrocitario/plasmático más alto y homocisteína algo más alta en algunos estudios", impact: 1}
+      AG: {phenotype: "Heterocigoto: sin efecto claro", impact: 0}
+      GG: {phenotype: "Normal", impact: 0}
+    effect_size: "Efectos pequeños e inconsistentes sobre folato/homocisteína; AA ~10 % de europeos"
+    evidence: C
+    mechanism: "Leu474Phe impide la SUMOilación/transporte nuclear de SHMT1 → menor síntesis de timidilato nuclear, desvía un carbono hacia metilación"
+    levers:
+      - "Glicina/serina y B6 suficientes (SHMT es PLP-dependiente)"
+      - "Folato dietético; nada específico"
+    caveats: "Poca evidencia clínica; alelo T de la literatura = A en hebra +."
+    refs: []
+
+  - id: PEMT_V175M
+    gene: PEMT
+    rsid: rs7946
+    name: "V175M (Val212Met en transcrito canónico; c.634G>A)"
+    effect_allele: T
+    other_allele: C
+    direction: risk
+    genotypes:
+      TT: {phenotype: "Met/Met: menor actividad PEMT (síntesis endógena de fosfatidilcolina); mayor necesidad de colina dietética; asociado a hígado graso no alcohólico", impact: 1}
+      CT: {phenotype: "Heterocigoto: efecto menor", impact: 0}
+      CC: {phenotype: "Val/Val: actividad normal", impact: 0}
+    effect_size: "Actividad ~30 % menor en Met; OR ~1.5-2 para NAFLD en Met/Met; alelo T (Met) es mayoritario en europeos (~75 %)"
+    evidence: B
+    mechanism: "PEMT convierte fosfatidiletanolamina en fosfatidilcolina usando 3 SAMe; Met reduce la actividad, aumentando la dependencia de colina exógena"
+    levers:
+      - "Colina 500-550 mg/d (2-3 huevos, hígado) o fosfatidilcolina/alfa-GPC/CDP-colina 250-500 mg/d"
+      - "Pedir ALT/GGT y ecografía hepática si sobrepeso; dieta baja en fructosa"
+      - "Estrógenos inducen PEMT: mujeres postmenopáusicas tienen mayor requerimiento"
+    caveats: "Al ser el alelo mayoritario, TT es 'lo normal' en europeos; el efecto se manifiesta sobre todo con dieta pobre en colina."
+    refs: ["PMID:16600922"]
+
+  - id: PEMT_rs12325817
+    gene: PEMT
+    rsid: rs12325817
+    name: "Promotor −744G>C (intrón, c.97-6178G>C)"
+    effect_allele: G
+    other_allele: C
+    direction: risk
+    genotypes:
+      GG: {phenotype: "CC (literatura): alta susceptibilidad a disfunción hepática/muscular con dieta baja en colina, sobre todo en mujeres premenopáusicas", impact: 2}
+      CG: {phenotype: "Heterocigoto: susceptibilidad intermedia a déficit de colina", impact: 1}
+      CC: {phenotype: "GG (literatura): referencia", impact: 0}
+    effect_size: "En estudio de depleción de colina: OR ~25 para disfunción orgánica por alelo C (lit.) en mujeres premenopáusicas; ~45 % de europeos portan ≥1 copia"
+    evidence: B
+    mechanism: "Variante del promotor que reduce la inducción de PEMT por estrógenos → menor síntesis endógena de fosfatidilcolina"
+    levers:
+      - "Colina 550 mg/d (hombres) / 425-550 mg/d (mujeres); más en embarazo/lactancia (≥450-550 mg)"
+      - "Fosfatidilcolina o CDP-colina si la dieta no la aporta; evitar dietas veganas sin suplemento de colina"
+      - "Vigilar ALT y CK si dieta baja en colina"
+    caveats: "SNP C/G: el alelo 'C' de la literatura (gen en hebra −) corresponde a G en hebra +, que es lo que lee 23andMe. Evidencia de un único grupo (UNC) con réplicas parciales."
+    refs: ["PMID:16600922"]
+
+  - id: FOLH1_rs202676
+    gene: FOLH1
+    rsid: rs202676
+    name: "Tyr75His (c.223T>C; 'T484C' en paneles comerciales)"
+    effect_allele: G
+    other_allele: A
+    direction: risk
+    genotypes:
+      GG: {phenotype: "Posible menor actividad de la folato-hidrolasa intestinal (glutamato carboxipeptidasa II): menor absorción de poliglutamatos de folato dietético", impact: 1}
+      AG: {phenotype: "Heterocigoto: efecto no demostrado", impact: 0}
+      AA: {phenotype: "Referencia", impact: 0}
+    effect_size: "Asociación débil/inconsistente con folato sérico; GG ~5 % de europeos"
+    evidence: C
+    mechanism: "FOLH1 desconjuga los poliglutamatos de folato en el yeyuno; la variante podría reducir la eficiencia de hidrólisis"
+    levers:
+      - "Usar folato monoglutamato (L-metilfolato o ácido folínico) en lugar de confiar sólo en folato alimentario"
+      - "Medir folato eritrocitario"
+    caveats: "Evidencia pobre; incluido por su uso extendido en paneles, con impacto mínimo. La variante bien estudiada de FOLH1 (His475Tyr, rs61886492) no es ésta."
+    refs: []
+
+  - id: TCN2_C776G
+    gene: TCN2
+    rsid: rs1801198
+    name: "C776G (Pro259Arg)"
+    effect_allele: G
+    other_allele: C
+    direction: risk
+    genotypes:
+      GG: {phenotype: "776GG (Arg/Arg): holotranscobalamina ↓ (~10-15 %), homocisteína y MMA ligeramente ↑; menor entrega celular de B12", impact: 2}
+      CG: {phenotype: "Heterocigoto: holoTC intermedia", impact: 1}
+      CC: {phenotype: "776CC (Pro/Pro): referencia", impact: 0}
+    effect_size: "HoloTC −10-15 % y homocisteína +~0.5 µmol/L en GG; GG ~20 % de europeos; mayor riesgo de déficit funcional de B12 con ingesta baja"
+    evidence: B
+    mechanism: "Transcobalamina II transporta B12 desde la sangre a las células; Arg259 reduce la afinidad/estabilidad del complejo TC-B12"
+    levers:
+      - "Valorar B12 por holoTC + MMA (la B12 total puede ser normal con déficit funcional)"
+      - "Suplementar B12 (hidroxo/metil/adenosilcobalamina 1000 µg/d sublingual o IM) si holoTC <40 pmol/L o MMA alto"
+      - "Especial atención en veganos, >60 años, metformina o IBP"
+    caveats: "SNP C/G: orientación verificada por HGVS (gen en hebra +: G = Arg). En Ensembl el alelo de referencia es G, pero la proteína 'normal' de la literatura es Pro (C)."
+    refs: []
+
+  - id: FUT2_secretor
+    gene: FUT2
+    rsid: rs601338
+    name: "G428A (Trp143Ter; estado secretor/no secretor 'se428')"
+    effect_allele: A
+    other_allele: G
+    direction: mixed
+    genotypes:
+      AA: {phenotype: "No secretor: B12 sérica ~10 % más alta (menor unión a H. pylori/mayor absorción), microbiota con menos bifidobacterias, resistencia a norovirus GII.4, más riesgo de Crohn/celiaquía", impact: 1}
+      AG: {phenotype: "Secretor heterocigoto: B12 intermedia", impact: 0}
+      GG: {phenotype: "Secretor: B12 sérica algo más baja; mayor susceptibilidad a H. pylori/norovirus", impact: 1}
+    effect_size: "Locus con mayor efecto sobre B12 en GWAS (~0.1 SD por alelo); no secretores ~20 % de europeos"
+    evidence: A
+    mechanism: "Codón stop en FUT2 → no expresa antígenos ABH en mucosas; modifica la unión de H. pylori (que compite por B12) y la microbiota; posible efecto en absorción ileal"
+    levers:
+      - "Secretores (GG): vigilar B12/holoTC, sobre todo si dieta baja en proteína animal o IBP; considerar probióticos con Bifidobacterium"
+      - "No secretores (AA): B12 sérica puede sobreestimar el estado tisular → usar holoTC/MMA; aporte de fibra prebiótica por menor diversidad de bifidobacterias"
+      - "Ambos: test de aliento/serología H. pylori si dispepsia"
+    caveats: "El efecto sobre B12 es real pero modesto; el estado secretor tiene más implicaciones inmunes/microbiota que nutricionales."
+    refs: ["PMID:18776911", "PMID:19303062"]
+
+  - id: SLC19A1_G80A
+    gene: SLC19A1
+    rsid: rs1051266
+    name: "RFC1 G80A (His27Arg); 80A = His27 = T en hebra +"
+    effect_allele: T
+    other_allele: C
+    direction: mixed
+    genotypes:
+      TT: {phenotype: "80AA (His/His): algunos estudios muestran folato plasmático algo más alto y homocisteína más alta; otros, ningún efecto", impact: 1}
+      CT: {phenotype: "Heterocigoto: sin efecto claro", impact: 0}
+      CC: {phenotype: "80GG (Arg/Arg): referencia", impact: 0}
+    effect_size: "Efectos pequeños e inconsistentes sobre folato/homocisteína; TT ~20 % de europeos; modula respuesta/toxicidad de metotrexato"
+    evidence: C
+    mechanism: "Transportador reducido de folato (RFC1) para 5-MTHF y antifolatos; His27Arg altera la cinética de transporte"
+    levers:
+      - "Dieta rica en folato o L-metilfolato si homocisteína alta"
+      - "Relevante si se prescribe metotrexato: comentar farmacogenética con el médico"
+    caveats: "La nomenclatura 'G80A' está en hebra del gen (−): 80A = T y 80G = C en hebra +. Direccionalidad clínica inconsistente; impacto mínimo."
+    refs: []

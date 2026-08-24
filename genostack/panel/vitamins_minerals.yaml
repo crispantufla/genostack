@@ -1,0 +1,611 @@
+module: vitamins_minerals
+title: "Vitaminas, minerales y micronutrientes"
+goals: [health, energy]
+description: >
+  Necesidades y manejo de micronutrientes: vitamina D (VDR, GC, CYP2R1, CYP24A1, DHCR7),
+  vitamina A a partir de betacaroteno (BCO1), vitamina C (SLC23A1), vitamina K (VKORC1, GGCX),
+  vitamina B6 (NBPF3/ALPL), hierro (HFE, TMPRSS6, TF), magnesio (MUC1), selenio (SELENOP),
+  omega-3/6 (FADS1/FADS2), colina (CHDH), calcio (CASR) y urato (ABCG2).
+  No se duplican aquí: FUT2 (B12) y PEMT/MTHFD1 (colina/folato) están en methylation;
+  MCM6/lactasa en inflammation_gut; CYP1A2 en sleep_caffeine; SLC30A8 y FTO en cardiometabolic.
+  Todos los alelos están en hebra + de GRCh37 (la orientación del fichero crudo de 23andMe);
+  cuando la literatura usa la hebra opuesta se indica en `name` o en `caveats`.
+
+variants:
+  - id: VDR_FokI
+    gene: VDR
+    rsid: rs2228570
+    name: "FokI (clásico C>T; en hebra + G=alelo F, A=alelo f)"
+    effect_allele: A
+    other_allele: G
+    direction: risk
+    genotypes:
+      AA: {phenotype: "ff: se usa el codón de inicio proximal y se produce el VDR largo (427 aa), transcripcionalmente algo menos activo", impact: 1}
+      AG: {phenotype: "Ff: intermedio", impact: 1}
+      GG: {phenotype: "FF: VDR corto (424 aa), la isoforma más activa; mejor señalización por 1,25(OH)2D", impact: 0}
+    effect_size: "La isoforma corta (F) interacciona mejor con TFIIB y tiene ~1.7 veces más actividad transcripcional in vitro; efectos clínicos (DMO, inmunidad) pequeños e inconsistentes"
+    evidence: B
+    mechanism: "El SNP crea/destruye el primer codón ATG del VDR: el alelo f conserva el ATG upstream (proteína larga) y el alelo F obliga a iniciar en el ATG siguiente (proteína corta, más activa)"
+    levers:
+      - "Si ff y 25-OH-D bajo: apuntar a la zona alta del rango (35-50 ng/mL) con vitamina D3, no conformarse con 20-30 ng/mL"
+      - "Vitamina D3 1000-2000 UI/d de mantenimiento; ajustar por 25-OH-D a las 10-12 semanas"
+      - "Acompañar con vitamina K2 MK-7 100-200 µg/d y magnesio 300-400 mg/d (cofactor de las hidroxilasas)"
+      - "Analítica: 25-OH-D, calcio, PTH; repetir 2 veces/año (final de invierno y final de verano)"
+    caveats: "El genotipo no cambia el objetivo de 25-OH-D en las guías; úsalo para decidir dónde situarte dentro del rango, no para tratar sin analítica. La literatura escribe este SNP como C/T (hebra -)."
+    refs: []
+
+  - id: VDR_BsmI
+    gene: VDR
+    rsid: rs1544410
+    name: "BsmI (clásico G>A; en hebra + C=G clásico, T=A clásico)"
+    effect_allele: T
+    other_allele: C
+    direction: risk
+    genotypes:
+      CC: {phenotype: "Genotipo BB clásico: en meta-análisis, densidad mineral ósea ligeramente mayor", impact: 0}
+      CT: {phenotype: "Heterocigoto", impact: 0}
+      TT: {phenotype: "Genotipo bb clásico: asociado a densidad mineral ósea algo menor y menor estabilidad del ARNm del VDR", impact: 1}
+    effect_size: "Diferencias de DMO entre homocigotos del orden del 1-2 % en meta-análisis; OR de osteoporosis ~0.6-0.9 según genotipo y población"
+    evidence: C
+    mechanism: "Variante intrónica 3' en fuerte desequilibrio de ligamiento con la región 3'UTR del VDR, que regula la estabilidad del ARNm; no cambia la proteína"
+    levers:
+      - "Calcio dietético 1000-1200 mg/d (preferir lácteos, sardinas, tofu, almendras) antes que suplementos"
+      - "Vitamina D3 según 25-OH-D + K2 MK-7 100-200 µg/d"
+      - "Entrenamiento de fuerza e impacto 2-3 veces/semana: la palanca con mayor efecto sobre DMO"
+      - "Analítica: 25-OH-D, PTH, calcio, fósforo; densitometría (DEXA) si hay otros factores de riesgo"
+    caveats: "Marcador de haplotipo, no funcional; muy correlacionado con TaqI (rs731236). Efecto pequeño."
+    refs: []
+
+  - id: VDR_TaqI
+    gene: VDR
+    rsid: rs731236
+    name: "TaqI Ile352Ile (clásico T>C; en hebra + A=T clásico, G=C clásico / alelo 't')"
+    effect_allele: G
+    other_allele: A
+    direction: risk
+    genotypes:
+      AA: {phenotype: "TT clásico: haplotipo de referencia", impact: 0}
+      AG: {phenotype: "Tt: intermedio", impact: 0}
+      GG: {phenotype: "tt clásico: en LD con BsmI b; asociado a DMO algo menor en algunos meta-análisis", impact: 1}
+    effect_size: "Sinónima; el efecto atribuido procede del haplotipo BsmI-ApaI-TaqI de la región 3'. Magnitud pequeña"
+    evidence: C
+    mechanism: "Cambio sinónimo (Ile352) que marca el haplotipo 3'UTR del VDR asociado a la estabilidad del ARNm"
+    levers:
+      - "Mismas que BsmI: calcio dietético, D3 titulada por 25-OH-D, K2, fuerza e impacto"
+      - "Interpretar BsmI y TaqI juntos: si son concordantes, refuerzan la lectura; si no, ignora la señal"
+    caveats: "Redundante con BsmI por desequilibrio de ligamiento; no sumar los dos como si fueran hallazgos independientes."
+    refs: []
+
+  - id: GC_rs2282679
+    gene: GC
+    rsid: rs2282679
+    name: "GC (DBP) rs2282679 - principal locus GWAS de 25-OH-D"
+    effect_allele: G
+    other_allele: T
+    direction: risk
+    genotypes:
+      GG: {phenotype: "Menor proteína transportadora de vitamina D y 25-OH-D total claramente más baja; mayor riesgo de insuficiencia", impact: 2}
+      GT: {phenotype: "Portador: 25-OH-D total algo menor", impact: 1}
+      TT: {phenotype: "Genotipo de referencia", impact: 0}
+    effect_size: "Cada alelo G baja la 25-OH-D total ~1.5-2 ng/mL; es el locus con mayor efecto del GWAS SUNLIGHT (OR de insuficiencia ~1.4-1.5 en homocigotos)"
+    evidence: A
+    mechanism: "El gen GC codifica la proteína de unión a vitamina D (DBP), que transporta el 85-90 % de la 25-OH-D circulante; menos DBP = menor 25-OH-D total medida"
+    levers:
+      - "Vitamina D3 titulada por analítica: típicamente 2000-4000 UI/d para portadores con 25-OH-D < 30 ng/mL"
+      - "Tomar la D3 con la comida más grasa del día (aumenta la absorción ~30-50 %)"
+      - "Magnesio 300-400 mg/d y K2 MK-7 100-200 µg/d como cofactores"
+      - "Analítica: 25-OH-D basal y a las 10-12 semanas; PTH y calcio para vigilar la respuesta fisiológica"
+    caveats: "Con menos DBP, la 25-OH-D total subestima la fracción libre/biodisponible: no persigas cifras muy altas sólo por el número. Interpretar junto a rs7041 y rs4588 (haplotipos GC1F/GC1S/GC2)."
+    refs: ["PMID:20541252"]
+
+  - id: GC_rs7041_D432E
+    gene: GC
+    rsid: rs7041
+    name: "GC Asp432Glu (en hebra + A=Asp432, C=Glu432)"
+    effect_allele: A
+    other_allele: C
+    direction: mixed
+    genotypes:
+      AA: {phenotype: "Asp432/Asp432: haplotipos GC1F/GC2; 25-OH-D total algo menor de media", impact: 1}
+      AC: {phenotype: "Heterocigoto", impact: 0}
+      CC: {phenotype: "Glu432/Glu432 (GC1S): mayor afinidad/concentración de DBP y 25-OH-D total más alta", impact: 0}
+    effect_size: "Diferencias de 25-OH-D total de 1-3 ng/mL entre genotipos; junto a rs4588 define los haplotipos GC1F, GC1S y GC2"
+    evidence: B
+    mechanism: "El aminoácido 432 (con el 436 de rs4588) determina la isoforma de DBP, su glicosilación y su afinidad por 25-OH-D"
+    levers:
+      - "Mismas palancas que rs2282679 (D3 con grasa, titulada por analítica)"
+      - "Si el haplotipo apunta a DBP baja, valorar medir vitamina D libre/biodisponible si está disponible"
+    caveats: "La literatura suele expresarlo en hebra - (T=Asp, G=Glu): aquí A=Asp y C=Glu, en hebra + del fichero de 23andMe. Su valor real es como parte del haplotipo GC, no aislado."
+    refs: []
+
+  - id: GC_rs4588_T436K
+    gene: GC
+    rsid: rs4588
+    name: "GC Thr436Lys (en hebra + G=Thr436, T=Lys436 = haplotipo GC2)"
+    effect_allele: T
+    other_allele: G
+    direction: risk
+    genotypes:
+      GG: {phenotype: "Thr436/Thr436 (GC1): DBP de referencia", impact: 0}
+      GT: {phenotype: "Portador de GC2: 25-OH-D total algo menor", impact: 1}
+      TT: {phenotype: "GC2/GC2: DBP más baja, 25-OH-D total claramente menor, mayor riesgo de insuficiencia (aunque la fracción libre se conserva mejor)", impact: 2}
+    effect_size: "Los homocigotos GC2 tienen ~20-25 % menos DBP y varios ng/mL menos de 25-OH-D total"
+    evidence: A
+    mechanism: "Lys436 impide la O-glicosilación de la DBP, reduce su semivida y su concentración plasmática (haplotipo GC2)"
+    levers:
+      - "D3 titulada por 25-OH-D con la comida grasa; suele requerir dosis algo mayores para el mismo número"
+      - "Magnesio y K2 como cofactores; exposición solar razonable (10-20 min al mediodía en primavera-verano)"
+      - "Analítica: 25-OH-D, PTH (si la PTH es normal con 25-OH-D 25-30 ng/mL, probablemente no necesitas perseguir 50)"
+    caveats: "rs4588 y rs2282679 están en desequilibrio de ligamiento casi perfecto: no cuentes las dos señales por separado. Nomenclatura clásica en hebra - (C=Thr, A=Lys)."
+    refs: ["PMID:20541252"]
+
+  - id: CYP2R1_rs10741657
+    gene: CYP2R1
+    rsid: rs10741657
+    name: "CYP2R1 (25-hidroxilasa hepática)"
+    effect_allele: G
+    other_allele: A
+    direction: risk
+    genotypes:
+      AA: {phenotype: "25-hidroxilación eficiente; 25-OH-D de referencia", impact: 0}
+      AG: {phenotype: "Intermedio", impact: 0}
+      GG: {phenotype: "25-OH-D algo menor: conversión hepática de colecalciferol a 25-OH-D menos eficiente", impact: 1}
+    effect_size: "Cada alelo G baja la 25-OH-D ~0.5-1 ng/mL (beta 0.031 unidades, p=2e-46 en GWAS)"
+    evidence: A
+    mechanism: "CYP2R1 es la principal 25-hidroxilasa hepática; el SNP regulador reduce su expresión"
+    levers:
+      - "Dosis de D3 algo mayores para el mismo objetivo de 25-OH-D; controlar respuesta a las 12 semanas"
+      - "Salud hepática (evitar alcohol, controlar hígado graso): la 25-hidroxilación es hepática"
+      - "Si la respuesta a D3 es plana pese a dosis correctas, valorar calcifediol (25-OH-D3) 0.266 mg mensual bajo indicación médica: salta el paso de CYP2R1"
+    caveats: "Efecto pequeño por sí solo; suma con GC y DHCR7 en un score poligénico de vitamina D."
+    refs: ["PMID:20541252"]
+
+  - id: CYP24A1_rs6013897
+    gene: CYP24A1
+    rsid: rs6013897
+    name: "CYP24A1 (24-hidroxilasa, catabolismo de la vitamina D)"
+    effect_allele: A
+    other_allele: T
+    direction: risk
+    genotypes:
+      AA: {phenotype: "Mayor catabolismo de 25-OH-D: niveles algo más bajos y menor DMO de cuello femoral en GWAS", impact: 1}
+      AT: {phenotype: "Portador", impact: 0}
+      TT: {phenotype: "Genotipo de referencia", impact: 0}
+    effect_size: "Cada alelo A baja ligeramente la 25-OH-D y la DMO de cuello femoral (beta 0.068 DE, p=5e-11)"
+    evidence: B
+    mechanism: "CYP24A1 inactiva la 25-OH-D y la 1,25(OH)2D convirtiéndolas en metabolitos 24-hidroxilados; más actividad = semivida más corta de la vitamina D"
+    levers:
+      - "Dosificación de D3 más regular (diaria mejor que quincenal/mensual) si el catabolismo es alto"
+      - "Vigilar DMO y aporte de calcio/proteína si hay otros factores de riesgo óseo"
+      - "Analítica: 25-OH-D; ratio 24,25(OH)2D/25-OH-D si está disponible (informa del catabolismo real)"
+    caveats: "Las mutaciones con pérdida de función bialélica de CYP24A1 (hipercalcemia infantil idiopática) son otra cosa: variantes raras, no este SNP común."
+    refs: []
+
+  - id: DHCR7_rs12785878
+    gene: DHCR7
+    rsid: rs12785878
+    name: "DHCR7/NADSYN1 (7-dehidrocolesterol reductasa)"
+    effect_allele: G
+    other_allele: T
+    direction: risk
+    genotypes:
+      GG: {phenotype: "Menos sustrato cutáneo (7-dehidrocolesterol) disponible para la síntesis de vitamina D3: 25-OH-D más baja", impact: 1}
+      GT: {phenotype: "Portador: 25-OH-D algo menor", impact: 1}
+      TT: {phenotype: "Genotipo de referencia", impact: 0}
+    effect_size: "Cada alelo G baja la 25-OH-D ~1-1.5 ng/mL (GWAS SUNLIGHT, p=4e-62)"
+    evidence: A
+    mechanism: "DHCR7 convierte 7-dehidrocolesterol en colesterol; más actividad DHCR7 = menos sustrato en la piel para la fotosíntesis de colecalciferol"
+    levers:
+      - "Al depender menos de la síntesis cutánea, la vía dietética/suplemento gana peso: D3 1000-2000 UI/d y pescado graso 2-3 veces/semana"
+      - "Exposición solar sin quemarse (no compensa del todo el genotipo)"
+      - "Analítica: 25-OH-D al final del invierno (peor momento del año)"
+    caveats: "Efecto pequeño; su valor es aditivo con GC y CYP2R1."
+    refs: ["PMID:20541252"]
+
+  - id: BCO1_rs12934922
+    gene: BCO1
+    rsid: rs12934922
+    name: "BCMO1/BCO1 R267S"
+    effect_allele: T
+    other_allele: A
+    direction: risk
+    genotypes:
+      AA: {phenotype: "Arg267/Arg267: conversión de betacaroteno a retinol de referencia", impact: 0}
+      AT: {phenotype: "Portador de 267S: conversión algo menor", impact: 1}
+      TT: {phenotype: "267S/267S: menor actividad de la BCO1; peor conversión de betacaroteno en vitamina A", impact: 1}
+    effect_size: "Junto con A379V (rs7501331) reduce la conversión de betacaroteno hasta un 57-69 % en mujeres voluntarias"
+    evidence: B
+    mechanism: "BCO1 rompe el betacaroteno en el enterocito para dar retinal; ambas variantes reducen la eficiencia catalítica"
+    levers:
+      - "Asegurar retinol preformado si eres doble portador: hígado 1 vez/mes, huevos, lácteos enteros, o retinol 1500-3000 UI/d (no superar 3000 µg RAE/d; contraindicado en embarazo a dosis altas)"
+      - "No confiar en el betacaroteno de zanahoria/suplementos como única fuente de vitamina A"
+      - "Grasa en la misma comida: el betacaroteno necesita 5-10 g de grasa para absorberse"
+      - "Analítica: retinol plasmático y betacaroteno sérico (betacaroteno alto con retinol bajo sugiere mala conversión)"
+    caveats: "A/T es un par ambiguo. Alelos verificados en hebra + con Ensembl/VEP (A=Arg267, T=Ser267) y la frecuencia de T (~44 % en europeos) coincide con la del alelo 267S descrito; SNPedia también lo lista con orientation=plus."
+    refs: ["PMID:19103647"]
+
+  - id: BCO1_rs7501331
+    gene: BCO1
+    rsid: rs7501331
+    name: "BCMO1/BCO1 A379V"
+    effect_allele: T
+    other_allele: C
+    direction: risk
+    genotypes:
+      CC: {phenotype: "Ala379/Ala379: conversión de referencia", impact: 0}
+      CT: {phenotype: "Portador de 379V: conversión de betacaroteno ~30 % menor", impact: 1}
+      TT: {phenotype: "379V/379V: conversión de betacaroteno claramente reducida (hasta ~60-70 % menos si también portas 267S)", impact: 2}
+    effect_size: "Portadoras de 379V: 32 % menos capacidad de convertir betacaroteno en ésteres de retinilo; doble variante hasta 69 % menos"
+    evidence: B
+    mechanism: "Ver rs12934922: reduce la eficiencia catalítica de la beta-caroteno 15,15'-monooxigenasa"
+    levers:
+      - "Retinol preformado en la dieta (hígado, huevo, mantequilla, lácteos enteros) o suplemento moderado 1500-3000 UI/d"
+      - "Si eres vegano: la vitamina A depende sólo del betacaroteno; considera medir retinol plasmático y valorar suplemento de retinol/palmitato"
+      - "Grasa en la comida y cocción suave de las verduras para mejorar la biodisponibilidad del betacaroteno"
+    caveats: "Los estudios funcionales se hicieron sobre todo en mujeres; el efecto en hombres se asume similar pero está menos medido."
+    refs: ["PMID:19103647"]
+
+  - id: SLC23A1_V264M
+    gene: SLC23A1
+    rsid: rs33972313
+    name: "SVCT1 Val264Met (transportador de vitamina C)"
+    effect_allele: T
+    other_allele: C
+    direction: risk
+    genotypes:
+      CC: {phenotype: "Transporte de ascorbato de referencia", impact: 0}
+      CT: {phenotype: "Portador: ascorbato plasmático más bajo en estudios poblacionales y menor reabsorción renal", impact: 1}
+      TT: {phenotype: "Homocigoto (muy raro): transporte de vitamina C marcadamente reducido", impact: 2}
+    effect_size: "Los portadores tienen concentraciones plasmáticas de ascorbato menores (del orden de 3-6 µmol/L menos por alelo); frecuencia del alelo menor ~3 % en europeos"
+    evidence: B
+    mechanism: "SLC23A1 (SVCT1) transporta ascorbato en intestino y túbulo renal; la variante Met264 reduce la captación y aumenta las pérdidas urinarias"
+    levers:
+      - "Vitamina C 200-500 mg/d repartida en 2 tomas (dosis única >500 mg satura la absorción); mejor de fruta/verdura (kiwi, pimiento, cítricos)"
+      - "Si fumas o hay estrés oxidativo alto, el requerimiento sube 35 mg/d adicionales como mínimo"
+      - "Analítica: vitamina C plasmática (poco disponible); en su defecto, asegurar 5 raciones de fruta/verdura"
+      - "Ojo: no tomar vitamina C con las comidas ricas en hierro si tienes sobrecarga férrica (ver HFE)"
+    caveats: "Alelo poco frecuente; puede no estar tipado en todos los chips de 23andMe."
+    refs: []
+
+  - id: VKORC1_1639_nutri
+    gene: VKORC1
+    rsid: rs9923231
+    name: "VKORC1 -1639 G>A (en hebra + C=G clásico, T=A clásico)"
+    effect_allele: T
+    other_allele: C
+    direction: mixed
+    genotypes:
+      CC: {phenotype: "Expresión alta de VKORC1: reciclado eficiente de vitamina K; dosis de warfarina/acenocumarol estándar-alta", impact: 0}
+      CT: {phenotype: "Expresión intermedia: sensibilidad intermedia a anticoagulantes cumarínicos", impact: 1}
+      TT: {phenotype: "Expresión baja de VKORC1: reciclado de vitamina K reducido y alta sensibilidad a warfarina/acenocumarol (dosis mucho menores)", impact: 2}
+    effect_size: "El haplotipo de baja expresión explica ~25 % de la variabilidad de dosis de warfarina; los homocigotos necesitan aproximadamente la mitad de dosis"
+    evidence: A
+    mechanism: "VKORC1 regenera la vitamina K hidroquinona necesaria para la gamma-carboxilación (protrombina, osteocalcina, MGP). El SNP del promotor reduce la transcripción"
+    levers:
+      - "Lectura nutricional: con menos reciclado, mantener un aporte estable de vitamina K1 (verdura de hoja 100-150 g/d) y valorar K2 MK-7 100-200 µg/d, sobre todo si suplementas vitamina D"
+      - "Consistencia más que cantidad: evitar oscilaciones bruscas de verdura de hoja"
+      - "Si alguna vez te anticoagulan con cumarínicos: este genotipo, con CYP2C9, guía la dosis inicial (ver módulo pharmaco)"
+      - "Analítica: INR sólo si estás anticoagulado; osteocalcina infracarboxilada si se investiga estado de vitamina K"
+    caveats: "El uso principal de este SNP es farmacogenético; la interpretación nutricional (necesidad de vitamina K) es plausible pero no está probada en ensayos. No modifiques ninguna anticoagulación por tu cuenta."
+    refs: ["PMID:15930419"]
+
+  - id: GGCX_R325Q
+    gene: GGCX
+    rsid: rs699664
+    name: "GGCX Arg325Gln (gamma-glutamil carboxilasa)"
+    effect_allele: T
+    other_allele: C
+    direction: mixed
+    genotypes:
+      CC: {phenotype: "Carboxilación dependiente de vitamina K de referencia", impact: 0}
+      CT: {phenotype: "Heterocigoto: efecto pequeño sobre la dosis de cumarínicos", impact: 0}
+      TT: {phenotype: "Gln325/Gln325: ligera modificación de la actividad carboxilasa y de los requerimientos de vitamina K", impact: 1}
+    effect_size: "Contribución a la variabilidad de dosis de warfarina de ~1-2 %; efecto sobre carboxilación de osteocalcina pequeño"
+    evidence: C
+    mechanism: "GGCX gamma-carboxila los residuos Glu de los factores de coagulación y de proteínas óseas/vasculares (osteocalcina, MGP) usando vitamina K hidroquinona"
+    levers:
+      - "Vitamina K2 MK-7 100-200 µg/d si suplementas vitamina D3 a dosis medias-altas (protege la calcificación arterial vía MGP)"
+      - "Vitamina K1 dietética estable: 100-150 g/d de verdura de hoja verde con algo de grasa"
+    caveats: "Efecto marginal; se incluye como contexto de la vía de vitamina K junto a VKORC1."
+    refs: []
+
+  - id: NBPF3_B6
+    gene: NBPF3
+    rsid: rs4654748
+    name: "NBPF3/ALPL rs4654748 - locus GWAS de vitamina B6 (piridoxal-5-fosfato)"
+    effect_allele: C
+    other_allele: T
+    direction: risk
+    genotypes:
+      CC: {phenotype: "Piridoxal-5-fosfato plasmático más bajo (locus con el mayor efecto conocido sobre B6)", impact: 1}
+      CT: {phenotype: "Intermedio", impact: 1}
+      TT: {phenotype: "PLP de referencia", impact: 0}
+    effect_size: "Cada alelo C baja el PLP plasmático ~1.45 ng/mL (GWAS, p=8e-18); es el mayor efecto genético descrito sobre la B6 circulante"
+    evidence: A
+    mechanism: "Variante cercana a ALPL (fosfatasa alcalina no específica de tejido), que desfosforila el PLP extracelular; más actividad ALPL = menos PLP circulante"
+    levers:
+      - "B6 como piridoxal-5-fosfato (P5P) 10-25 mg/d en lugar de piridoxina si el PLP plasmático está bajo"
+      - "No superar 50 mg/d de forma crónica (riesgo de neuropatía sensitiva con piridoxina a dosis altas y prolongadas)"
+      - "Comprobar la fosfatasa alcalina: si está alta, el PLP baja aunque la ingesta sea correcta"
+      - "Analítica: PLP plasmático (B6 activa), fosfatasa alcalina, homocisteína (la B6 alimenta la transulfuración)"
+    caveats: "Un PLP bajo con fosfatasa alcalina alta puede ser un artefacto analítico más que un déficit real de ingesta."
+    refs: ["PMID:19303062"]
+
+  - id: HFE_C282Y
+    gene: HFE
+    rsid: rs1800562
+    name: "C282Y (clásico G845A)"
+    effect_allele: A
+    other_allele: G
+    direction: risk
+    genotypes:
+      AA: {phenotype: "C282Y homocigoto: genotipo de hemocromatosis hereditaria tipo 1; riesgo alto de sobrecarga de hierro (ferritina y saturación de transferrina elevadas), con penetrancia clínica parcial (mayor en hombres)", impact: 4}
+      AG: {phenotype: "Portador: ferritina y saturación de transferrina algo más altas; riesgo clínico bajo salvo que coexista H63D u otro factor", impact: 1}
+      GG: {phenotype: "Sin C282Y", impact: 0}
+    effect_size: "Homocigotos C282Y (~0.4 % de europeos del norte): saturación de transferrina >45 % en la mayoría; enfermedad clínica (cirrosis, diabetes, artropatía) en ~10-30 % de hombres y menos en mujeres"
+    evidence: A
+    mechanism: "HFE regula la producción hepática de hepcidina; C282Y impide el plegamiento y la unión a beta-2-microglobulina, la hepcidina baja y la ferroportina intestinal queda desinhibida: absorción de hierro descontrolada"
+    levers:
+      - "Si eres homocigoto: medir ferritina y saturación de transferrina YA y consultar con médico/hematología; el tratamiento estándar es la flebotomía (donación de sangre periódica) hasta ferritina 50-100 ng/mL"
+      - "No suplementar hierro ni multivitamínicos con hierro; evitar vitamina C en dosis altas junto a las comidas (aumenta la absorción de hierro no hemo)"
+      - "Té verde/negro, café y lácteos con las comidas ricas en hierro: reducen la absorción del hierro no hemo; moderar carne roja"
+      - "Evitar alcohol (sinergia hepatotóxica) y el marisco crudo (riesgo de Vibrio vulnificus en sobrecarga férrica)"
+      - "Analítica: ferritina, saturación de transferrina, transaminasas; si ferritina >1000 ng/mL, valorar RM hepática y derivación"
+    caveats: "La penetrancia es parcial: muchos homocigotos nunca desarrollan enfermedad, pero todos deben monitorizarse. El heterocigoto simple no tiene, por sí solo, riesgo clínico relevante. La variante S65C (rs1800730) tiene relevancia sólo en combinación con C282Y y se evalúa en la regla de haplotipos HFE."
+    refs: ["PMID:8696333"]
+
+  - id: HFE_H63D
+    gene: HFE
+    rsid: rs1799945
+    name: "H63D (clásico C187G)"
+    effect_allele: G
+    other_allele: C
+    direction: risk
+    genotypes:
+      CC: {phenotype: "Sin H63D", impact: 0}
+      CG: {phenotype: "Portador de H63D: efecto mínimo aislado; relevante si coexiste C282Y (heterocigoto compuesto)", impact: 1}
+      GG: {phenotype: "H63D homocigoto: ferritina y saturación de transferrina ligeramente más altas; sobrecarga clínica infrecuente y normalmente leve", impact: 1}
+    effect_size: "H63D/H63D: aumento pequeño de índices de hierro; C282Y/H63D compuesto: sobrecarga bioquímica en ~1-2 % de los casos, clínica rara"
+    evidence: A
+    mechanism: "La sustitución His63Asp altera parcialmente la interacción de HFE con el receptor de transferrina 1 y la señalización de hepcidina; efecto mucho más leve que C282Y"
+    levers:
+      - "Medir ferritina y saturación de transferrina una vez para tener referencia"
+      - "No tomar suplementos de hierro sin analítica que lo justifique"
+      - "Si además eres portador de C282Y: seguir las palancas de C282Y (donación de sangre si ferritina alta, evitar hierro + vitamina C con las comidas)"
+    caveats: "C/G es un par ambiguo, pero HFE está en la hebra +, así que la nomenclatura de cDNA (C187G, G=Asp63) coincide con la hebra + del fichero de 23andMe (verificado con VEP)."
+    refs: []
+
+  - id: HFE_S65C
+    gene: HFE
+    rsid: rs1800730
+    name: "S65C (clásico A193T)"
+    effect_allele: T
+    other_allele: A
+    direction: risk
+    genotypes:
+      AA: {phenotype: "Sin S65C", impact: 0}
+      AT: {phenotype: "Portador de S65C: sólo relevante en combinación con C282Y (sobrecarga leve)", impact: 1}
+      TT: {phenotype: "S65C homocigoto (muy raro): efecto leve sobre los índices de hierro", impact: 1}
+    effect_size: "Alelo menor ~1.5 % en europeos; en combinación C282Y/S65C se describe sobrecarga bioquímica leve"
+    evidence: B
+    mechanism: "Tercera variante clásica de HFE, con efecto funcional menor sobre la señalización de hepcidina"
+    levers:
+      - "Sólo actúa como modificador: interpretarla junto a C282Y y H63D (regla de haplotipos HFE)"
+      - "Si coexiste con C282Y: ferritina y saturación de transferrina periódicas"
+    caveats: "A/T es un par ambiguo; alelos verificados en hebra + con Ensembl/VEP (A=Ser65, T=Cys65) y HFE está en la hebra +, por lo que coincide con la nomenclatura de cDNA. Frecuencia muy baja: la mayoría de la gente será AA."
+    refs: []
+
+  - id: TMPRSS6_V736A
+    gene: TMPRSS6
+    rsid: rs855791
+    name: "Matriptasa-2 V736A (en hebra + A=Val736, G=Ala736)"
+    effect_allele: A
+    other_allele: G
+    direction: risk
+    genotypes:
+      AA: {phenotype: "Val736/Val736: matriptasa-2 menos activa, hepcidina más alta y por tanto hierro sérico, saturación de transferrina, ferritina y hemoglobina más bajos; tendencia a ferropenia", impact: 1}
+      AG: {phenotype: "Intermedio", impact: 0}
+      GG: {phenotype: "Ala736/Ala736: hepcidina más baja, hierro y hemoglobina algo más altos (protector frente a ferropenia, desfavorable si además hay HFE C282Y)", impact: 1}
+    effect_size: "Cada alelo A: hierro sérico -0.10 a -0.18 DE, saturación de transferrina -0.19 DE, hemoglobina -0.09 a -0.13 g/dL (GWAS con >17.000 personas)"
+    evidence: A
+    mechanism: "TMPRSS6 (matriptasa-2) degrada la hemojuvelina y frena la producción de hepcidina; la variante Val736 es menos activa, deja subir la hepcidina y bloquea la absorción intestinal de hierro"
+    levers:
+      - "Si AA y ferritina < 30 ng/mL con síntomas: hierro oral en días alternos y en ayunas (mejora la absorción al evitar el pico de hepcidina), 60-100 mg de hierro elemental"
+      - "Vitamina C 100-200 mg junto al hierro y separar de té, café, calcio y lácteos 2 h"
+      - "Fuentes hemo (carne, mejillones, sardinas) que no dependen tanto del bloqueo por hepcidina"
+      - "Si GG y además HFE C282Y/H63D: vigilar sobrecarga (ferritina, saturación de transferrina)"
+      - "Analítica: ferritina, saturación de transferrina, hemograma; en mujeres con menstruaciones abundantes, revisar anualmente"
+    caveats: "El efecto es de magnitud poblacional; no explica por sí solo una anemia. Descartar siempre causas de pérdida (menstruación, digestivas) y celiaquía."
+    refs: ["PMID:19820699"]
+
+  - id: TF_rs3811647
+    gene: TF
+    rsid: rs3811647
+    name: "Transferrina rs3811647"
+    effect_allele: A
+    other_allele: G
+    direction: mixed
+    genotypes:
+      AA: {phenotype: "Transferrina y capacidad total de fijación de hierro más altas, con saturación de transferrina más baja: la ferritina puede parecer 'normal' con reservas ajustadas", impact: 1}
+      AG: {phenotype: "Intermedio", impact: 0}
+      GG: {phenotype: "Transferrina más baja y saturación algo mayor", impact: 0}
+    effect_size: "Cada alelo A: transferrina +15 mg/dL y TIBC +21 µg/dL aproximadamente (GWAS, p<1e-40)"
+    evidence: A
+    mechanism: "Variante del gen de la transferrina que modifica su concentración plasmática y, con ella, la TIBC y el cálculo de la saturación"
+    levers:
+      - "Interpretar la saturación de transferrina con este contexto: una saturación baja puede reflejar transferrina alta y no falta de hierro"
+      - "Usar ferritina + receptor soluble de transferrina para decidir si hay ferropenia real antes de suplementar"
+      - "Analítica: hemograma, ferritina, transferrina, TIBC, saturación"
+    caveats: "Es un modificador de la interpretación analítica más que un riesgo clínico."
+    refs: []
+
+  - id: MUC1_Mg
+    gene: MUC1
+    rsid: rs4072037
+    name: "MUC1/TRPM6-independiente: locus GWAS de magnesio sérico"
+    effect_allele: C
+    other_allele: T
+    direction: risk
+    genotypes:
+      CC: {phenotype: "Magnesio sérico más bajo de media", impact: 1}
+      CT: {phenotype: "Intermedio", impact: 0}
+      TT: {phenotype: "Magnesio sérico de referencia", impact: 0}
+    effect_size: "Cada alelo C baja el magnesio sérico ~0.01 mmol/L (GWAS CHARGE, p=2e-36): diferencia pequeña pero muy replicada"
+    evidence: A
+    mechanism: "Locus MUC1/TRIM46 asociado a la homeostasis renal del magnesio; el mecanismo exacto no está establecido"
+    levers:
+      - "Magnesio dietético 350-450 mg/d (semillas de calabaza, cacao, legumbres, frutos secos, verdura de hoja)"
+      - "Si suplementas: citrato, glicinato o malato 200-400 mg de magnesio elemental por la noche (evitar óxido, mala biodisponibilidad)"
+      - "El magnesio sérico es mal marcador de reservas: valorar magnesio eritrocitario si hay síntomas (calambres, palpitaciones, insomnio)"
+      - "Vigilar fármacos que gastan magnesio: IBP crónicos, diuréticos de asa/tiazidas"
+    caveats: "El magnesio sérico varía muy poco; el efecto genético es de escala poblacional y no diagnostica déficit individual."
+    refs: ["PMID:20700443"]
+
+  - id: SELENOP_A234T
+    gene: SELENOP
+    rsid: rs3877899
+    name: "SEPP1/SELENOP Ala234Thr (en hebra + C=Ala234, T=Thr234)"
+    effect_allele: T
+    other_allele: C
+    direction: mixed
+    genotypes:
+      CC: {phenotype: "Selenoproteína P de referencia", impact: 0}
+      CT: {phenotype: "Portador: respuesta del selenio plasmático y de la SELENOP a la suplementación algo distinta", impact: 0}
+      TT: {phenotype: "Thr234/Thr234: transporte/distribución de selenio modificado; respuesta a la suplementación con selenio diferente según estudios", impact: 1}
+    effect_size: "Diferencias pequeñas en selenio plasmático y en la respuesta de biomarcadores a la suplementación; dirección no uniforme entre cohortes"
+    evidence: C
+    mechanism: "SELENOP es la principal proteína de transporte de selenio del plasma al cerebro y testículo; la variante en el exón 3 modifica su función"
+    levers:
+      - "Selenio 100-150 µg/d (selenometionina o 1-2 nueces de Brasil, que varían mucho en contenido) con objetivo de selenio plasmático 100-130 µg/L"
+      - "Techo: no superar 300-400 µg/d de forma crónica (más selenio no es mejor: hay asociación en U con diabetes tipo 2)"
+      - "Analítica: selenio plasmático o sérico; SELENOP si está disponible (mejor marcador funcional)"
+    caveats: "Evidencia limitada y direccionalidad inconsistente; útil sobre todo para justificar medir selenio antes de suplementar."
+    refs: []
+
+  - id: FADS1_rs174547
+    gene: FADS1
+    rsid: rs174547
+    name: "FADS1 rs174547 (proxy casi perfecto de rs174546 y del haplotipo FADS)"
+    effect_allele: C
+    other_allele: T
+    direction: risk
+    genotypes:
+      CC: {phenotype: "Actividad delta-5-desaturasa baja: conversión de ALA a EPA/DHA y de LA a AA claramente reducida; dependencia de omega-3 preformado", impact: 2}
+      CT: {phenotype: "Actividad intermedia", impact: 1}
+      TT: {phenotype: "Conversión eficiente de precursores vegetales a EPA/DHA/AA", impact: 0}
+    effect_size: "El haplotipo menor explica hasta un 25-30 % de la varianza de ácido araquidónico plasmático; los homocigotos convierten ALA a EPA/DHA con eficiencia muy baja (GWAS de PUFA, p<1e-70)"
+    evidence: A
+    mechanism: "FADS1 codifica la delta-5-desaturasa, paso limitante de la síntesis de AA (omega-6) y EPA (omega-3) a partir de LA y ALA; el haplotipo menor reduce la expresión"
+    levers:
+      - "EPA+DHA preformados 1-2 g/d (pescado azul 3-4 raciones/semana, aceite de pescado o aceite de algas si eres vegano): la lino/chía NO compensan este genotipo"
+      - "Bajar el omega-6 competidor: menos aceites de girasol/maíz/soja y ultraprocesados"
+      - "Analítica: índice omega-3 en membrana eritrocitaria (objetivo 8-12 %); repetir a los 3-4 meses de suplementar"
+      - "En embarazo/lactancia y en veganos con genotipo CC, el aporte de DHA preformado (algas 500-1000 mg/d) es especialmente importante"
+    caveats: "rs174546 y rs174547 están en desequilibrio de ligamiento casi perfecto: cuentan como una sola señal. El efecto sobre biomarcadores es grande; sobre desenlaces clínicos, indirecto."
+    refs: []
+
+  - id: FADS2_rs1535
+    gene: FADS2
+    rsid: rs1535
+    name: "FADS2 rs1535 (delta-6-desaturasa)"
+    effect_allele: G
+    other_allele: A
+    direction: risk
+    genotypes:
+      AA: {phenotype: "Conversión de referencia", impact: 0}
+      AG: {phenotype: "Intermedio", impact: 0}
+      GG: {phenotype: "Menor actividad delta-6-desaturasa: menos EPA/DHA y AA a partir de precursores vegetales", impact: 1}
+    effect_size: "Asociación robusta con el perfil de ácidos grasos plasmáticos (p<1e-15), en el mismo haplotipo que FADS1"
+    evidence: A
+    mechanism: "FADS2 (delta-6-desaturasa) cataliza el primer paso de la elongación/desaturación de LA y ALA; comparte región reguladora con FADS1"
+    levers:
+      - "Mismas palancas que FADS1: EPA+DHA preformados 1-2 g/d, reducir omega-6 industrial, medir índice omega-3"
+    caveats: "Muy correlacionado con FADS1 rs174547: no sumes las dos señales como independientes."
+    refs: []
+
+  - id: CHDH_rs12676
+    gene: CHDH
+    rsid: rs12676
+    name: "CHDH (colina deshidrogenasa); en hebra + C=alelo G clásico, A=alelo T clásico"
+    effect_allele: A
+    other_allele: C
+    direction: risk
+    genotypes:
+      AA: {phenotype: "Homocigoto del alelo menor: mayor susceptibilidad a signos de deficiencia de colina (disfunción hepática o muscular) con dietas bajas en colina", impact: 1}
+      AC: {phenotype: "Portador", impact: 1}
+      CC: {phenotype: "Genotipo de referencia", impact: 0}
+    effect_size: "En estudios de depleción-repleción controlada, los portadores desarrollan signos de deficiencia con más frecuencia; tamaño de muestra pequeño"
+    evidence: C
+    mechanism: "CHDH oxida colina a betaína, donante de metilos para la remetilación de homocisteína vía BHMT; menos actividad = menos betaína y más dependencia de colina dietética"
+    levers:
+      - "Colina 400-550 mg/d: huevo entero (1 huevo ~150 mg), hígado, soja, carne; los veganos son el grupo de mayor riesgo"
+      - "Si hay poca colina dietética, valorar betaína (TMG) 500-1000 mg/d o CDP-colina/alfa-GPC"
+      - "Analítica: transaminasas (ALT) y CK (la deficiencia de colina se manifiesta como hígado graso o daño muscular), homocisteína"
+    caveats: "Los polimorfismos PEMT y MTHFD1, también determinantes del requerimiento de colina, están en el módulo methylation: valora los tres juntos. Evidencia procedente de estudios pequeños de depleción controlada."
+    refs: ["PMID:16816108"]
+
+  - id: CASR_A986S
+    gene: CASR
+    rsid: rs1801725
+    name: "Receptor sensor de calcio A986S"
+    effect_allele: T
+    other_allele: G
+    direction: mixed
+    genotypes:
+      GG: {phenotype: "Ala986/Ala986: sensibilidad al calcio de referencia", impact: 0}
+      GT: {phenotype: "Portador de Ser986: calcio sérico total ligeramente más alto", impact: 0}
+      TT: {phenotype: "Ser986/Ser986: calcio sérico algo más alto (receptor menos sensible), PTH ligeramente distinta", impact: 1}
+    effect_size: "Diferencias de calcio sérico total del orden de 0.02-0.05 mmol/L entre homocigotos; sin traducción clínica directa"
+    evidence: B
+    mechanism: "El CaSR de la paratiroides y del riñón detecta el calcio extracelular y regula la secreción de PTH y la excreción renal de calcio; Ser986 desplaza ligeramente el punto de ajuste"
+    levers:
+      - "Calcio dietético 1000-1200 mg/d; evitar suplementos de calcio > 500 mg por toma (riesgo cardiovascular discutido)"
+      - "Si hay historia de cálculos renales: medir calciuria de 24 h antes de suplementar calcio o vitamina D a dosis altas"
+      - "Analítica: calcio, calcio corregido por albúmina, PTH, 25-OH-D"
+    caveats: "Efecto minúsculo; sólo es relevante como contexto si aparece una hipercalcemia leve en la analítica."
+    refs: []
+
+  - id: APOA2_prom_265
+    gene: APOA2
+    rsid: rs5082
+    name: "APOA2 -265 T>C (en hebra + G=alelo C clásico, A=alelo T clásico)"
+    effect_allele: G
+    other_allele: A
+    direction: mixed
+    genotypes:
+      AA: {phenotype: "Genotipo TT clásico: la grasa saturada de la dieta no se asocia a mayor IMC en este grupo", impact: 0}
+      AG: {phenotype: "TC clásico", impact: 0}
+      GG: {phenotype: "CC clásico (~10-15 % de la población): con ingesta alta de grasa saturada (>22 % de la energía) se asocia a IMC y obesidad mayores; sin ella, el efecto desaparece", impact: 1}
+    effect_size: "Interacción gen-dieta replicada en 3 poblaciones independientes: en CC con grasa saturada alta, IMC ~1.4-2.3 kg/m2 mayor; sin interacción con grasa saturada baja"
+    evidence: B
+    mechanism: "El SNP del promotor de APOA2 modifica la expresión de la apolipoproteína A-II, implicada en el metabolismo del HDL y en la regulación del apetito/saciedad"
+    levers:
+      - "Si GG: mantener la grasa saturada por debajo del 10 % de la energía (sustituir mantequilla/embutido/queso curado por AOVE, frutos secos y pescado)"
+      - "Dieta de patrón mediterráneo; controlar densidad energética más que grasa total"
+      - "Analítica: IMC/perímetro de cintura, perfil lipídico con ApoB"
+    caveats: "Es una interacción gen-dieta, no un efecto directo: sin exceso de grasa saturada el genotipo no predice nada. Nomenclatura clásica en hebra -."
+    refs: ["PMID:19901143"]
+
+  - id: ABCG2_Q141K
+    gene: ABCG2
+    rsid: rs2231142
+    name: "ABCG2 Q141K (clásico C421A)"
+    effect_allele: T
+    other_allele: G
+    direction: risk
+    genotypes:
+      GG: {phenotype: "Excreción intestinal/renal de urato normal", impact: 0}
+      GT: {phenotype: "Portador de 141K: urato sérico más alto (~0.2-0.4 mg/dL) y riesgo de gota aproximadamente el doble", impact: 1}
+      TT: {phenotype: "141K/141K: transporte de urato reducido ~50 %; urato claramente elevado y riesgo de gota alto (OR ~3); también menor respuesta a alopurinol", impact: 2}
+    effect_size: "El alelo 141K reduce a la mitad el transporte de urato; explica una parte importante de la gota de inicio temprano (OR ~2 por alelo)"
+    evidence: A
+    mechanism: "ABCG2 (BCRP) es un transportador de eflujo de urato en intestino y riñón, y también transporta fármacos (rosuvastatina, alopurinol/oxipurinol, sulfasalazina, algunos inhibidores de tirosina quinasa)"
+    levers:
+      - "Limitar fructosa libre (refrescos, zumos, siropes) y cerveza: son los mayores impulsores dietéticos del urato"
+      - "Moderar purinas de alto impacto (vísceras, marisco, caldos concentrados, anchoas); los vegetales ricos en purinas no aumentan el riesgo"
+      - "Hidratación 2-2.5 L/d; café y lácteos desnatados se asocian a urato más bajo; vitamina C 500 mg/d baja el urato modestamente"
+      - "Si urato > 7 mg/dL o has tenido un ataque de gota: valoración médica; con 141K la respuesta a alopurinol es menor y puede requerir dosis más altas o febuxostat"
+      - "Analítica: ácido úrico sérico anual; función renal"
+      - "Farmacológico: mayor exposición a rosuvastatina (riesgo de miopatía) en homocigotos: relevante para el módulo pharmaco"
+    caveats: "El genotipo no diagnostica gota; el urato depende sobre todo de dieta, alcohol, función renal, diuréticos y adiposidad. Nomenclatura clásica en hebra -."
+    refs: ["PMID:19506252"]

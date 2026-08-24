@@ -1,0 +1,395 @@
+# Reglas de haplotipo / combinación. Alelos en hebra + de GRCh37 (como en el raw file 23andMe).
+# Verificados contra Ensembl REST (GRCh37, mappings[].allele_string, strand=1) y SNPedia (Orientation).
+
+rules:
+  - id: APOE
+    gene: APOE
+    title: "Genotipo APOE (ε2/ε3/ε4)"
+    type: combo
+    rsids: [rs429358, rs7412]
+    combos:
+      "rs429358=TT;rs7412=CC": {name: "ε3/ε3", phenotype: "Genotipo de referencia (~60 % de europeos)", impact: 0}
+      "rs429358=CT;rs7412=CC": {name: "ε3/ε4", phenotype: "Riesgo de Alzheimer ×3-4; LDL y ApoB algo mayores; peor recuperación tras traumatismo craneal", impact: 3, direction: risk}
+      "rs429358=CC;rs7412=CC": {name: "ε4/ε4", phenotype: "Riesgo de Alzheimer ×10-15 (riesgo de por vida 30-55 %), edad de inicio más precoz; LDL ↑; riesgo de ARIA con anti-amiloide", impact: 4, direction: risk}
+      "rs429358=TT;rs7412=CT": {name: "ε2/ε3", phenotype: "LDL ~-10 mg/dL, riesgo de Alzheimer −40 %; longevidad algo mayor", impact: 1, direction: beneficial}
+      "rs429358=TT;rs7412=TT": {name: "ε2/ε2", phenotype: "LDL muy bajo y protección frente a Alzheimer, pero riesgo de hiperlipoproteinemia tipo III (remanentes, TG altos) si hay obesidad/DM2/hipotiroidismo", impact: 2, direction: mixed}
+      "rs429358=CT;rs7412=CT": {name: "ε2/ε4 (o ε1/ε3, muy raro)", phenotype: "Efectos opuestos parcialmente compensados: riesgo de Alzheimer ligeramente elevado y perfil lipídico variable", impact: 2, direction: mixed}
+      "rs429358=CC;rs7412=CT": {name: "ε1/ε4 (extremadamente raro)", phenotype: "Combinación atípica: revisar posible error de genotipado antes de interpretar", impact: 1, direction: mixed}
+      "rs429358=CC;rs7412=TT": {name: "Combinación imposible/ε1ε2", phenotype: "Muy probablemente error de array: repetir con test clínico", impact: 0}
+    evidence: A
+    mechanism: >
+      ApoE4 (Cys112→Arg, rs429358 C) aclara peor el amiloide-β y desestabiliza la reparación lipídica neuronal;
+      ApoE2 (Arg158→Cys, rs7412 T) tiene menor afinidad por el receptor LDL (menos captación hepática de remanentes,
+      LDL bajo) y es protector frente a Alzheimer.
+    levers:
+      - "ε4: sueño de calidad (7-9 h, tratar apnea), ejercicio aerobico 150-300 min/sem + fuerza, control estricto de LDL/ApoB y presión arterial, no fumar, evitar traumatismos craneales (casco, no boxeo)"
+      - "ε4: dieta mediterránea/MIND; DHA en fase preclínica (mejor efecto si se inicia antes de deterioro; los ε4 lo transportan peor al SNC — dosis 1-2 g/d de DHA), colina y B12/folato adecuados"
+      - "ε4: evitar exceso de alcohol; considerar HbA1c y resistencia insulínica (el riesgo se potencia con DM2)"
+      - "ε4: si hay quejas cognitivas, valoración neuropsicológica; los anti-amiloide (lecanemab, donanemab) tienen más riesgo de ARIA en ε4/ε4"
+      - "ε2/ε2: perfil lipídico completo, TG, TSH, glucosa; tratar dislipidemia tipo III si aparece (fibratos/estatina)"
+      - "Todos: Lp(a) y ApoB independientes de APOE — medir aparte"
+    caveats: >
+      Verificado: en hebra + rs429358 C = ε4 y rs7412 T = ε2. APOE no es determinista (muchos ε4/ε4 no desarrollan
+      demencia y la mayoría de casos de Alzheimer no son ε4/ε4). Información con carga emocional: no hay tratamiento
+      preventivo específico aprobado.
+    refs: ["PMID:8346443", "PMID:9343463", "PMID:37552095"]
+
+  - id: CYP2C19
+    gene: CYP2C19
+    title: "Fenotipo metabolizador CYP2C19"
+    type: allele_count
+    alleles:
+      - {star: "*2",  rsid: rs4244285,  allele: A, function: loss}
+      - {star: "*3",  rsid: rs4986893,  allele: A, function: loss}
+      - {star: "*17", rsid: rs12248560, allele: T, function: gain}
+    phenotypes:
+      - {when: "loss>=2", name: "Metabolizador lento (PM)", impact: 4, direction: risk}
+      - {when: "loss==1", name: "Metabolizador intermedio (IM)", impact: 2, direction: risk}
+      - {when: "gain>=2", name: "Metabolizador ultrarrápido (UM)", impact: 2, direction: mixed}
+      - {when: "gain==1", name: "Metabolizador rápido (RM)", impact: 1, direction: mixed}
+      - {when: "true",    name: "Metabolizador normal (NM)", impact: 0}
+    evidence: A
+    mechanism: >
+      CYP2C19 activa el clopidogrel (profármaco) y elimina IBP, ISRS (citalopram, escitalopram, sertralina),
+      antidepresivos tricíclicos, voriconazol, diazepam y proguanil. *2 y *3 son alelos nulos; *17 aumenta la expresión.
+    levers:
+      - "PM/IM: clopidogrel poco eficaz tras SCA/stent — preferir prasugrel o ticagrelor (CPIC/FDA); si no es posible, valorar test de agregación plaquetaria"
+      - "PM: omeprazol/lansoprazol/pantoprazol con exposición 2-5× — dosis más bajas suelen bastar (ventaja para erradicar H. pylori); citalopram/escitalopram máx. 50 % de dosis (riesgo de QT), sertralina −50 %"
+      - "PM: voriconazol con niveles altos (elegir alternativa o monitorizar); diazepam más prolongado"
+      - "UM/RM: IBP menos eficaces — usar esomeprazol/rabeprazol o duplicar dosis; escitalopram/sertralina pueden requerir más dosis o cambiar a un fármaco no-2C19 (venlafaxina, mirtazapina); voriconazol con riesgo de infradosificación"
+      - "Llevar el resultado a la historia clínica; el fenotipo no cambia nunca"
+    caveats: >
+      El array no cubre *4-*8 ni alelos raros: un 'NM' puede ser en realidad IM. *2 es frecuente (~15 % alelos en
+      Europa, ~30 % en Asia Oriental); *3 casi exclusivo de Asia Oriental. Un *2/*17 se comporta como intermedio
+      (el *17 no compensa por completo) — si aparecen loss==1 y gain==1, tratar como IM.
+    refs: ["PMID:35034351", "PMID:37032427", "PMID:32770672"]
+
+  - id: CYP2C9
+    gene: CYP2C9
+    title: "Fenotipo metabolizador CYP2C9"
+    type: allele_count
+    alleles:
+      - {star: "*2", rsid: rs1799853, allele: T, function: loss}
+      - {star: "*3", rsid: rs1057910, allele: C, function: loss}
+    phenotypes:
+      - {when: "loss>=2", name: "Metabolizador lento (PM) — actividad ≤25 %", impact: 4, direction: risk}
+      - {when: "loss==1", name: "Metabolizador intermedio (IM) — actividad ~50-70 %", impact: 2, direction: risk}
+      - {when: "true",    name: "Metabolizador normal (NM)", impact: 0}
+    evidence: A
+    mechanism: >
+      CYP2C9 metaboliza S-warfarina, AINEs (celecoxib, ibuprofeno, diclofenaco, meloxicam, piroxicam), fenitoína,
+      sulfonilureas (glimepirida, glipizida), losartán y siponimod. *2 reduce parcialmente la actividad; *3 la elimina casi por completo.
+    levers:
+      - "Warfarina/acenocumarol: dosis según algoritmo con VKORC1 (rs9923231) + CYP2C9 + CYP4F2; INR frecuente al inicio; alternativa anticoagulantes directos"
+      - "AINEs: en IM/PM empezar con la dosis mínima y evitar los de vida media larga (piroxicam, meloxicam); preferir naproxeno o paracetamol; vigilar tolerancia gástrica y renal"
+      - "Fenitoína: dosis inicial −25 % (IM) o −50 % (PM) con niveles; sulfonilureas: riesgo de hipoglucemia — empezar bajo"
+      - "Siponimod: contraindicado en *3/*3; losartán menos eficaz (profármaco) en PM"
+    caveats: >
+      El array no cubre *5, *6, *8, *11 (más frecuentes en ancestría africana): un resultado normal no descarta
+      actividad reducida. Un solo *3 tiene más peso funcional que un solo *2 (el recuento simple no lo distingue).
+    refs: ["PMID:32189324", "PMID:28198005"]
+
+  - id: CYP2D6
+    gene: CYP2D6
+    title: "Fenotipo metabolizador CYP2D6 (parcial, sin CNV)"
+    type: allele_count
+    alleles:
+      - {star: "*4",  rsid: rs3892097,  allele: T, function: loss}
+      - {star: "*10", rsid: rs1065852,  allele: A, function: decreased}
+      - {star: "*41", rsid: rs28371725, allele: T, function: decreased}
+    phenotypes:
+      - {when: "loss>=2", name: "Metabolizador lento (PM) probable", impact: 4, direction: risk}
+      - {when: "loss==1", name: "Metabolizador intermedio (IM) probable", impact: 2, direction: risk}
+      - {when: "count>=2", name: "Actividad reducida (IM probable)", impact: 2, direction: risk}
+      - {when: "count==1", name: "Actividad ligeramente reducida (NM-IM)", impact: 1, direction: risk}
+      - {when: "true",     name: "Metabolizador normal (NM) aparente", impact: 0}
+    evidence: A
+    mechanism: >
+      CYP2D6 metaboliza ~25 % de los fármacos: activa codeína y tramadol a morfina/O-desmetiltramadol, activa
+      tamoxifeno a endoxifeno, y elimina antidepresivos tricíclicos, paroxetina, fluoxetina, venlafaxina,
+      atomoxetina, risperidona, aripiprazol, metoprolol, ondansetrón y tamsulosina.
+    levers:
+      - "PM: no usar codeína ni tramadol (analgesia nula) — alternativas morfina, hidromorfona, paracetamol/AINE; tamoxifeno menos eficaz (valorar inhibidor de aromatasa)"
+      - "PM/IM: reducir 25-50 % nortriptilina, amitriptilina, paroxetina, venlafaxina, risperidona, atomoxetina, metoprolol (o usar bisoprolol/carvedilol)"
+      - "Si se plantea un fármaco crítico (tamoxifeno, antidepresivos, antipsicóticos), pedir genotipado CYP2D6 clínico con CNV"
+      - "Cuidado con los inhibidores potentes (paroxetina, fluoxetina, bupropión, quinidina): convierten a cualquiera en 'PM' funcional"
+    caveats: >
+      PARCIAL: el array no detecta la deleción *5 ni las duplicaciones (metabolizadores ultrarrápidos, ~2-5 % en
+      Europa y hasta 20 % en Oriente Medio/Norte de África), ni *3, *6, *9, *17, *29. Además el 100C>T (*10) también
+      forma parte del haplotipo *4: si rs3892097 es variante, no contar el *10 dos veces. Un 'NM aparente' puede ser
+      PM o UM real: no tomar decisiones clínicas sin genotipado dirigido.
+    refs: ["PMID:33387367", "PMID:27997040"]
+
+  - id: SLCO1B1
+    gene: SLCO1B1
+    title: "Función del transportador OATP1B1 (estatinas)"
+    type: allele_count
+    alleles:
+      - {star: "*5/*15", rsid: rs4149056, allele: C, function: loss}
+    phenotypes:
+      - {when: "loss>=2", name: "Función baja (poor function)", impact: 3, direction: risk}
+      - {when: "loss==1", name: "Función disminuida (decreased function)", impact: 2, direction: risk}
+      - {when: "true",    name: "Función normal", impact: 0}
+    evidence: A
+    mechanism: >
+      OATP1B1 introduce las estatinas en el hepatocito. Con función reducida, la estatina permanece en plasma
+      y músculo: mayor riesgo de mialgias, elevación de CK y (raramente) rabdomiólisis.
+    levers:
+      - "Función baja/disminuida: evitar simvastatina (o ≤20 mg) y atorvastatina >40 mg; usar rosuvastatina ≤20 mg, pravastatina ≤40 mg, fluvastatina o pitavastatina (CPIC 2022)"
+      - "Si mialgias: medir CK y vitamina D, descartar hipotiroidismo; probar dosis en días alternos o cambiar de estatina; CoQ10 100-200 mg/d (evidencia mixta)"
+      - "Alternativas no-estatina: ezetimiba, ácido bempedoico, inhibidores de PCSK9, inclisirán"
+      - "Vigilar también metotrexato en dosis altas y repaglinida (mismo transportador)"
+    caveats: >
+      Sólo se evalúa rs4149056 (521T>C); no se distinguen *15/*17 (que añaden rs2306283) ni variantes raras de
+      pérdida de función. El riesgo de miopatía depende mucho de la dosis y de las interacciones (fibratos, azoles,
+      claritromicina, ciclosporina, zumo de pomelo).
+    refs: ["PMID:18650507", "PMID:35152405"]
+
+  - id: DPYD
+    gene: DPYD
+    title: "Actividad de DPD (fluoropirimidinas: 5-FU, capecitabina)"
+    type: allele_count
+    alleles:
+      - {star: "*2A",   rsid: rs3918290,  allele: T, function: loss}
+      - {star: "*13",   rsid: rs55886062, allele: C, function: loss}
+      - {star: "c.2846A>T", rsid: rs67376798, allele: A, function: decreased}
+      - {star: "HapB3", rsid: rs56038477, allele: T, function: decreased}
+    phenotypes:
+      - {when: "loss>=2",  name: "Deficiencia completa de DPD — fluoropirimidinas contraindicadas", impact: 4, direction: risk}
+      - {when: "count>=2", name: "Deficiencia importante de DPD — evitar o reducir ≥50 % con monitorización", impact: 4, direction: risk}
+      - {when: "loss==1",  name: "Deficiencia parcial de DPD (actividad ~50 %) — dosis inicial −50 %", impact: 4, direction: risk}
+      - {when: "count==1", name: "Deficiencia parcial de DPD — dosis inicial −25-50 %", impact: 4, direction: risk}
+      - {when: "true",     name: "Actividad DPD normal para las variantes analizadas", impact: 0}
+    evidence: A
+    mechanism: >
+      La dihidropirimidina deshidrogenasa degrada >80 % del 5-fluorouracilo. Con actividad reducida, el fármaco se
+      acumula y produce mucositis, diarrea, neutropenia y toxicidad cardíaca/neurológica potencialmente mortales.
+    levers:
+      - "Comunicar al oncólogo ANTES de 5-FU, capecitabina o tegafur (la EMA exige cribado DPYD previo)"
+      - "Portador de una variante: dosis inicial reducida 50 % y escalada guiada por toxicidad; dos variantes: fármaco alternativo (irinotecán, oxaliplatino, taxanos)"
+      - "Confirmar con genotipado clínico DPYD (4 variantes) o fenotipado (uracilo plasmático >16 ng/mL)"
+      - "Existe rescate con uridina triacetato en las primeras 96 h si hay sobredosis/toxicidad grave"
+    caveats: >
+      Sólo 4 de las muchas variantes de DPYD (las 4 recomendadas por CPIC/EMA); un resultado normal no descarta
+      deficiencia. Las variantes son raras y los arrays de consumo dan falsos positivos en variantes raras:
+      confirmar siempre por método clínico antes de cambiar un tratamiento.
+    refs: ["PMID:29152729"]
+
+  - id: TPMT
+    gene: TPMT
+    title: "Actividad TPMT (tiopurinas: azatioprina, 6-mercaptopurina)"
+    type: allele_count
+    alleles:
+      - {star: "*2",  rsid: rs1800462, allele: G, function: loss}
+      - {star: "*3B", rsid: rs1800460, allele: T, function: loss}
+      - {star: "*3C", rsid: rs1142345, allele: C, function: loss}
+    phenotypes:
+      - {when: "loss>=3", name: "Probable *3A + otro alelo: metabolizador lento o intermedio (revisar fase)", impact: 4, direction: risk}
+      - {when: "loss>=2", name: "Metabolizador lento (PM) o portador de *3A — verificar fase", impact: 4, direction: risk}
+      - {when: "loss==1", name: "Metabolizador intermedio (IM) — actividad ~50 %", impact: 3, direction: risk}
+      - {when: "true",    name: "Actividad TPMT normal para las variantes analizadas", impact: 0}
+    evidence: A
+    mechanism: >
+      La tiopurina metiltransferasa inactiva las tiopurinas por metilación. Con menos TPMT, más nucleótidos de
+      tioguanina (6-TGN) se incorporan al ADN de la médula: mielosupresión grave.
+    levers:
+      - "IM: dosis de azatioprina/6-MP al 30-80 % de la habitual, hemograma cada 1-2 semanas al inicio (CPIC)"
+      - "PM: dosis al 10 % o 3 veces por semana, o fármaco alternativo (metotrexato, biológicos en EII/AR)"
+      - "Genotipar también NUDT15 (rs116855232) — vía independiente y aditiva"
+      - "Alopurinol/febuxostat concomitantes obligan a reducir la tiopurina ~75 %; medir metabolitos 6-TGN/6-MMP si respuesta o toxicidad atípicas"
+    caveats: >
+      *3A (el alelo deficiente más común en europeos) lleva rs1800460 y rs1142345 EN CIS: si ambos son heterocigotos
+      lo más probable es un solo alelo deficiente (*1/*3A → intermedio), no dos. Sin información de fase la regla
+      sobreestima; verificar con actividad enzimática TPMT eritrocitaria antes de decidir dosis.
+    refs: ["PMID:30447069"]
+
+  - id: NAT2
+    gene: NAT2
+    title: "Fenotipo acetilador NAT2"
+    type: allele_count
+    alleles:
+      - {star: "*5 (T341C)",  rsid: rs1801280, allele: C, function: loss}
+      - {star: "*6 (G590A)",  rsid: rs1799930, allele: A, function: loss}
+      - {star: "*7 (G857A)",  rsid: rs1799931, allele: A, function: loss}
+      - {star: "*14 (G191A)", rsid: rs1801279, allele: A, function: loss}
+    phenotypes:
+      - {when: "loss>=2", name: "Acetilador lento (~50-60 % de europeos)", impact: 2, direction: risk}
+      - {when: "loss==1", name: "Acetilador intermedio", impact: 1, direction: mixed}
+      - {when: "true",    name: "Acetilador rápido", impact: 1, direction: mixed}
+    evidence: A
+    mechanism: >
+      La N-acetiltransferasa 2 acetila isoniazida, hidralazina, sulfametoxazol, dapsona, procainamida, cafeína
+      (vía secundaria) y aminas aromáticas del humo del tabaco y de la carne muy hecha.
+    levers:
+      - "Lento: más riesgo de hepatotoxicidad y neuropatía por isoniazida (suplementar B6 25-50 mg/d), de lupus por hidralazina/procainamida y de reacciones a sulfamidas — vigilar transaminasas"
+      - "Lento: más riesgo de cáncer de vejiga con tabaco o exposición a aminas aromáticas (tintes, pintura, caucho) — no fumar, protección laboral"
+      - "Rápido: mayor riesgo de cáncer colorrectal asociado a carne muy hecha/a la parrilla (aminas heterocíclicas) — cocinar a menor temperatura, marinar, más verdura crucífera"
+      - "Rápido: isoniazida puede requerir dosis más altas (fallo terapéutico en TB)"
+    caveats: >
+      El fenotipo acetilador está bien establecido, pero las asociaciones con cáncer son de efecto pequeño (OR 1.2-1.5).
+      Los 4 SNPs cubren la mayoría de alelos lentos en europeos (*5, *6, *7, *14) pero la inferencia sin fase es
+      aproximada; *5 y *6 pueden ir juntos en cis en algunos haplotipos. No se cubren alelos frecuentes en otras
+      ancestrías. Los mismos SNPs se usan en el módulo energy_mito para detoxificación de fase II.
+    refs: ["PMID:23364886"]
+
+  - id: MTHFR_compuesto
+    gene: MTHFR
+    title: "Genotipo compuesto MTHFR (C677T + A1298C)"
+    type: combo
+    rsids: [rs1801133, rs1801131]
+    combos:
+      "rs1801133=GG;rs1801131=TT": {name: "677CC/1298AA", phenotype: "Actividad MTHFR normal (referencia)", impact: 0}
+      "rs1801133=AG;rs1801131=TT": {name: "677CT/1298AA", phenotype: "Actividad ~65 %; homocisteína normal si el folato es adecuado", impact: 1, direction: risk}
+      "rs1801133=AA;rs1801131=TT": {name: "677TT/1298AA", phenotype: "Actividad ~30 %; homocisteína +20-25 % si folato/B2 bajos; mayor necesidad de folato", impact: 2, direction: risk}
+      "rs1801133=GG;rs1801131=GT": {name: "677CC/1298AC", phenotype: "Actividad ~85 %; sin repercusión práctica", impact: 0}
+      "rs1801133=GG;rs1801131=GG": {name: "677CC/1298CC", phenotype: "Actividad ~60 %; homocisteína habitualmente normal", impact: 1, direction: risk}
+      "rs1801133=AG;rs1801131=GT": {name: "Heterocigoto compuesto 677CT/1298AC", phenotype: "Actividad ~50-60 %, similar a 677TT: homocisteína algo elevada si folato bajo", impact: 2, direction: risk}
+      "rs1801133=AA;rs1801131=GT": {name: "677TT/1298AC (poco frecuente)", phenotype: "Actividad muy reducida; revisar homocisteína y folato", impact: 2, direction: risk}
+      "rs1801133=AG;rs1801131=GG": {name: "677CT/1298CC (poco frecuente)", phenotype: "Actividad reducida; revisar homocisteína", impact: 2, direction: risk}
+      "rs1801133=AA;rs1801131=GG": {name: "677TT/1298CC (prácticamente inexistente: en cis)", phenotype: "Combinación improbable — sospechar error de genotipado", impact: 1, direction: risk}
+    evidence: A
+    mechanism: >
+      C677T (Ala222Val) produce una enzima termolábil dependiente de riboflavina; A1298C (Glu429Ala) reduce la
+      actividad reguladora. Menos 5-metil-THF → menos remetilación de homocisteína y menos SAMe.
+    levers:
+      - "Medir homocisteína, folato eritrocitario, B12 y B6 antes de suplementar; homocisteína <10 µmol/L es el objetivo"
+      - "Si homocisteína alta: L-metilfolato 400-1000 µg/d (o folato dietético: verduras de hoja, legumbres), B12 (metilcobalamina 500-1000 µg si B12 baja), B6 25-50 mg/d, riboflavina 1.6-10 mg/d (especialmente eficaz en 677TT)"
+      - "Betaína/TMG 500-3000 mg/d como vía alternativa (BHMT) si la homocisteína no baja"
+      - "Mujeres en edad fértil: 400-800 µg/d de folato periconcepcional (el ácido fólico funciona; no hay que sustituirlo obligatoriamente por metilfolato)"
+      - "Evitar interpretar MTHFR como causa de fatiga/ansiedad: sin homocisteína elevada, el impacto clínico es mínimo"
+    caveats: >
+      MTHFR está en hebra −: en el raw file (hebra +) rs1801133 A = 677T y rs1801131 G = 1298C. 677T y 1298C casi
+      nunca aparecen en cis, por eso 677TT/1298CC es prácticamente imposible. El sobre-diagnóstico de 'MTHFR' es
+      habitual: la variante sólo importa vía homocisteína y estado de folato.
+    refs: ["PMID:9545395", "PMID:20101055"]
+
+  - id: HFE
+    gene: HFE
+    title: "Genotipo HFE (hemocromatosis hereditaria)"
+    type: combo
+    rsids: [rs1800562, rs1799945]
+    combos:
+      "rs1800562=GG;rs1799945=CC": {name: "Sin C282Y ni H63D", phenotype: "Referencia; hemocromatosis HFE muy improbable", impact: 0}
+      "rs1800562=AG;rs1799945=CC": {name: "Portador C282Y (heterocigoto)", phenotype: "Ferritina/saturación de transferrina ligeramente mayores; sobrecarga clínica rara (riesgo similar a la población si no hay otro factor)", impact: 1, direction: risk}
+      "rs1800562=AA;rs1799945=CC": {name: "C282Y/C282Y (homocigoto)", phenotype: "Genotipo de riesgo de hemocromatosis: penetrancia bioquímica alta (>80 % ferritina/IST elevadas) y clínica 10-30 % en varones (cirrosis, diabetes, artropatía, hipogonadismo, miocardiopatía)", impact: 4, direction: risk}
+      "rs1800562=AG;rs1799945=CG": {name: "Heterocigoto compuesto C282Y/H63D", phenotype: "Riesgo bajo-moderado de sobrecarga leve; sobrecarga clínica sólo con cofactores (alcohol, esteatosis, síndrome metabólico)", impact: 2, direction: risk}
+      "rs1800562=GG;rs1799945=CG": {name: "Portador H63D", phenotype: "Sin relevancia clínica aislada", impact: 0}
+      "rs1800562=GG;rs1799945=GG": {name: "H63D/H63D", phenotype: "Ferritina ligeramente mayor; sobrecarga significativa infrecuente", impact: 1, direction: risk}
+      "rs1800562=AA;rs1799945=CG": {name: "C282Y/C282Y + H63D (poco frecuente)", phenotype: "Tratar como C282Y homocigoto: riesgo alto de sobrecarga", impact: 4, direction: risk}
+      "rs1800562=AG;rs1799945=GG": {name: "C282Y + H63D/H63D", phenotype: "Riesgo bajo-moderado de sobrecarga leve", impact: 2, direction: risk}
+      "rs1800562=AA;rs1799945=GG": {name: "Combinación improbable", phenotype: "Sospechar error de genotipado", impact: 1, direction: risk}
+    evidence: A
+    mechanism: >
+      HFE regula la hepcidina; C282Y (Cys282Tyr) impide el plegamiento con β2-microglobulina → hepcidina baja →
+      absorción intestinal de hierro no regulada y depósito en hígado, páncreas, corazón y articulaciones.
+    levers:
+      - "C282Y homocigoto o compuesto: ferritina + índice de saturación de transferrina (IST) ahora; si ferritina >300 (varón)/200 (mujer) o IST >45 %, derivar a digestivo/hematología"
+      - "Tratamiento si sobrecarga: flebotomías (objetivo ferritina 50-100 µg/L); RM hepática (T2*) para cuantificar hierro; elastografía si ferritina muy alta"
+      - "Evitar suplementos de hierro y multivitamínicos con hierro, vitamina C en altas dosis con las comidas y alcohol; evitar marisco crudo (Vibrio vulnificus)"
+      - "El té y el café con las comidas reducen la absorción de hierro; donar sangre es terapéutico y útil"
+      - "Informar a familiares de primer grado (cribado genético y de ferritina)"
+    caveats: >
+      Penetrancia incompleta: la mayoría de los C282Y homocigotos no desarrolla enfermedad orgánica, y las mujeres
+      están protegidas hasta la menopausia. La ferritina alta es más a menudo inflamación/esteatosis que
+      hemocromatosis: interpretarla con IST y PCR.
+    refs: ["PMID:8696333", "PMID:18054934"]
+
+  - id: VITD_perfil
+    gene: GC / CYP2R1 / DHCR7 / CYP24A1
+    title: "Perfil genético de vitamina D (alelos de 25-OH-D baja)"
+    type: allele_count
+    alleles:
+      - {star: "GC (DBP) rs2282679 G",   rsid: rs2282679,  allele: G, function: loss}
+      - {star: "GC Asp432 rs7041 A",     rsid: rs7041,     allele: A, function: loss}
+      - {star: "GC Lys436 rs4588 T",     rsid: rs4588,     allele: T, function: loss}
+      - {star: "CYP2R1 rs10741657 G",    rsid: rs10741657, allele: G, function: loss}
+      - {star: "DHCR7 rs12785878 G",     rsid: rs12785878, allele: G, function: loss}
+    phenotypes:
+      - {when: "loss>=6", name: "Predisposición marcada a 25-OH-D baja", impact: 2, direction: risk}
+      - {when: "loss>=4", name: "Predisposición moderada a 25-OH-D baja", impact: 1, direction: risk}
+      - {when: "loss>=2", name: "Predisposición leve a 25-OH-D baja", impact: 1, direction: risk}
+      - {when: "true",    name: "Sin predisposición genética destacable", impact: 0}
+    evidence: A
+    mechanism: >
+      GC codifica la proteína transportadora de vitamina D (los haplotipos Gc2 tienen menor afinidad y niveles
+      totales más bajos), CYP2R1 la 25-hidroxilasa hepática y DHCR7 desvía 7-dehidrocolesterol hacia colesterol
+      restando sustrato para la síntesis cutánea. Juntos explican ~5 % de la varianza de 25-OH-D.
+    levers:
+      - "Medir 25-OH-D (objetivo 30-50 ng/mL; evitar >80) y PTH, calcio y magnesio; repetir a los 3 meses de suplementar"
+      - "Colecalciferol 1000-2000 UI/d como base; 3000-5000 UI/d si nivel <20 ng/mL, con reevaluación (no dosis altas indefinidas)"
+      - "Vitamina K2 (MK-7 100-200 µg/d) y magnesio 200-400 mg/d como cofactores; tomar la D con grasa"
+      - "Sol: 10-20 min en brazos/piernas a mediodía según fototipo y latitud"
+      - "Portadores de Gc2 (rs4588 T / rs2282679 G): la 25-OH-D total puede subestimar la fracción libre biodisponible; interpretar con PTH"
+    caveats: >
+      Orientación verificada en hebra +: rs2282679 G, rs4588 T y rs7041 A son los alelos asociados a niveles más
+      bajos (SNPedia lista rs2282679, rs4588 y rs7041 en orientación −, ya complementados aquí). rs7041 es el menos
+      claro de los cinco (define Gc1F/Gc1S junto a rs4588) — tratarlo como señal débil. Efecto genético total
+      pequeño: el nivel medido manda siempre sobre el genotipo. rs4588 no está en 23andMe v5 (sí rs2282679, su proxy).
+    refs: ["PMID:20541252", "PMID:20418485"]
+
+  - id: FADS_conversion
+    gene: FADS1/FADS2
+    title: "Capacidad de conversión de omega-3/omega-6 (delta-5/delta-6 desaturasa)"
+    type: allele_count
+    alleles:
+      - {star: "FADS1 rs174547 C", rsid: rs174547, allele: C, function: loss}
+      - {star: "FADS2 rs174575 G", rsid: rs174575, allele: G, function: loss}
+    phenotypes:
+      - {when: "loss>=3", name: "Conversor lento: ALA→EPA/DHA y LA→AA muy reducidos", impact: 2, direction: risk}
+      - {when: "loss>=2", name: "Conversor lento-intermedio", impact: 1, direction: risk}
+      - {when: "loss==1", name: "Conversión ligeramente reducida", impact: 1, direction: risk}
+      - {when: "true",    name: "Conversión normal (alta actividad desaturasa)", impact: 0}
+    evidence: A
+    mechanism: >
+      FADS1 (delta-5) y FADS2 (delta-6) desaturan los ácidos grasos esenciales. Los alelos de baja actividad reducen
+      la síntesis endógena de EPA/DHA a partir de ALA (lino, chía, nueces) y de AA a partir de linoleico.
+    levers:
+      - "Conversores lentos: EPA/DHA preformados 1-2 g/d de pescado azul (2-3 raciones/semana) o aceite de pescado/algas — el lino no basta (conversión ALA→DHA <1 %)"
+      - "Medir índice omega-3 en membrana eritrocitaria (objetivo 8-11 %) si se quiere precisión"
+      - "Reducir el exceso de omega-6 industriales (aceites de semillas refinados, ultraprocesados) para mejorar la relación n-6/n-3"
+      - "Relevante en embarazo/lactancia y en vegetarianos: DHA de algas 250-500 mg/d"
+    caveats: >
+      rs174575 es C/G (par ambiguo de hebra): verificado en SNPedia con Orientation=plus, donde G es el alelo menor
+      de baja actividad — si el parser detecta discordancias de hebra, revisar. rs174547 (T/C) en hebra +: C = alelo
+      de menor actividad FADS1. El efecto sobre niveles de EPA/DHA en sangre es notable, pero el efecto clínico
+      depende sobre todo de la ingesta.
+    refs: ["PMID:21829377", "PMID:19717577"]
+
+  - id: COMT_MAOA_dopamina
+    gene: COMT / MAOA
+    title: "Perfil de aclaramiento de catecolaminas (COMT × MAOA)"
+    type: combo
+    rsids: [rs4680, rs6323]
+    combos:
+      "rs4680=AA;rs6323=GG": {name: "COMT Met/Met + MAOA alta", phenotype: "Dopamina prefrontal alta (COMT lento) con degradación de monoaminas rápida: buena memoria de trabajo en calma, más sensibilidad al estrés/dolor", impact: 1, direction: mixed}
+      "rs4680=AA;rs6323=GT": {name: "COMT Met/Met + MAOA het (mujer)", phenotype: "COMT lento: dopamina prefrontal alta, peor rendimiento bajo estrés agudo, mayor sensibilidad al dolor y a estimulantes", impact: 1, direction: mixed}
+      "rs4680=AA;rs6323=TT": {name: "COMT Met/Met + MAOA baja", phenotype: "Aclaramiento de catecolaminas doblemente lento: mayor reactividad emocional/ansiedad, buena cognición en condiciones tranquilas", impact: 1, direction: mixed}
+      "rs4680=AA;rs6323=G":  {name: "COMT Met/Met + MAOA alta (varón)", phenotype: "COMT lento con MAOA de alta actividad", impact: 1, direction: mixed}
+      "rs4680=AA;rs6323=T":  {name: "COMT Met/Met + MAOA baja (varón)", phenotype: "Aclaramiento lento por ambas vías: más reactividad al estrés", impact: 1, direction: mixed}
+      "rs4680=AG;rs6323=GG": {name: "COMT Val/Met + MAOA alta", phenotype: "Perfil intermedio (el más común)", impact: 0}
+      "rs4680=AG;rs6323=GT": {name: "COMT Val/Met + MAOA het (mujer)", phenotype: "Perfil intermedio", impact: 0}
+      "rs4680=AG;rs6323=TT": {name: "COMT Val/Met + MAOA baja", phenotype: "Perfil intermedio con degradación de monoaminas más lenta", impact: 0}
+      "rs4680=AG;rs6323=G":  {name: "COMT Val/Met + MAOA alta (varón)", phenotype: "Perfil intermedio", impact: 0}
+      "rs4680=AG;rs6323=T":  {name: "COMT Val/Met + MAOA baja (varón)", phenotype: "Perfil intermedio", impact: 0}
+      "rs4680=GG;rs6323=GG": {name: "COMT Val/Val + MAOA alta", phenotype: "Aclaramiento rápido de catecolaminas: más resistencia al estrés y al dolor, dopamina prefrontal basal más baja (posible beneficio de estimulantes/tirosina)", impact: 1, direction: mixed}
+      "rs4680=GG;rs6323=GT": {name: "COMT Val/Val + MAOA het (mujer)", phenotype: "COMT rápido: dopamina prefrontal basal más baja", impact: 1, direction: mixed}
+      "rs4680=GG;rs6323=TT": {name: "COMT Val/Val + MAOA baja", phenotype: "COMT rápido con MAOA lenta: perfil mixto", impact: 1, direction: mixed}
+      "rs4680=GG;rs6323=G":  {name: "COMT Val/Val + MAOA alta (varón)", phenotype: "Aclaramiento rápido por ambas vías: buena tolerancia al estrés, dopamina prefrontal basal baja", impact: 1, direction: mixed}
+      "rs4680=GG;rs6323=T":  {name: "COMT Val/Val + MAOA baja (varón)", phenotype: "COMT rápido con MAOA lenta", impact: 1, direction: mixed}
+    evidence: C
+    mechanism: >
+      COMT Val158Met (rs4680 A = Met, actividad enzimática ~3-4× menor) determina el aclaramiento de dopamina en
+      corteza prefrontal; MAOA rs6323 (G = forma de mayor actividad) degrada serotonina, dopamina y noradrenalina.
+      El eje combinado se ha propuesto como 'perfil dopaminérgico', con la relación en U invertida entre dopamina
+      prefrontal y rendimiento cognitivo.
+    levers:
+      - "COMT Met/Met: proteger del estrés agudo (respiración, pausas), cafeína moderada (más sensibilidad), cuidado con dosis altas de tirosina/estimulantes; magnesio y SAMe/metilación adecuados (COMT usa SAMe)"
+      - "COMT Val/Val: puede beneficiarse de tirosina 500-2000 mg antes de tareas exigentes o de cafeína; suele tolerar mejor el estrés agudo"
+      - "MAOA baja (T): moderar alcohol y estimulantes; sueño regular; el ejercicio regular es la palanca más fiable"
+      - "Nada de esto justifica medicación: usar como marco de autoexperimentación, no de diagnóstico"
+    caveats: >
+      Evidencia débil e inconsistente (efectos pequeños, muchas no replicaciones); marco heurístico, no clínico.
+      MAOA está en el cromosoma X: los varones tienen una sola letra (claves de un carácter). El VNTR promotor de
+      MAOA (MAOA-uVNTR, 'gen guerrero') NO es detectable en arrays: rs6323 es un marcador distinto de la actividad
+      enzimática. COMT rs4680 en hebra +: A = Met158.
+    refs: ["PMID:11381111", "PMID:12629541"]

@@ -1,0 +1,8 @@
+.venv/
+data/
+__pycache__/
+*.egg-info/
+*.genostack.md
+tests/fixture_big.txt
+.pytest_cache/
+genostack-*.zip

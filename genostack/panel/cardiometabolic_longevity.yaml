@@ -1,0 +1,576 @@
+module: cardiometabolic_longevity
+title: "Cardiometabolismo y longevidad"
+goals: [health, longevity]
+description: >
+  Variantes con efecto replicado sobre lipoproteínas (Lp(a), LDL, TG, HDL), riesgo coronario,
+  glucemia/diabetes tipo 2, adiposidad, hígado graso y loci de longevidad (KLOTHO, FOXO3).
+  APOE se evalúa como haplotipo en haplotypes.yaml. Alelos en hebra + GRCh37.
+
+variants:
+  - id: LPA_rs10455872
+    gene: LPA
+    rsid: rs10455872
+    name: "Intrón 25 (tag de isoformas KIV-2 cortas, Lp(a) alta)"
+    effect_allele: G
+    other_allele: A
+    direction: risk
+    genotypes:
+      GG: {phenotype: "Homocigoto: Lp(a) muy alta (típicamente >100-150 nmol/L); riesgo coronario ×2.5 y estenosis aórtica", impact: 4}
+      AG: {phenotype: "Portador: Lp(a) ~+50-70 nmol/L (a menudo >50 mg/dL); riesgo coronario ×1.5-1.7 y estenosis aórtica ×2", impact: 3}
+      AA: {phenotype: "Referencia (no excluye Lp(a) alta por otros alelos)", impact: 0}
+    effect_size: "OR enfermedad coronaria 1.70 por alelo G; explica junto a rs3798220 ~36 % de la varianza de Lp(a) en europeos"
+    evidence: A
+    mechanism: "Alelo en LD con isoformas apo(a) pequeñas de alta expresión; Lp(a) es causal (aterogénica, protrombótica, proinflamatoria por fosfolípidos oxidados)"
+    levers:
+      - "Medir Lp(a) en nmol/L una vez en la vida (objetivo <75 nmol/L / <30 mg/dL); ApoB, perfil lipídico, PCR-us"
+      - "Si Lp(a) alta: control agresivo de LDL/ApoB (estatina + ezetimiba; PCSK9i reducen Lp(a) ~25 %); aspirina 100 mg en prevención primaria si Lp(a) alta (ASPREE subanálisis)"
+      - "Niacina baja Lp(a) 20-30 % pero sin beneficio CV demostrado; aféresis en casos extremos"
+      - "Fármacos específicos en fase 3: pelacarsen (ASO), olpasiran, lepodisiran, zerlasiran (siRNA) — Lp(a) -80-95 %; muvalaplin oral"
+      - "Ecocardiograma/TC coronario (calcio) a partir de 40-45 años; evitar tabaco"
+    caveats: "Lp(a) genética no cambia con dieta; un resultado AA no descarta Lp(a) alta (medir siempre)"
+    refs: ["PMID:20032323"]
+
+  - id: LPA_rs3798220
+    gene: LPA
+    rsid: rs3798220
+    name: "Ile4399Met (I4399M)"
+    effect_allele: C
+    other_allele: T
+    direction: risk
+    genotypes:
+      CC: {phenotype: "Homocigoto (muy raro): Lp(a) muy alta", impact: 4}
+      CT: {phenotype: "Portador: Lp(a) ~+100 nmol/L; riesgo coronario ×1.5-2", impact: 3}
+      TT: {phenotype: "Referencia", impact: 0}
+    effect_size: "OR coronario ~1.9 por alelo C; ~2 % europeos, más frecuente en hispanos"
+    evidence: A
+    mechanism: "Variante del dominio proteasa de apo(a) en LD con isoformas pequeñas de alta expresión"
+    levers:
+      - "Ver LPA_rs10455872: medir Lp(a), ApoB; la aspirina mostró beneficio especial en portadores (WHS)"
+    caveats: "Independiente de rs10455872; sumar ambos"
+    refs: ["PMID:20032323"]
+
+  - id: PCSK9_R46L
+    gene: PCSK9
+    rsid: rs11591147
+    name: "R46L (137G>T), pérdida de función"
+    effect_allele: T
+    other_allele: G
+    direction: beneficial
+    genotypes:
+      TT: {phenotype: "Homocigoto (raro): LDL ~-30 mg/dL de por vida; riesgo coronario muy reducido", impact: 3}
+      GT: {phenotype: "Portador R46L: LDL ~-15 mg/dL (−15 %) de por vida; riesgo coronario −28-47 %", impact: 2}
+      GG: {phenotype: "Referencia", impact: 0}
+    effect_size: "LDL −15-20 mg/dL por alelo; HR enfermedad coronaria ~0.5-0.7"
+    evidence: A
+    mechanism: "Menor degradación del receptor LDL → mayor aclaramiento de LDL (mimetiza inhibidores de PCSK9)"
+    levers:
+      - "Ventaja: LDL bajo de por vida; igualmente medir ApoB/LDL y Lp(a) (independiente)"
+      - "Ligero aumento de glucemia/riesgo de DM2 descrito en aleatorización mendeliana (pequeño)"
+    caveats: "Frecuencia ~1-3 % en europeos; protector, no exime de otros factores"
+    refs: ["PMID:16554528"]
+
+  - id: LDLR_rs6511720
+    gene: LDLR
+    rsid: rs6511720
+    name: "Intrón 1 (alelo T protector)"
+    effect_allele: T
+    other_allele: G
+    direction: beneficial
+    genotypes:
+      TT: {phenotype: "Homocigoto: LDL ~-14 mg/dL; menor riesgo coronario", impact: 2}
+      GT: {phenotype: "Portador: LDL ~-7 mg/dL; riesgo coronario −10-15 %", impact: 1}
+      GG: {phenotype: "Referencia", impact: 0}
+    effect_size: "LDL −6.99 mg/dL por alelo T (GLGC); OR coronario ~0.87"
+    evidence: A
+    mechanism: "Mayor expresión de receptor LDL"
+    levers:
+      - "Informativo (protector)"
+    caveats: "No excluye hipercolesterolemia familiar por mutaciones raras en LDLR (no detectables aquí)"
+    refs: []
+
+  - id: APOB_T71I
+    gene: APOB
+    rsid: rs1367117
+    name: "Thr71Ile"
+    effect_allele: A
+    other_allele: G
+    direction: risk
+    genotypes:
+      AA: {phenotype: "Homocigoto: LDL/ApoB ligeramente mayores (~+5 mg/dL)", impact: 1}
+      AG: {phenotype: "Heterocigoto: LDL ~+2.5 mg/dL", impact: 0}
+      GG: {phenotype: "Referencia", impact: 0}
+    effect_size: "LDL +2.5 mg/dL por alelo A; OR coronario ~1.05"
+    evidence: A
+    mechanism: "Variante codificante de APOB asociada a mayor ApoB circulante"
+    levers:
+      - "Medir ApoB (objetivo <80 mg/dL si riesgo moderado, <60 alto); fibra soluble 10 g/d, fitoesteroles 2 g/d, reducir grasa saturada"
+    caveats: "Efecto pequeño; no detecta hipercolesterolemia familiar por APOB (R3500Q)"
+    refs: []
+
+  - id: CDKN2B_AS1_9p21_rs10757278
+    gene: CDKN2B-AS1 (9p21)
+    rsid: rs10757278
+    name: "Locus 9p21.3 (tag funcional)"
+    effect_allele: G
+    other_allele: A
+    direction: risk
+    genotypes:
+      GG: {phenotype: "Homocigoto de riesgo (~25 % europeos): riesgo coronario/IAM ×1.5-1.6 vs AA, independiente de lípidos; también aneurisma aórtico", impact: 2}
+      AG: {phenotype: "Heterocigoto: riesgo coronario ×1.25", impact: 1}
+      AA: {phenotype: "Referencia", impact: 0}
+    effect_size: "OR 1.25-1.3 por alelo G; IAM precoz OR ~1.6 GG vs AA"
+    evidence: A
+    mechanism: "Región reguladora (ANRIL/CDKN2A-B) que afecta proliferación de células musculares lisas vasculares e inflamación de la pared"
+    levers:
+      - "El riesgo 9p21 es modulable: dieta 'prudente' rica en fruta/verdura anula el exceso de riesgo (INTERHEART/FINRISK); ejercicio, no fumar"
+      - "Score de calcio coronario (TC) a 40-50 años si otros factores; control estricto de LDL/ApoB y presión arterial"
+    caveats: "En LD fuerte con rs1333049 (mismo locus); no duplicar. No actúa vía factores de riesgo clásicos"
+    refs: ["PMID:17478679", "PMID:17478681"]
+
+  - id: CETP_TaqIB
+    gene: CETP
+    rsid: rs708272
+    name: "TaqIB (+279G>A; A = B2)"
+    effect_allele: A
+    other_allele: G
+    direction: beneficial
+    genotypes:
+      AA: {phenotype: "B2/B2: CETP ~-30 %, HDL-c +~5-6 mg/dL; riesgo coronario ligeramente menor", impact: 1}
+      AG: {phenotype: "B1/B2: HDL intermedio", impact: 0}
+      GG: {phenotype: "B1/B1: referencia (CETP más alta, HDL más baja)", impact: 0}
+    effect_size: "HDL +0.13 mmol/L B2B2 vs B1B1; OR coronario 0.78 (meta-análisis)"
+    evidence: A
+    mechanism: "Menor actividad de la proteína transferidora de ésteres de colesterol → más colesterol en HDL, menos en LDL"
+    levers:
+      - "Informativo; el HDL no es diana terapéutica (los inhibidores de CETP sólo benefician vía LDL/ApoB)"
+    caveats: "SNPedia lo lista en orientación −; aquí A (hebra +) = B2"
+    refs: ["PMID:15630040"]
+
+  - id: CETP_I405V
+    gene: CETP
+    rsid: rs5882
+    name: "Ile405Val (G = Val)"
+    effect_allele: G
+    other_allele: A
+    direction: beneficial
+    genotypes:
+      GG: {phenotype: "Val/Val: CETP más baja, partículas HDL/LDL más grandes; asociado a longevidad excepcional y menor deterioro cognitivo (Ashkenazi), replicación parcial", impact: 1}
+      AG: {phenotype: "Ile/Val: intermedio", impact: 0}
+      AA: {phenotype: "Ile/Ile: referencia", impact: 0}
+    effect_size: "VV: OR longevidad ~2-3 en cohortes Ashkenazi; HDL +~3 mg/dL; no replicado en todas las poblaciones"
+    evidence: C
+    mechanism: "Menor actividad CETP → lipoproteínas grandes; hipótesis de menor aterogenicidad"
+    levers:
+      - "Informativo"
+    caveats: "Evidencia de longevidad limitada y heterogénea"
+    refs: []
+
+  - id: LPL_S447X
+    gene: LPL
+    rsid: rs328
+    name: "Ser447Ter (S447X), ganancia de función"
+    effect_allele: G
+    other_allele: C
+    direction: beneficial
+    genotypes:
+      GG: {phenotype: "Homocigoto (raro): TG ~-20 %, HDL ↑; menor riesgo coronario", impact: 2}
+      CG: {phenotype: "Portador S447X: TG ~-8-10 %, HDL +2 mg/dL; OR coronario ~0.8", impact: 1}
+      CC: {phenotype: "Referencia", impact: 0}
+    effect_size: "TG −0.1 mmol/L por alelo; OR coronario 0.8-0.9"
+    evidence: A
+    mechanism: "Lipoproteína lipasa truncada con mayor actividad/liberación → mejor aclaramiento de TG"
+    levers:
+      - "Informativo (protector); mantener TG <100 mg/dL con actividad física y control de carbohidratos refinados"
+    caveats: "Protector; ~10 % de europeos"
+    refs: []
+
+  - id: APOA5_1131TC
+    gene: APOA5
+    rsid: rs662799
+    name: "-1131T>C (G en hebra + = -1131C)"
+    effect_allele: G
+    other_allele: A
+    direction: risk
+    genotypes:
+      GG: {phenotype: "-1131CC: TG ~+40-50 %; mayor riesgo de hipertrigliceridemia y coronario", impact: 2}
+      AG: {phenotype: "Portador -1131C: TG ~+20 % (~+15-20 mg/dL); riesgo coronario ×1.2; más sensible a grasa dietética", impact: 1}
+      AA: {phenotype: "-1131TT: referencia", impact: 0}
+    effect_size: "TG +0.25 mmol/L por alelo C; OR coronario 1.18 por alelo"
+    evidence: A
+    mechanism: "Menor expresión de ApoA-V → menor activación de LPL y aclaramiento de VLDL/quilomicrones"
+    levers:
+      - "Medir TG en ayunas y ApoB; limitar alcohol y fructosa/azúcar; omega-3 EPA (icosapento de etilo 2-4 g/d) si TG >150 persistente"
+      - "Fibratos/EPA bajo indicación; mayor respuesta de TG a dieta baja en grasa"
+    caveats: "APOA5 en hebra −: G (hebra +) = -1131C. La referencia GRCh37 lleva curiosamente el alelo G (raro); no confundir con 'normal'"
+    refs: ["PMID:11588264"]
+
+  - id: APOC3_SstI
+    gene: APOC3
+    rsid: rs5128
+    name: "SstI 3238C>G (S2 = G)"
+    effect_allele: G
+    other_allele: C
+    direction: risk
+    genotypes:
+      GG: {phenotype: "S2/S2: ApoC-III y TG más altos; hipertrigliceridemia más probable", impact: 2}
+      CG: {phenotype: "S1/S2: TG ~+10-15 %", impact: 1}
+      CC: {phenotype: "S1/S1: referencia", impact: 0}
+    effect_size: "TG +0.1-0.2 mmol/L por alelo G; OR hipertrigliceridemia ~1.5"
+    evidence: B
+    mechanism: "ApoC-III inhibe LPL y el aclaramiento hepático de remanentes; el haplotipo S2 se asocia a mayor ApoC-III"
+    levers:
+      - "Medir TG, ApoB, remanentes (no-HDL); reducir azúcares y alcohol; EPA 2-4 g/d si TG altos"
+      - "Inhibidores de ApoC-III (volanesorsen, olezarsen, plozasiran) para hipertrigliceridemia grave"
+    caveats: "Hebra +: G = S2 (SNPedia lo lista en orientación −); la referencia GRCh37 porta G"
+    refs: []
+
+  - id: TCF7L2_rs7903146
+    gene: TCF7L2
+    rsid: rs7903146
+    name: "Intrón 3 (alelo T de riesgo de DM2)"
+    effect_allele: T
+    other_allele: C
+    direction: risk
+    genotypes:
+      TT: {phenotype: "Homocigoto: riesgo de DM2 ×1.8-2 (la variante común de mayor efecto); menor secreción de insulina/incretinas", impact: 2}
+      CT: {phenotype: "Portador: riesgo de DM2 ×1.4", impact: 1}
+      CC: {phenotype: "Referencia", impact: 0}
+    effect_size: "OR DM2 1.37-1.45 por alelo; TT vs CC ~1.9"
+    evidence: A
+    mechanism: "Menor función de células β y efecto incretina (GLP-1) por alteración de la vía Wnt/TCF7L2"
+    levers:
+      - "HbA1c, glucosa e insulina en ayunas (HOMA-IR) cada 1-2 años; sobrecarga oral de glucosa si dudas"
+      - "Dieta baja en carga glucémica y rica en fibra; el riesgo TT se atenúa con pérdida de peso/ejercicio (DPP)"
+      - "Metformina funciona; posible menor respuesta a sulfonilureas; agonistas GLP-1 y DPP4i siguen siendo eficaces"
+      - "Berberina 500 mg ×2-3/d o inositol pueden ayudar con glucemia (evidencia moderada)"
+    caveats: "Efecto principalmente sobre secreción, no resistencia a insulina"
+    refs: ["PMID:16415884"]
+
+  - id: FTO_rs9939609
+    gene: FTO
+    rsid: rs9939609
+    name: "Intrón 1 (alelo A de obesidad)"
+    effect_allele: A
+    other_allele: T
+    direction: risk
+    genotypes:
+      AA: {phenotype: "Homocigoto (~16 % europeos): IMC +~1 kg/m² (~3 kg), riesgo de obesidad ×1.7; mayor apetito/preferencia por densidad energética", impact: 1}
+      AT: {phenotype: "Heterocigoto: IMC +~0.4 kg/m²", impact: 0}
+      TT: {phenotype: "Referencia", impact: 0}
+    effect_size: "+0.39 kg/m² por alelo; OR obesidad 1.67 AA vs TT"
+    evidence: A
+    mechanism: "Regula IRX3/IRX5 en adipocitos (termogénesis) e hipotálamo (saciedad, grelina)"
+    levers:
+      - "La actividad física reduce el efecto FTO ~30 %; dieta rica en proteína mejora la pérdida de peso en AA"
+      - "Atención a saciedad: comidas regulares ricas en proteína y fibra; el efecto actúa por ingesta, no por gasto"
+    caveats: "A/T: SNP ambiguo de hebra; verificado con SNPedia (orientación +): A = riesgo"
+    refs: ["PMID:17434869"]
+
+  - id: MC4R_rs17782313
+    gene: MC4R
+    rsid: rs17782313
+    name: "Región 3' de MC4R (alelo C)"
+    effect_allele: C
+    other_allele: T
+    direction: risk
+    genotypes:
+      CC: {phenotype: "Homocigoto: IMC +~0.5-0.7 kg/m², mayor ingesta; efecto aditivo con FTO", impact: 1}
+      CT: {phenotype: "Heterocigoto: efecto pequeño", impact: 0}
+      TT: {phenotype: "Referencia", impact: 0}
+    effect_size: "+0.22 kg/m² por alelo; OR obesidad ~1.12 por alelo"
+    evidence: A
+    mechanism: "Región reguladora del receptor de melanocortina 4 (vía de saciedad leptina-POMC)"
+    levers:
+      - "Mismas palancas conductuales que FTO; la vía MC4R es diana de setmelanotida (sólo deficiencias monogénicas)"
+    caveats: "Efecto pequeño"
+    refs: ["PMID:18454148"]
+
+  - id: PPARG_P12A
+    gene: PPARG
+    rsid: rs1801282
+    name: "Pro12Ala (G = Ala12)"
+    effect_allele: G
+    other_allele: C
+    direction: beneficial
+    genotypes:
+      GG: {phenotype: "Ala/Ala (~1-2 %): mayor sensibilidad a insulina; riesgo DM2 −30-40 %", impact: 1}
+      CG: {phenotype: "Portador Ala12: riesgo DM2 −15-20 %; mejor sensibilidad a insulina, algo más de ganancia de peso con dieta alta en grasa", impact: 1}
+      CC: {phenotype: "Pro/Pro: referencia", impact: 0}
+    effect_size: "OR DM2 0.81-0.86 por alelo Ala"
+    evidence: A
+    mechanism: "Menor actividad transcripcional de PPARγ2 → menos lipogénesis adipocitaria, mejor sensibilidad insulínica"
+    levers:
+      - "Informativo (protector); en portadores Ala, la relación grasa poliinsaturada/saturada alta se asocia a menor IMC"
+    caveats: "C/G: SNP ambiguo de hebra; verificado con SNPedia (orientación +, C = Pro común)"
+    refs: ["PMID:10973253"]
+
+  - id: KCNJ11_E23K
+    gene: KCNJ11
+    rsid: rs5219
+    name: "Glu23Lys (T en hebra + = Lys23)"
+    effect_allele: T
+    other_allele: C
+    direction: risk
+    genotypes:
+      TT: {phenotype: "Lys/Lys: secreción de insulina algo menor; riesgo DM2 ×1.3; posible mejor respuesta a sulfonilureas", impact: 1}
+      CT: {phenotype: "Portador Lys23: riesgo DM2 ×1.15", impact: 0}
+      CC: {phenotype: "Glu/Glu: referencia", impact: 0}
+    effect_size: "OR DM2 ~1.15 por alelo K"
+    evidence: A
+    mechanism: "Canal KATP (Kir6.2) menos sensible a ATP → umbral de secreción de insulina más alto"
+    levers:
+      - "Mismas medidas que TCF7L2; si DM2, las sulfonilureas/glinidas actúan directamente sobre este canal"
+    caveats: "KCNJ11 en hebra −: T (hebra +) = alelo K de la literatura"
+    refs: ["PMID:12540637"]
+
+  - id: ADIPOQ_45TG
+    gene: ADIPOQ
+    rsid: rs2241766
+    name: "+45T>G (exón 2, Gly15Gly)"
+    effect_allele: G
+    other_allele: T
+    direction: risk
+    genotypes:
+      GG: {phenotype: "Homocigoto: adiponectina algo menor; asociado a resistencia insulínica/DM2 sobre todo en poblaciones asiáticas", impact: 1}
+      GT: {phenotype: "Heterocigoto: efecto leve", impact: 0}
+      TT: {phenotype: "Referencia", impact: 0}
+    effect_size: "Adiponectina −5-10 %; OR DM2 ~1.2 en asiáticos, inconsistente en europeos"
+    evidence: C
+    mechanism: "Variante sinónima en LD con reguladores de expresión de adiponectina"
+    levers:
+      - "Medir adiponectina si síndrome metabólico; ejercicio, pérdida de grasa visceral y pioglitazona elevan adiponectina"
+    caveats: "Evidencia limitada en europeos"
+    refs: []
+
+  - id: KL_VS_F352V
+    gene: KL
+    rsid: rs9536314
+    name: "KL-VS Phe352Val (G = Val352)"
+    effect_allele: G
+    other_allele: T
+    direction: mixed
+    genotypes:
+      GT: {phenotype: "KL-VS heterocigoto (~20-25 %): klotho sérico mayor; asociado a mejor cognición/volumen prefrontal, menor declive con APOE ε4 y longevidad; rendimiento cognitivo ligeramente superior", impact: 2}
+      GG: {phenotype: "KL-VS homocigoto (~2-3 %): ventaja perdida o invertida (menor longevidad y cognición en varios estudios)", impact: 2}
+      TT: {phenotype: "KL-FC/FC: referencia", impact: 0}
+    effect_size: "Heterocigotos: +~0.3 DE en cognición (meta-análisis); OR longevidad ~1.5; efecto atenuador de APOE ε4 sobre amiloide/tau"
+    evidence: B
+    mechanism: "KL-VS aumenta la secreción/actividad de α-klotho (factor antienvejecimiento, cofactor FGF23, neuroprotector)"
+    levers:
+      - "GT: ventaja (especialmente si APOE ε4); no requiere acción"
+      - "GG: cuidar factores que elevan klotho: ejercicio aeróbico regular, vitamina D suficiente, función renal y fósforo controlados (IECA/ARA-II y calcitriol elevan klotho en estudios)"
+      - "Klotho sérico medible (ELISA) pero sin rango clínico consensuado"
+    caveats: "Sólo 'KL-VS' si co-segrega con rs9527025 (C370S); en 23andMe v1-v4 (v5 incierto). Heterocigosis beneficiosa, homocigosis no"
+    refs: ["PMID:11792841", "PMID:24813892"]
+
+  - id: KL_VS_C370S
+    gene: KL
+    rsid: rs9527025
+    name: "KL-VS Cys370Ser (C = Ser370)"
+    effect_allele: C
+    other_allele: G
+    direction: mixed
+    genotypes:
+      CG: {phenotype: "KL-VS heterocigoto (mismo haplotipo que rs9536314 GT): ventaja cognitiva/longevidad", impact: 2}
+      CC: {phenotype: "KL-VS homocigoto: ventaja perdida o invertida", impact: 2}
+      GG: {phenotype: "Referencia", impact: 0}
+    effect_size: "Ver KL_VS_F352V"
+    evidence: B
+    mechanism: "Co-segrega con F352V (LD completo); juntos definen KL-VS"
+    levers:
+      - "Ver KL_VS_F352V; si ambos SNPs aparecen, es una única señal (no sumar)"
+    caveats: "Principalmente en arrays Ancestry; redundante con rs9536314"
+    refs: ["PMID:11792841"]
+
+  - id: FOXO3_rs2802292
+    gene: FOXO3
+    rsid: rs2802292
+    name: "Intrón 2 (alelo G de longevidad)"
+    effect_allele: G
+    other_allele: T
+    direction: beneficial
+    genotypes:
+      GG: {phenotype: "Homocigoto G: asociado a longevidad excepcional (OR ~1.5-2.7 para ≥95 años), replicado en múltiples poblaciones", impact: 1}
+      GT: {phenotype: "Portador G: efecto intermedio", impact: 0}
+      TT: {phenotype: "Referencia", impact: 0}
+    effect_size: "OR centenario ~1.5-2.75 (GG vs TT); efecto sobre mortalidad general pequeño"
+    evidence: A
+    mechanism: "Alelo G crea un enhancer sensible a estrés que aumenta la expresión de FOXO3 (resistencia a estrés, autofagia, sensibilidad insulínica)"
+    levers:
+      - "Informativo; los activadores de FOXO3 (restricción calórica, ejercicio, AMPK/metformina, inhibición mTOR) actúan sobre la misma vía"
+    caveats: "Asociación con longevidad extrema, no con salud individual"
+    refs: ["PMID:18765803"]
+
+  - id: FOXO3_rs2764264
+    gene: FOXO3
+    rsid: rs2764264
+    name: "Intrón 3 (alelo C de longevidad)"
+    effect_allele: C
+    other_allele: T
+    direction: beneficial
+    genotypes:
+      CC: {phenotype: "Homocigoto C: asociado a longevidad (mismo haplotipo FOXO3)", impact: 1}
+      CT: {phenotype: "Portador C", impact: 0}
+      TT: {phenotype: "Referencia", impact: 0}
+    effect_size: "OR longevidad ~1.5-2 CC vs TT"
+    evidence: B
+    mechanism: "En LD con rs2802292; haplotipo de longevidad FOXO3"
+    levers:
+      - "Ver FOXO3_rs2802292 (misma señal)"
+    caveats: "Redundante con rs2802292"
+    refs: ["PMID:18765803"]
+
+  - id: SH2B3_R262W
+    gene: SH2B3 (LNK)
+    rsid: rs3184504
+    name: "Arg262Trp (T = Trp262)"
+    effect_allele: T
+    other_allele: C
+    direction: risk
+    genotypes:
+      TT: {phenotype: "Trp/Trp (~25 % europeos): presión arterial ligeramente mayor, más eosinófilos/plaquetas, riesgo de IAM, celiaquía, DM1 e hipotiroidismo ×1.1-1.3", impact: 1}
+      CT: {phenotype: "Heterocigoto: efecto pequeño", impact: 0}
+      CC: {phenotype: "Referencia", impact: 0}
+    effect_size: "PAS +~0.6 mmHg y OR IAM ~1.1 por alelo T; OR celiaquía 1.2"
+    evidence: A
+    mechanism: "Menor función del regulador negativo de señalización JAK2/citocinas en células hematopoyéticas e inmunes"
+    levers:
+      - "Control de presión arterial; informativo para autoinmunidad"
+    caveats: "Pleiotrópico, efectos individuales pequeños; la referencia GRCh37 porta T"
+    refs: ["PMID:19198610"]
+
+  - id: GCKR_P446L
+    gene: GCKR
+    rsid: rs1260326
+    name: "Pro446Leu (T = Leu446)"
+    effect_allele: T
+    other_allele: C
+    direction: mixed
+    genotypes:
+      TT: {phenotype: "Leu/Leu: TG +~10-15 %, CRP y ácido úrico algo mayores, hígado graso más frecuente; glucosa en ayunas menor y riesgo DM2 menor", impact: 1}
+      CT: {phenotype: "Heterocigoto: efecto intermedio", impact: 0}
+      CC: {phenotype: "Referencia", impact: 0}
+    effect_size: "TG +0.1 mmol/L y glucosa −0.03 mmol/L por alelo T"
+    evidence: A
+    mechanism: "Menor inhibición de la glucoquinasa hepática → más glucólisis/lipogénesis de novo, menos glucosa circulante"
+    levers:
+      - "Limitar fructosa/azúcares añadidos (amplifican lipogénesis); medir TG, GGT, ácido úrico; ecografía/elastografía hepática si PNPLA3 también de riesgo"
+    caveats: "La referencia GRCh37 porta el alelo T (Leu)"
+    refs: ["PMID:18678614"]
+
+  - id: PNPLA3_I148M
+    gene: PNPLA3
+    rsid: rs738409
+    name: "Ile148Met (G = Met148)"
+    effect_allele: G
+    other_allele: C
+    direction: risk
+    genotypes:
+      GG: {phenotype: "Met/Met (~5-10 % europeos): grasa hepática ×2-3, riesgo de esteatohepatitis, fibrosis, cirrosis y hepatocarcinoma ×3-12 (alcohol u obesidad lo multiplican)", impact: 3}
+      CG: {phenotype: "Portador Met148: grasa hepática +~30 %, riesgo de NAFLD/fibrosis ×1.5-2; más sensible a alcohol y fructosa", impact: 2}
+      CC: {phenotype: "Referencia", impact: 0}
+    effect_size: "OR NAFLD ~3.3 GG vs CC; HCC OR ~3-12 en GG; carga de grasa hepática +73 % por alelo"
+    evidence: A
+    mechanism: "Pérdida de función lipasa + acumulación en gotas lipídicas → menor remodelado de TG en hepatocitos y células estrelladas"
+    levers:
+      - "Analítica: ALT/AST/GGT, ferritina, perfil lipídico; FIB-4 y elastografía (FibroScan) si IMC alto o ALT elevada"
+      - "Alcohol mínimo/cero; evitar fructosa añadida y exceso calórico; pérdida de peso ≥7-10 % revierte esteatosis"
+      - "Omega-3 EPA/DHA 2-4 g/d (reduce grasa hepática, mayor efecto en GG), vitamina E 800 UI/d (RCT PIVENS en NASH no diabético), café 2-3 tazas/d"
+      - "Fármacos: resmetirom (THR-β, aprobado NASH F2-F3), pioglitazona, semaglutida/tirzepatida; en desarrollo: siRNA anti-PNPLA3 (AZD2693)"
+    caveats: "Efecto sinérgico con TM6SF2, GCKR, obesidad y alcohol; HSD17B13 rs72613567 (protector) no está en arrays de consumo"
+    refs: ["PMID:18820647"]
+
+  - id: TM6SF2_E167K
+    gene: TM6SF2
+    rsid: rs58542926
+    name: "Glu167Lys (T = Lys167)"
+    effect_allele: T
+    other_allele: C
+    direction: mixed
+    genotypes:
+      TT: {phenotype: "Lys/Lys (raro): esteatosis hepática marcada y fibrosis, pero LDL/TG bajos y menor riesgo coronario", impact: 2}
+      CT: {phenotype: "Portador Lys167 (~7 %): grasa hepática +~30 %, riesgo NAFLD/fibrosis ×1.5-2; LDL −5 mg/dL, TG −10 %, riesgo coronario −10 %", impact: 1}
+      CC: {phenotype: "Referencia", impact: 0}
+    effect_size: "OR NAFLD ~1.9 por alelo; LDL −0.1 mmol/L"
+    evidence: A
+    mechanism: "Menor secreción hepática de VLDL → retención de grasa en hígado, menos lípidos circulantes"
+    levers:
+      - "Ver PNPLA3: vigilancia hepática (ALT, FIB-4, elastografía); mismas medidas dietéticas; menor prioridad cardiovascular"
+    caveats: "Sólo en 23andMe v5"
+    refs: ["PMID:24531328"]
+
+  - id: SORT1_rs646776
+    gene: CELSR2-PSRC1-SORT1 (1p13)
+    rsid: rs646776
+    name: "Locus 1p13 SORT1 (C = alelo menor, LDL bajo)"
+    effect_allele: C
+    other_allele: T
+    direction: beneficial
+    genotypes:
+      CC: {phenotype: "Homocigoto menor (~5 %): LDL ~-12-16 mg/dL; riesgo coronario −20 %; ligeramente mejor respuesta a estatinas", impact: 1}
+      CT: {phenotype: "Portador: LDL ~-6-8 mg/dL; riesgo coronario −10 %", impact: 1}
+      TT: {phenotype: "Referencia (mayoritario)", impact: 0}
+    effect_size: "LDL −5.65 mg/dL y OR IAM 0.89 por alelo menor"
+    evidence: A
+    mechanism: "Variante reguladora (rs12740374, en LD completo) crea sitio C/EBP → más sortilina hepática → menor secreción de ApoB/VLDL"
+    levers:
+      - "Informativo (protector)"
+    caveats: "Equivalente a rs12740374 T (mismo haplotipo). SNPedia lista rs646776 en orientación −; aquí C (hebra +) = alelo menor"
+    refs: ["PMID:18262040", "PMID:20686566"]
+
+  - id: LIPC_514CT
+    gene: LIPC
+    rsid: rs1800588
+    name: "-514C>T (promotor lipasa hepática)"
+    effect_allele: T
+    other_allele: C
+    direction: mixed
+    genotypes:
+      TT: {phenotype: "TT: lipasa hepática −30-50 %, HDL +~5 mg/dL pero HDL/LDL más grandes y ricas en TG; beneficio CV no claro; mejor respuesta de HDL a ejercicio", impact: 1}
+      CT: {phenotype: "Heterocigoto: HDL ligeramente mayor", impact: 0}
+      CC: {phenotype: "Referencia", impact: 0}
+    effect_size: "HDL +0.04-0.06 mmol/L por alelo; sin efecto claro en riesgo coronario"
+    evidence: B
+    mechanism: "Menor transcripción de LIPC → menor hidrólisis de TG/fosfolípidos de HDL y remanentes"
+    levers:
+      - "Informativo; en TT, dieta alta en grasa saturada se asocia a perfil más aterogénico (interacción dieta-gen)"
+    caveats: "Efecto modesto y dependiente de dieta"
+    refs: []
+
+  - id: ANGPTL4_E40K
+    gene: ANGPTL4
+    rsid: rs116843064
+    name: "Glu40Lys (A = Lys40), pérdida de función"
+    effect_allele: A
+    other_allele: G
+    direction: beneficial
+    genotypes:
+      AA: {phenotype: "Homocigoto (muy raro): TG muy bajos, HDL alto", impact: 2}
+      AG: {phenotype: "Portador E40K (~2-3 %): TG −13-15 %, HDL +~7 %; riesgo coronario −19 % (OR 0.81)", impact: 2}
+      GG: {phenotype: "Referencia", impact: 0}
+    effect_size: "TG −0.2 mmol/L; OR coronario 0.81 (NEJM 2016 ×2)"
+    evidence: A
+    mechanism: "ANGPTL4 inhibe LPL; la variante inestable deja más LPL activa (diana de anticuerpos/ASO en desarrollo)"
+    levers:
+      - "Informativo (protector)"
+    caveats: "No incluido en chips 23andMe (sí en AncestryDNA); el estudio de 2009 sugirió lo contrario pero los grandes estudios de 2016 lo refutaron"
+    refs: ["PMID:26933753", "PMID:26934567"]
+
+  - id: HMGCR_rs12916
+    gene: HMGCR
+    rsid: rs12916
+    name: "3'UTR (C = LDL algo mayor; T = efecto 'estatina' natural)"
+    effect_allele: C
+    other_allele: T
+    direction: risk
+    genotypes:
+      CC: {phenotype: "CC: LDL ~+5 mg/dL vs TT; sin el leve efecto diabetógeno/peso asociado al alelo T", impact: 1}
+      CT: {phenotype: "Heterocigoto: LDL +2.5 mg/dL", impact: 0}
+      TT: {phenotype: "TT: LDL ~-5 mg/dL (mimetiza estatina), peso y riesgo DM2 ligeramente mayores", impact: 0}
+    effect_size: "LDL +2.45 mg/dL por alelo C (GLGC); T: peso +0.3 kg, OR DM2 1.02"
+    evidence: A
+    mechanism: "Variante reguladora de la expresión de HMG-CoA reductasa (diana de estatinas)"
+    levers:
+      - "Informativo; leve modulación de LDL basal; respuesta a estatinas clínicamente similar"
+    caveats: "Efecto pequeño; incluido como contexto para estatinas"
+    refs: ["PMID:25262344"]

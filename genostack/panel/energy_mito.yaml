@@ -1,0 +1,460 @@
+module: energy_mito
+title: "Energía, mitocondria, estrés oxidativo y detoxificación fase I/II"
+goals: [energy, longevity, health]
+description: >
+  Biogénesis mitocondrial (PPARGC1A, PPARD, PPARA), defensa antioxidante endógena
+  (NFE2L2/NRF2, SOD2, GPX1, CAT, NQO1, GCLC), conjugación y detoxificación de xenobióticos
+  (GSTP1, NAT2, CYP1B1, PON1) y desacoplamiento/energía muscular (UCP2, UCP3, AMPD1).
+  Aviso: las deleciones GSTM1-null y GSTT1-null (las más relevantes de la familia GST) son
+  variantes de número de copia y NO son detectables en un array de 23andMe/Ancestry: no
+  aparecen en este panel aunque se citen mucho en la literatura de detox. HMOX1 (repeat GT)
+  tampoco es tipable por array. rs671 (ALDH2) se evalúa en inflammation_gut y KL-VS en
+  cardiometabolic_longevity; el fenotipo acetilador NAT2 completo se resuelve en pharmaco.
+  Todos los alelos están en hebra + de GRCh37 (la orientación del fichero crudo de 23andMe).
+
+variants:
+  - id: PPARGC1A_Gly482Ser
+    gene: PPARGC1A
+    rsid: rs8192678
+    name: "Gly482Ser (clásico G1444A / 'A' en hebra -)"
+    effect_allele: T
+    other_allele: C
+    direction: risk
+    genotypes:
+      CC: {phenotype: "Gly/Gly: PGC-1alfa de referencia; mejor respuesta media de biogénesis mitocondrial al ejercicio", impact: 0}
+      CT: {phenotype: "Gly/Ser: fenotipo intermedio", impact: 1}
+      TT: {phenotype: "Ser/Ser: menor actividad transcripcional de PGC-1alfa; VO2max basal y respuesta al entrenamiento algo menores, riesgo de DM2 ligeramente aumentado", impact: 2}
+    effect_size: "Meta-análisis: OR DM2 ~1.1-1.2 por alelo Ser; diferencias de VO2max entre genotipos pequeñas (<5 %) y muy dependientes del entrenamiento"
+    evidence: B
+    mechanism: "PGC-1alfa es el coactivador maestro de la biogénesis mitocondrial (NRF1/NRF2-GABPA, TFAM, ERRalfa). La sustitución Gly482Ser reduce la actividad coactivadora y la inducción de genes OXPHOS"
+    levers:
+      - "Palanca dominante: entrenamiento de resistencia (zona 2, 150-240 min/sem) + 1-2 sesiones HIIT 4x4 min: sobreexpresa PGC-1alfa por encima del efecto del genotipo"
+      - "Urolitina A 500-1000 mg/d: mejora fuerza muscular y biomarcadores mitocondriales en RCT (mitofagia, vía independiente de PGC-1alfa)"
+      - "Precursores de NAD+: nicotinamida ribósido 250-500 mg/d o NMN 250-500 mg/d (efecto sobre función mitocondrial modesto y heterogéneo en humanos)"
+      - "Exposición al frío y ayuno intermitente: activan PGC-1alfa vía AMPK/SIRT1"
+      - "Analítica: VO2max o test de lactato, HbA1c y glucosa/insulina en ayunas (HOMA-IR)"
+    caveats: "El efecto sobre rendimiento es pequeño frente al del entrenamiento; el alelo Ser es muy frecuente (~34 % en europeos). No duplicado en el módulo performance."
+    refs: ["PMID:16435105"]
+
+  - id: NFE2L2_prom_617
+    gene: NFE2L2
+    rsid: rs6721961
+    name: "Promotor -617 C>A (hebra -); T = alelo -617A clásico"
+    effect_allele: T
+    other_allele: G
+    direction: risk
+    genotypes:
+      GG: {phenotype: "Actividad basal normal del promotor NRF2", impact: 0}
+      GT: {phenotype: "Portador: inducción de genes ARE algo menor bajo estrés oxidativo", impact: 1}
+      TT: {phenotype: "Homocigoto: menor transcripción de NRF2 y menor inducción de HMOX1/NQO1/GCLC; peor tolerancia al estrés oxidativo (tabaco, contaminación, ejercicio extenuante)", impact: 2}
+    effect_size: "Reducción de la actividad del promotor NRF2 in vitro; asociación con lesión pulmonar aguda y peor respuesta antioxidante en fumadores. Alelo T ~12 % en europeos"
+    evidence: C
+    mechanism: "El SNP cae en un elemento ARE del propio promotor de NFE2L2 y reduce su autoinducción; NRF2 gobierna la expresión de NQO1, HMOX1, GCLC/GCLM, GST y tiorredoxina"
+    levers:
+      - "Sulforafano 10-20 mg/d (glucorafanina 30-60 mg + mirosinasa activa) o 50-100 g/d de germinados de brócoli: el inductor de NRF2 mejor documentado en humanos"
+      - "Ejercicio aeróbico regular: inductor fisiológico de NRF2 (hormesis)"
+      - "Evitar tabaco y humos; filtro HEPA si hay alta contaminación"
+      - "Alternativas/coadyuvantes: curcumina fitosomada 500-1000 mg/d, EGCG del té verde, resveratrol (evidencia menor)"
+      - "Evitar megadosis crónicas de antioxidantes aislados (vit C/E > 1 g/400 UI) que embotan la señal hormética del ejercicio"
+    caveats: "Evidencia mayoritariamente in vitro y en cohortes pequeñas; el efecto clínico individual es incierto. rs6721961 (G/T) no es un SNP ambiguo, la orientación está verificada en Ensembl y SNPedia (orientation=plus)."
+    refs: []
+
+  - id: NFE2L2_prom_653
+    gene: NFE2L2
+    rsid: rs35652124
+    name: "Promotor -653 A>G (nomenclatura clásica); C/T en hebra +"
+    effect_allele: C
+    other_allele: T
+    direction: mixed
+    genotypes:
+      CC: {phenotype: "Homocigoto del alelo menor del promotor; actividad NRF2 basal posiblemente distinta (dirección no consistente entre estudios)", impact: 1}
+      CT: {phenotype: "Heterocigoto", impact: 0}
+      TT: {phenotype: "Genotipo más frecuente en europeos (~68 %)", impact: 0}
+    effect_size: "Diferencias de actividad del promotor pequeñas y no replicadas de forma consistente"
+    evidence: D
+    mechanism: "Variante en la región reguladora proximal de NFE2L2, en desequilibrio de ligamiento parcial con rs6721961; modula la transcripción basal de NRF2"
+    levers:
+      - "Mismas palancas que rs6721961: sulforafano/germinados de brócoli, ejercicio, evitar tóxicos"
+      - "Interpretar sólo en combinación con rs6721961 (haplotipo del promotor)"
+    caveats: "Evidencia débil; se incluye únicamente como contexto del haplotipo del promotor NRF2. Puede no estar tipado en todos los chips de 23andMe."
+    refs: []
+
+  - id: SOD2_Ala16Val
+    gene: SOD2
+    rsid: rs4880
+    name: "Ala16Val (clásico C47T; C=Ala en cDNA = G en hebra +)"
+    effect_allele: A
+    other_allele: G
+    direction: mixed
+    genotypes:
+      AA: {phenotype: "Val/Val: menor eficiencia de importación de SOD2 a la matriz mitocondrial (~30-40 % menos actividad mitocondrial); más superóxido mitocondrial", impact: 1}
+      AG: {phenotype: "Ala/Val: intermedio", impact: 0}
+      GG: {phenotype: "Ala/Ala: importación eficiente y más SOD2 mitocondrial; genera más H2O2, que hay que aclarar con GPX1/catalasa (mirar GPX1 rs1050450 y CAT rs1001179)", impact: 1}
+    effect_size: "La hélice alfa Ala16 se importa ~30-40 % mejor a la mitocondria (estudio funcional); asociaciones clínicas (cáncer, fertilidad, diabetes) inconsistentes"
+    evidence: B
+    mechanism: "El polimorfismo está en la secuencia señal mitocondrial: Ala favorece la hélice alfa y el paso por el poro TIM/TOM; Val la desestabiliza y deja parte de la proteína en el citosol"
+    levers:
+      - "Manganeso suficiente pero no alto: 2-5 mg/d de la dieta (frutos secos, legumbres, cereal integral, té); evitar suplementos de Mn > 10 mg/d y agua con Mn elevado"
+      - "Si Ala/Ala: asegurar el brazo distal (selenio 100-150 µg/d hasta selenio plasmático 100-130 µg/L, y buena función de catalasa) para no acumular H2O2"
+      - "Si Val/Val: prioriza reducir carga oxidativa mitocondrial (evitar sobreentrenamiento, alcohol, exceso de hierro libre)"
+      - "Analítica opcional: 8-OHdG o isoprostanos F2 en orina (interpretación limitada)"
+    caveats: "La literatura usa C/T (cDNA, hebra -). En el fichero de 23andMe verás A/G: A = Val, G = Ala. Muchas webs de 'nutrigenética' invierten este SNP."
+    refs: ["PMID:12618592"]
+
+  - id: GPX1_Pro198Leu
+    gene: GPX1
+    rsid: rs1050450
+    name: "Pro198Leu (clásico C599T)"
+    effect_allele: A
+    other_allele: G
+    direction: risk
+    genotypes:
+      AA: {phenotype: "Leu/Leu: menor actividad de glutatión peroxidasa 1 y peor respuesta de la enzima al aporte de selenio", impact: 1}
+      AG: {phenotype: "Pro/Leu: actividad intermedia", impact: 1}
+      GG: {phenotype: "Pro/Pro: actividad de referencia", impact: 0}
+    effect_size: "Actividad GPx1 eritrocitaria ~5-10 % menor por alelo Leu y menor incremento tras suplementar selenio; asociaciones con cáncer débiles/inconsistentes"
+    evidence: C
+    mechanism: "GPX1 es la selenoproteína que reduce H2O2 y peróxidos lipídicos usando glutatión; la sustitución Pro198Leu reduce la inducibilidad por selenio"
+    levers:
+      - "Selenio 100-200 µg/d (selenometionina o 1-2 nueces de Brasil), objetivo selenio plasmático 100-130 µg/L; no superar 300-400 µg/d (riesgo de diabetes y selenosis)"
+      - "Glutatión: NAC 600-1200 mg/d o glicina+NAC (GlyNAC) si hay estrés oxidativo alto; proteína suficiente (cisteína)"
+      - "Riboflavina y NADPH (glutatión reductasa) adecuados: B2 1.6-5 mg/d"
+      - "Analítica: selenio plasmático/eritrocitario; GPx eritrocitaria si es accesible"
+    caveats: "Efecto individual pequeño; cobra sentido combinado con SOD2 Ala/Ala (más H2O2 producido) y catalasa baja."
+    refs: []
+
+  - id: CAT_prom_262
+    gene: CAT
+    rsid: rs1001179
+    name: "-262 C>T (promotor)"
+    effect_allele: T
+    other_allele: C
+    direction: beneficial
+    genotypes:
+      CC: {phenotype: "Actividad catalasa eritrocitaria de referencia", impact: 0}
+      CT: {phenotype: "Portador de -262T: catalasa algo mayor", impact: 0}
+      TT: {phenotype: "-262TT: mayor expresión/actividad de catalasa; mejor aclaramiento de H2O2", impact: 1}
+    effect_size: "Diferencias de actividad catalasa eritrocitaria del orden del 10-30 % entre homocigotos en varios estudios"
+    evidence: C
+    mechanism: "Variante en el promotor de CAT que altera la unión de factores de transcripción y la expresión basal de catalasa, la enzima que descompone H2O2 en el peroxisoma/citosol"
+    levers:
+      - "Si CC (catalasa baja) junto a SOD2 Ala/Ala: reforzar el eje GPx (selenio 100-150 µg/d) y glutatión (NAC 600 mg/d)"
+      - "Evitar peróxido y agentes pro-oxidantes en dosis altas (peróxido de hidrógeno oral, megadosis de hierro)"
+      - "Hierro dentro de rango (ferritina 30-100 ng/mL): el hierro libre convierte H2O2 en radical hidroxilo (Fenton)"
+    caveats: "Evidencia funcional heterogénea; sin efecto clínico directo demostrado en personas sanas."
+    refs: []
+
+  - id: NQO1_Pro187Ser
+    gene: NQO1
+    rsid: rs1800566
+    name: "NQO1*2 Pro187Ser (clásico C609T)"
+    effect_allele: A
+    other_allele: G
+    direction: risk
+    genotypes:
+      AA: {phenotype: "*2/*2: actividad NQO1 prácticamente nula (proteína degradada por el proteasoma); peor reducción de quinonas, menos ubiquinol y menos vitamina E/K reducidas", impact: 2}
+      AG: {phenotype: "*1/*2: ~50 % de actividad", impact: 1}
+      GG: {phenotype: "*1/*1: actividad normal", impact: 0}
+    effect_size: "Homocigotos *2: <2-4 % de actividad enzimática; heterocigotos ~50 %. Alelo *2 ~20 % en europeos"
+    evidence: A
+    mechanism: "NQO1 hace la reducción de dos electrones de quinonas (evita el ciclo redox de un electrón), regenera ubiquinol y alfa-tocoferolquinona y estabiliza p53. La variante Ser187 desestabiliza la proteína"
+    levers:
+      - "Si *2/*2: evitar exposición a benceno, humo de tabaco, tintes de pelo permanentes y disolventes (riesgo de mielotoxicidad claramente aumentado)"
+      - "CoQ10 en forma ubiquinol 100-200 mg/d (no dependes de NQO1 para reducir el ubiquinona)"
+      - "Sulforafano: induce NQO1 vía NRF2 (útil sobre todo en *1/*2)"
+      - "Relevancia farmacológica: menor bioactivación de mitomicina C y de fármacos quinónicos; anotarlo en el informe de pharmaco"
+      - "Analítica: hemograma completo si hay exposición ocupacional a benceno/disolventes"
+    caveats: "El impacto clínico se concentra en exposiciones tóxicas y oncología; en ausencia de exposición el efecto cotidiano es limitado."
+    refs: []
+
+  - id: GSTP1_Ile105Val
+    gene: GSTP1
+    rsid: rs1695
+    name: "Ile105Val (clásico A313G)"
+    effect_allele: G
+    other_allele: A
+    direction: mixed
+    genotypes:
+      AA: {phenotype: "Ile/Ile: actividad de referencia frente a sustratos electrofílicos aromáticos", impact: 0}
+      AG: {phenotype: "Ile/Val: actividad intermedia", impact: 0}
+      GG: {phenotype: "Val/Val: menor conjugación de epóxidos de hidrocarburos aromáticos policíclicos (humo, barbacoa); mayor afinidad por otros sustratos", impact: 1}
+    effect_size: "Cambios de eficiencia catalítica de ~2-3 veces según sustrato (mayor para epóxidos de PAH con Val); asociaciones clínicas modestas"
+    evidence: B
+    mechanism: "GSTP1 conjuga glutatión con electrófilos (fase II). La sustitución en el sitio activo cambia la especificidad de sustrato más que la actividad global"
+    levers:
+      - "Reducir carga de PAH: menos ahumados/barbacoa carbonizada, no fumar, evitar humo de leña"
+      - "Crucíferas 100-200 g/d o sulforafano 10-20 mg/d: inducen GST vía NRF2"
+      - "Glutatión sustrato: proteína adecuada, NAC 600 mg/d en periodos de alta exposición"
+    caveats: "Las deleciones GSTM1/GSTT1, mucho más determinantes para la capacidad global de conjugación, NO son detectables por array y no se pueden evaluar aquí."
+    refs: []
+
+  - id: UCP2_prom_866
+    gene: UCP2
+    rsid: rs659366
+    name: "-866 G>A (promotor); T en hebra + = alelo -866A"
+    effect_allele: T
+    other_allele: C
+    direction: mixed
+    genotypes:
+      CC: {phenotype: "-866GG: menor expresión de UCP2 en tejido adiposo; eficiencia metabólica algo mayor", impact: 0}
+      CT: {phenotype: "Heterocigoto", impact: 0}
+      TT: {phenotype: "-866AA: mayor transcripción de UCP2; asociado a menor riesgo de obesidad en algunas cohortes, pero también a menor secreción de insulina", impact: 1}
+    effect_size: "Diferencias de expresión de UCP2 en adipocitos y asociación con obesidad de magnitud pequeña (OR ~0.8-0.9), no replicada en todas las poblaciones"
+    evidence: C
+    mechanism: "UCP2 desacopla parcialmente el gradiente de protones mitocondrial: reduce la producción de ROS pero también la eficiencia de la síntesis de ATP y la secreción de insulina en la célula beta"
+    levers:
+      - "Ejercicio y restricción calórica intermitente modulan la expresión de UCP2 más que cualquier suplemento"
+      - "Si hay tendencia a hipoglucemias reactivas o prediabetes, priorizar carga glucémica baja"
+      - "Analítica: insulina y glucosa en ayunas (HOMA-IR), HbA1c"
+    caveats: "La literatura usa la nomenclatura -866G/A (hebra -): en tu fichero verás C/T. Evidencia inconsistente entre cohortes."
+    refs: ["PMID:11381268"]
+
+  - id: UCP3_prom_55
+    gene: UCP3
+    rsid: rs1800849
+    name: "-55 C>T (promotor); A en hebra + = alelo -55T"
+    effect_allele: A
+    other_allele: G
+    direction: mixed
+    genotypes:
+      AA: {phenotype: "-55TT: mayor expresión de UCP3 en músculo esquelético; posible mayor oxidación de grasa y menor eficiencia", impact: 1}
+      AG: {phenotype: "Heterocigoto", impact: 0}
+      GG: {phenotype: "Genotipo más frecuente", impact: 0}
+    effect_size: "Asociaciones con IMC, gasto energético y perfil lipídico pequeñas e inconsistentes"
+    evidence: D
+    mechanism: "UCP3 es el desacoplante específico de músculo esquelético; participa en la exportación de ácidos grasos y en la protección frente a ROS durante la oxidación lipídica"
+    levers:
+      - "Entrenamiento en ayunas o zona 2 para maximizar oxidación de grasa (independiente del genotipo)"
+      - "Carnitina dietética adecuada (carne roja) si hay alta oxidación de grasas; no se recomienda suplementar de rutina (TMAO)"
+    caveats: "Evidencia débil; se incluye como contexto junto a UCP2."
+    refs: []
+
+  - id: PPARA_Leu162Val
+    gene: PPARA
+    rsid: rs1800206
+    name: "Leu162Val"
+    effect_allele: G
+    other_allele: C
+    direction: mixed
+    genotypes:
+      CC: {phenotype: "Leu/Leu: actividad PPAR-alfa de referencia", impact: 0}
+      CG: {phenotype: "Leu/Val: mayor actividad transcripcional dependiente de ligando; respuesta lipídica más marcada a la grasa de la dieta y a los fibratos", impact: 1}
+      GG: {phenotype: "Val/Val (raro, <1 %): fenotipo Val acentuado; LDL y triglicéridos muy sensibles a la composición de la dieta", impact: 2}
+    effect_size: "El alelo Val162 aumenta la transactivación in vitro y modifica la respuesta de LDL/TG a la grasa dietética (interacciones gen-dieta replicadas); alelo Val ~6-7 % en europeos"
+    evidence: B
+    mechanism: "PPAR-alfa regula la beta-oxidación hepática y muscular de ácidos grasos, la cetogénesis y APOA5/APOC3. Val162 está en el dominio de unión a ADN y aumenta la actividad ligando-dependiente"
+    levers:
+      - "Omega-3 (EPA+DHA 1-2 g/d): ligandos naturales de PPAR-alfa, bajan TG un 20-30 %"
+      - "Sustituir grasa saturada por monoinsaturada (AOVE) y poliinsaturada: los portadores de Val responden más a este cambio"
+      - "Si TG > 200 mg/dL pese a dieta: los fibratos (agonistas PPAR-alfa) son la clase lógica; decisión médica"
+      - "Analítica: perfil lipídico completo con ApoB y TG; repetir tras 8-12 semanas de cambio dietético"
+    caveats: "C/G es un par ambiguo, pero la orientación está confirmada (Ensembl hebra + C/G, SNPedia orientation=plus) y la frecuencia baja de G coincide con la del alelo Val162 descrito (~6 %)."
+    refs: []
+
+  - id: PPARD_exon4_294
+    gene: PPARD
+    rsid: rs2016520
+    name: "+294 T>C (exón 4, 5'UTR)"
+    effect_allele: C
+    other_allele: T
+    direction: mixed
+    genotypes:
+      CC: {phenotype: "Homocigoto del alelo menor: mayor actividad transcripcional de PPAR-delta in vitro; asociado a HDL más alto en algunas cohortes", impact: 1}
+      CT: {phenotype: "Heterocigoto", impact: 0}
+      TT: {phenotype: "Genotipo más frecuente (~80 % de alelos en europeos)", impact: 0}
+    effect_size: "Diferencias de HDL de ~2-4 mg/dL y de respuesta al entrenamiento pequeñas; interacción gen-ejercicio descrita pero poco replicada"
+    evidence: C
+    mechanism: "PPAR-delta controla el cambio a fibra muscular tipo I y la oxidación de ácidos grasos; el SNP en la región 5'UTR modifica la unión de Sp1 y la traducción"
+    levers:
+      - "Entrenamiento de resistencia prolongado: activador fisiológico de PPAR-delta (los agonistas farmacológicos tipo GW501516 son cancerígenos en animales y NO deben usarse)"
+      - "Grasa monoinsaturada y omega-3 como ligandos dietéticos"
+    caveats: "Nomenclatura clásica en hebra -; efecto pequeño. No usar agonistas PPAR-delta de mercado gris."
+    refs: []
+
+  - id: AMPD1_Gln12Ter
+    gene: AMPD1
+    rsid: rs17602729
+    name: "Q12X (clásico C34T); deficiencia de AMP desaminasa muscular"
+    effect_allele: A
+    other_allele: G
+    direction: mixed
+    genotypes:
+      AA: {phenotype: "Deficiencia completa de AMPD1 (~1-2 % de europeos): fatiga precoz, mialgias y calambres con ejercicio intenso, CK elevada tras esfuerzo; paradójicamente mejor pronóstico en insuficiencia cardiaca e isquemia", impact: 2}
+      AG: {phenotype: "Portador (~20 %): actividad ~50 %, la mayoría asintomáticos", impact: 1}
+      GG: {phenotype: "Actividad normal", impact: 0}
+    effect_size: "Homocigotos: actividad AMPD muscular <2 %; hasta 2-3 % de la población europea; penetrancia sintomática parcial"
+    evidence: A
+    mechanism: "AMPD1 desamina AMP a IMP en el ciclo de los nucleótidos de purina del músculo; su ausencia limita la regeneración de ATP en esfuerzos intensos pero aumenta la adenosina extracelular (vasodilatación, cardioprotección)"
+    levers:
+      - "Calentamiento largo y progresión suave: el fenómeno de 'segundo aliento' mejora la tolerancia"
+      - "Creatina monohidrato 3-5 g/d: sostiene la fosfocreatina, la vía alternativa de regeneración de ATP"
+      - "Evitar sobreentrenamiento y sesiones supramáximas encadenadas; hidratación y control de rabdomiólisis"
+      - "Analítica: CK basal y 24-48 h tras esfuerzo intenso; descartar otras miopatías metabólicas si hay mioglobinuria"
+      - "La D-ribosa se ha propuesto (5-10 g pre-ejercicio) pero la evidencia es pobre"
+    caveats: "Muchos homocigotos son asintomáticos; el genotipo por sí solo no diagnostica miopatía."
+    refs: []
+
+  - id: PON1_Gln192Arg
+    gene: PON1
+    rsid: rs662
+    name: "Q192R (clásico A192G en cDNA)"
+    effect_allele: C
+    other_allele: T
+    direction: mixed
+    genotypes:
+      CC: {phenotype: "192RR: alta hidrólisis de paraoxón, pero menor actividad lactonasa/arilesterasa frente a diazoxón y peor protección antioxidante del HDL", impact: 1}
+      CT: {phenotype: "192QR: intermedio", impact: 0}
+      TT: {phenotype: "192QQ: baja hidrólisis de paraoxón/clorpirifos-oxón; mayor sensibilidad a insecticidas organofosforados", impact: 1}
+    effect_size: "Diferencias de hasta 10 veces en la hidrólisis de sustratos específicos entre alozimas; el efecto neto depende del sustrato (R mejor para paraoxón, Q mejor para diazoxón/clorpirifós-oxón)"
+    evidence: B
+    mechanism: "PON1 viaja en el HDL e hidroliza lactonas, oxones de organofosforados y lípidos oxidados; el residuo 192 está en el sitio activo y determina la especificidad de sustrato"
+    levers:
+      - "Reducir exposición a organofosforados: lavar/pelar fruta y verdura, priorizar ecológico en los productos de mayor residuo, evitar insecticidas domésticos con clorpirifós/diazinón"
+      - "Dieta mediterránea con AOVE (polifenoles) y ejercicio: aumentan la actividad PON1 de forma modesta"
+      - "No fumar (el tabaco inhibe PON1); alcohol moderado a bajo"
+      - "Analítica: actividad PON1 (arilesterasa) si está disponible; perfil lipídico con HDL y ApoA1"
+    caveats: "La actividad enzimática real varía 40 veces entre personas y depende más de la concentración de PON1 que del genotipo; interpretar como contexto."
+    refs: []
+
+  - id: PON1_Leu55Met
+    gene: PON1
+    rsid: rs854560
+    name: "L55M (clásico T/A en cDNA)"
+    effect_allele: T
+    other_allele: A
+    direction: risk
+    genotypes:
+      AA: {phenotype: "Leu55/Leu55: proteína PON1 más estable y concentración sérica más alta", impact: 0}
+      AT: {phenotype: "Leu/Met: concentración intermedia", impact: 0}
+      TT: {phenotype: "Met55/Met55: menor estabilidad y menor concentración sérica de PON1 (~2 veces menos actividad)", impact: 1}
+    effect_size: "Met55 se asocia a concentraciones séricas de PON1 sustancialmente menores; contribuye menos que la variabilidad no genética"
+    evidence: B
+    mechanism: "La sustitución Leu55Met reduce la estabilidad del ARNm y de la proteína, bajando la concentración circulante de PON1 asociada al HDL"
+    levers:
+      - "Mismas palancas que rs662: minimizar organofosforados, dieta mediterránea con AOVE, no fumar"
+      - "Si además tienes 192QQ y 55MM: extremar la reducción de exposición a insecticidas"
+    caveats: "ATENCIÓN: A/T es un par ambiguo. Los alelos aquí están en hebra + de GRCh37 según Ensembl/VEP (A = Leu55, T = Met55) y la frecuencia de T (~36 % en europeos) coincide con la del alelo Met55 descrito. SNPedia marca este rsid como posible 'ambiguous flip': si tu fichero procede de un chip que reportó la hebra opuesta, AA y TT estarían intercambiados (los heterocigotos no se ven afectados)."
+    refs: []
+
+  - id: CYP1B1_Leu432Val
+    gene: CYP1B1
+    rsid: rs1056836
+    name: "L432V (clásico 4326C>G; C=Leu en cDNA = G en hebra +)"
+    effect_allele: C
+    other_allele: G
+    direction: mixed
+    genotypes:
+      CC: {phenotype: "Val432/Val432: mayor actividad 4-hidroxilasa de estradiol (metabolito 4-OH-E2, más genotóxico) y mayor activación de PAH del humo", impact: 1}
+      CG: {phenotype: "Leu/Val: intermedio", impact: 0}
+      GG: {phenotype: "Leu432/Leu432: actividad de referencia", impact: 0}
+    effect_size: "La alozima Val432 tiene ~2-3 veces más eficiencia catalítica para la 4-hidroxilación de estradiol in vitro; asociaciones con cáncer hormonal débiles"
+    evidence: C
+    mechanism: "CYP1B1 hidroxila estrógenos en posición 4 (catecoles reactivos que pueden formar aductos de ADN si no se metilan por COMT ni se conjugan) y bioactiva hidrocarburos aromáticos policíclicos"
+    levers:
+      - "Crucíferas 150-200 g/d o DIM 100-200 mg/d / I3C: desplazan el metabolismo estrogénico hacia 2-OH"
+      - "Asegurar metilación de catecoles: revisa COMT y el módulo de metilación (magnesio, SAMe/B12/folato)"
+      - "Evitar tabaco y carne muy carbonizada (PAH); alcohol bajo (sube estrógenos)"
+      - "Analítica opcional: perfil de metabolitos estrogénicos en orina (2-OH/16alfa-OH y 4-OH)"
+    caveats: "Nomenclatura clásica en orientación de cDNA (hebra -): en tu fichero verás G (Leu) y C (Val)."
+    refs: []
+
+  - id: NAT2_rs1801280_star5
+    gene: NAT2
+    rsid: rs1801280
+    name: "NAT2*5 (T341C, Ile114Thr) - tag del haplotipo acetilador lento más frecuente en europeos"
+    effect_allele: C
+    other_allele: T
+    direction: risk
+    genotypes:
+      CC: {phenotype: "Homocigoto *5: acetilación lenta muy probable (si no hay otros alelos rápidos)", impact: 1}
+      CT: {phenotype: "Portador de *5: acetilador intermedio probable", impact: 1}
+      TT: {phenotype: "Sin *5 en esta posición", impact: 0}
+    effect_size: "El haplotipo *5 reduce la actividad NAT2 >90 %; ~45 % de los alelos en europeos son lentos"
+    evidence: A
+    mechanism: "NAT2 N-acetila aminas aromáticas e hidrazinas (isoniazida, sulfametazina, hidralazina, procainamida, cafeína como sustrato secundario) y aminas heterocíclicas de la carne muy hecha"
+    levers:
+      - "El fenotipo acetilador se decide por la combinación de los 4 SNPs: consúltalo en el módulo pharmaco (regla NAT2), no por este SNP aislado"
+      - "Si eres acetilador lento: moderar carne muy hecha/braseada (aminas heterocíclicas), no fumar (aminas aromáticas)"
+      - "Relevancia clínica: mayor riesgo de hepatotoxicidad y neuropatía por isoniazida y de reacciones a sulfamidas e hidralazina"
+    caveats: "Un solo SNP no define el fenotipo acetilador; la regla de haplotipos NAT2 vive en pharmaco. Impacto deliberadamente bajo aquí para no duplicar."
+    refs: []
+
+  - id: NAT2_rs1799930_star6
+    gene: NAT2
+    rsid: rs1799930
+    name: "NAT2*6 (G590A, Arg197Gln) - alelo acetilador lento"
+    effect_allele: A
+    other_allele: G
+    direction: risk
+    genotypes:
+      AA: {phenotype: "Homocigoto *6: acetilación lenta probable", impact: 1}
+      AG: {phenotype: "Portador de *6", impact: 1}
+      GG: {phenotype: "Sin *6 en esta posición", impact: 0}
+    effect_size: "*6 reduce la estabilidad de la proteína NAT2 y su actividad >80 %"
+    evidence: A
+    mechanism: "Ver NAT2*5: acetilación de fase II de aminas aromáticas e hidrazinas"
+    levers:
+      - "Interpretar con los otros 3 tags en la regla NAT2 del módulo pharmaco"
+      - "Acetilador lento: precaución documentada con isoniazida, hidralazina, sulfasalazina, procainamida, dapsona"
+    caveats: "Ver NAT2*5."
+    refs: []
+
+  - id: NAT2_rs1799931_star7
+    gene: NAT2
+    rsid: rs1799931
+    name: "NAT2*7 (G857A, Gly286Glu) - alelo lento (frecuente en Asia oriental)"
+    effect_allele: A
+    other_allele: G
+    direction: risk
+    genotypes:
+      AA: {phenotype: "Homocigoto *7: acetilación lenta", impact: 1}
+      AG: {phenotype: "Portador de *7", impact: 1}
+      GG: {phenotype: "Sin *7 en esta posición", impact: 0}
+    effect_size: "*7 reduce marcadamente la actividad; frecuencia ~2-3 % en europeos, mucho mayor en poblaciones de Asia oriental"
+    evidence: A
+    mechanism: "Ver NAT2*5"
+    levers:
+      - "Interpretar en la regla NAT2 (pharmaco)"
+    caveats: "Ver NAT2*5."
+    refs: []
+
+  - id: NAT2_rs1801279_star14
+    gene: NAT2
+    rsid: rs1801279
+    name: "NAT2*14 (G191A, Arg64Gln) - alelo lento (frecuente en África)"
+    effect_allele: A
+    other_allele: G
+    direction: risk
+    genotypes:
+      AA: {phenotype: "Homocigoto *14: acetilación lenta", impact: 1}
+      AG: {phenotype: "Portador de *14", impact: 1}
+      GG: {phenotype: "Sin *14 en esta posición (lo esperable en europeos)", impact: 0}
+    effect_size: "*14 casi abole la actividad; muy raro en europeos (<1 %), frecuente en poblaciones africanas"
+    evidence: A
+    mechanism: "Ver NAT2*5"
+    levers:
+      - "Interpretar en la regla NAT2 (pharmaco)"
+    caveats: "Puede no estar tipado en algunos chips; su ausencia no invalida la inferencia del fenotipo en europeos."
+    refs: []
+
+  - id: GCLC_prom_129
+    gene: GCLC
+    rsid: rs17883901
+    name: "-129 C>T (promotor); A en hebra + = alelo -129T"
+    effect_allele: A
+    other_allele: G
+    direction: risk
+    genotypes:
+      AA: {phenotype: "-129TT (raro): menor transcripción de la subunidad catalítica de la glutamato-cisteína ligasa, síntesis de glutatión reducida", impact: 1}
+      AG: {phenotype: "Portador: expresión algo menor de GCLC", impact: 0}
+      GG: {phenotype: "Expresión de referencia", impact: 0}
+    effect_size: "Reducción de la actividad del promotor GCLC in vitro; asociaciones con disfunción endotelial, asma y NAFLD de tamaño pequeño. Alelo -129T ~8 % en europeos"
+    evidence: C
+    mechanism: "GCLC cataliza el paso limitante de la síntesis de glutatión (glutamato + cisteína); menos GCLC = menor capacidad de reponer GSH bajo estrés oxidativo"
+    levers:
+      - "NAC 600-1200 mg/d (aporta cisteína, el sustrato limitante) o GlyNAC (glicina 100 mg/kg/d + NAC) en periodos de estrés oxidativo alto"
+      - "Proteína suficiente (1.2-1.6 g/kg/d) con fuentes ricas en cisteína (huevo, suero de leche 20-30 g/d)"
+      - "Sulforafano 10-20 mg/d: induce GCLC/GCLM vía NRF2"
+      - "Analítica: GGT (marcador indirecto del recambio de glutatión), glutatión total en sangre si es accesible"
+    caveats: "Evidencia limitada y alelo poco frecuente; útil sobre todo si coincide con NRF2 hipoactivo."
+    refs: []

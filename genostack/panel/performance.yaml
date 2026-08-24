@@ -1,0 +1,397 @@
+module: performance
+title: "Rendimiento físico, composición corporal y tejido conectivo"
+goals: [performance, health]
+description: >
+  Perfil potencia/resistencia (ACTN3, ACE, HIF1A, CKM, MCT1), respuesta cardiovascular y
+  vasodilatación (NOS3, AGT, ADRB2/ADRB3), masa magra (TRHR, MSTN, CNTF) y riesgo de lesión de
+  tejido conectivo (COL1A1, COL5A1, MMP3, GDF5). Ninguna de estas variantes decide un techo de
+  rendimiento: el entrenamiento, el sueño y la nutrición pesan mucho más; se usan para afinar
+  el tipo de estímulo, la recuperación y la prevención de lesiones.
+  No se duplican aquí: PPARGC1A, AMPD1 y PPARA están en energy_mito; VDR en vitamins_minerals;
+  IL6 -174 (rs1800795) en inflammation_gut; FTO en cardiometabolic. El indel ACE I/D real
+  (rs1799752) y BDKRB2 +9/-9 no son tipables por array: se usa un tag SNP.
+  Todos los alelos están en hebra + de GRCh37 (la orientación del fichero crudo de 23andMe).
+
+variants:
+  - id: ACTN3_R577X
+    gene: ACTN3
+    rsid: rs1815739
+    name: "R577X (clásico C1747T)"
+    effect_allele: T
+    other_allele: C
+    direction: mixed
+    genotypes:
+      CC: {phenotype: "RR: alfa-actinina-3 presente en fibras rápidas tipo II; perfil de potencia/velocidad favorecido, algo más de daño muscular excéntrico", impact: 1}
+      CT: {phenotype: "RX: fenotipo intermedio, el más común", impact: 0}
+      TT: {phenotype: "XX (~18 % de europeos): ausencia total de alfa-actinina-3; menor potencia máxima y velocidad, mejor eficiencia y perfil de resistencia; recuperación algo más rápida del daño muscular", impact: 2}
+    effect_size: "El genotipo XX está claramente infrarrepresentado en velocistas de élite (y algo sobrerrepresentado en fondistas); en población general la diferencia de potencia entre genotipos es del orden del 2-5 %"
+    evidence: A
+    mechanism: "El codón de parada prematuro elimina la alfa-actinina-3 de la línea Z de las fibras tipo II; la alfa-actinina-2 compensa parcialmente, desplazando el metabolismo hacia un perfil más oxidativo"
+    levers:
+      - "Si XX: prioriza volumen y trabajo de resistencia/fuerza-resistencia; para ganar potencia necesitarás más trabajo específico de fuerza máxima y pliometría (respondes, pero desde más atrás)"
+      - "Si XX: la creatina monohidrato 3-5 g/d es especialmente útil para compensar el déficit de potencia"
+      - "Si RR: mayor daño muscular excéntrico: cuidar la progresión de bajadas/pliometría y la recuperación (proteína 1.6-2.2 g/kg/d, sueño 7-9 h)"
+      - "Test práctico: salto vertical / sprint 30 m vs test de umbral: el fenotipo real manda sobre el genotipo"
+    caveats: "Es el SNP de rendimiento mejor replicado, pero explica una fracción pequeña de la varianza: no descarta ni garantiza nada a nivel individual."
+    refs: ["PMID:12879365"]
+
+  - id: ACE_rs4343_ID_tag
+    gene: ACE
+    rsid: rs4343
+    name: "Tag del polimorfismo I/D de ACE (A = alelo I, G = alelo D)"
+    effect_allele: G
+    other_allele: A
+    direction: mixed
+    genotypes:
+      AA: {phenotype: "Equivalente a I/I: ECA sérica más baja; perfil asociado a resistencia aeróbica y mayor eficiencia muscular", impact: 1}
+      AG: {phenotype: "Equivalente a I/D: intermedio", impact: 0}
+      GG: {phenotype: "Equivalente a D/D: ECA sérica más alta (hasta el doble que I/I); perfil asociado a fuerza/potencia y a mayor hipertrofia ventricular con el entrenamiento", impact: 1}
+    effect_size: "El genotipo explica ~40-50 % de la variabilidad de la ECA sérica; las asociaciones con rendimiento (resistencia en I/I, potencia en D/D) son reales pero de efecto pequeño e inconsistente entre deportes"
+    evidence: B
+    mechanism: "La inserción/deleción de un elemento Alu en el intrón 16 de ACE determina la concentración de enzima convertidora de angiotensina; más ECA = más angiotensina II (vasoconstricción, hipertrofia) y menos bradicinina"
+    levers:
+      - "Si GG (D/D): vigilar tensión arterial en cada revisión y el remodelado cardiaco si haces mucho entrenamiento de fuerza; sodio moderado (<5 g de sal/d)"
+      - "Si AA (I/I): buen sustrato para trabajo de umbral y volumen aeróbico"
+      - "Palanca general: entrenamiento de resistencia y control del sodio afectan más a la tensión que el genotipo"
+      - "Analítica/medición: tensión arterial domiciliaria; ECG/ecocardio si hay hipertrofia sospechada"
+    caveats: "IMPORTANTE: rs4343 es un tag, no el indel. La correspondencia con I/D es alta (r2 ~0.9) pero no perfecta, así que el genotipo I/D inferido puede fallar en una minoría de casos. El indel real (rs1799752) no se puede leer en un array. rs4341 es un tag alternativo, pero es C/G (par ambiguo) y por eso se prefiere rs4343 (A/G)."
+    refs: []
+
+  - id: COL1A1_Sp1
+    gene: COL1A1
+    rsid: rs1800012
+    name: "Sitio Sp1 del intrón 1 (clásico G>T; en hebra + C=G clásico, A=T clásico)"
+    effect_allele: A
+    other_allele: C
+    direction: mixed
+    genotypes:
+      CC: {phenotype: "SS clásico: relación normal de cadenas alfa1/alfa2 del colágeno tipo I", impact: 0}
+      AC: {phenotype: "Ss: densidad mineral ósea ligeramente menor; en varios estudios, menor riesgo de rotura de ligamento cruzado y de luxación de hombro", impact: 1}
+      AA: {phenotype: "ss (~3 %): más transcripción de la cadena alfa1, colágeno con proporción alterada; densidad mineral ósea menor y más riesgo de fractura osteoporótica, pero tendón/ligamento aparentemente más resistentes a la rotura", impact: 2}
+    effect_size: "Meta-análisis: DMO ~2-4 % menor en homocigotos ss y OR de fractura vertebral ~1.3-1.7, independiente en parte de la DMO; efecto protector frente a rotura de LCA replicado en varias cohortes"
+    evidence: B
+    mechanism: "El SNP crea un sitio de unión mejorado para el factor Sp1 en el intrón 1 de COL1A1, aumentando la transcripción de la cadena alfa1(I) y desequilibrando la estequiometría del heterotrímero de colágeno tipo I"
+    levers:
+      - "Entrenamiento de fuerza e impacto 2-3 veces/semana: la palanca principal sobre hueso y tendón"
+      - "Proteína 1.6-2.2 g/kg/d, calcio 1000-1200 mg/d, vitamina D según 25-OH-D y vitamina K2 MK-7 100-200 µg/d"
+      - "Colágeno hidrolizado o gelatina 15 g + 50 mg de vitamina C, 45-60 min antes del trabajo de tendón (protocolo de carga con síntesis de colágeno)"
+      - "Analítica/prueba: DEXA si hay otros factores de riesgo de osteoporosis (mujer posmenopáusica, IMC bajo, corticoides)"
+    caveats: "Efecto direccionalmente opuesto en hueso (desfavorable) y en ligamento (posiblemente protector). Nomenclatura clásica en hebra -."
+    refs: []
+
+  - id: COL5A1_rs12722
+    gene: COL5A1
+    rsid: rs12722
+    name: "COL5A1 3'UTR rs12722 (antiguo RFLP BstUI)"
+    effect_allele: T
+    other_allele: C
+    direction: mixed
+    genotypes:
+      CC: {phenotype: "Asociado a menor rango de movimiento/flexibilidad y, en varias cohortes, a mejores tiempos en pruebas de resistencia (mayor rigidez músculo-tendinosa = mejor economía)", impact: 1}
+      CT: {phenotype: "Intermedio", impact: 0}
+      TT: {phenotype: "Asociado en varios estudios a mayor riesgo de tendinopatía aquílea y a mayor flexibilidad", impact: 1}
+    effect_size: "Odds ratio de tendinopatía aquílea en torno a 1.5-2 en los estudios positivos; resultados no replicados en todas las poblaciones"
+    evidence: C
+    mechanism: "Variante en la región 3'UTR de la cadena alfa1 del colágeno tipo V, que regula el diámetro de las fibrillas de colágeno tipo I en tendón y ligamento; afecta a la estabilidad del ARNm"
+    levers:
+      - "Carga progresiva del tendón: excéntricos tipo Alfredson o isométricos pesados (Heavy Slow Resistance) 3 veces/semana como prevención y tratamiento"
+      - "Colágeno hidrolizado/gelatina 15 g + vitamina C 50 mg, 45-60 min antes del trabajo de tendón"
+      - "Progresión de volumen ≤10 % semanal y calzado/superficie estables si hay historia de tendinopatía"
+      - "Si CC (poca flexibilidad): trabajo de movilidad específico; no fuerces estiramientos balísticos"
+    caveats: "Los estudios son pequeños y en poblaciones concretas (sudafricanos, australianos); tómalo como una señal débil de prevención, no como un diagnóstico."
+    refs: []
+
+  - id: MMP3_rs679620
+    gene: MMP3
+    rsid: rs679620
+    name: "MMP3 Glu45Lys (marcador del haplotipo MMP3, en hebra + T/C)"
+    effect_allele: T
+    other_allele: C
+    direction: mixed
+    genotypes:
+      CC: {phenotype: "Homocigoto: perfil de remodelado de matriz distinto; asociado en algunos estudios a riesgo de tendinopatía aquílea en interacción con COL5A1", impact: 1}
+      CT: {phenotype: "Heterocigoto", impact: 0}
+      TT: {phenotype: "Homocigoto alternativo: asociación opuesta o nula según cohorte", impact: 1}
+    effect_size: "Asociaciones débiles (OR ~1.3-1.8) y dependientes del haplotipo con COL5A1; direccionalidad no consistente entre estudios"
+    evidence: D
+    mechanism: "MMP3 (estromelisina-1) degrada proteoglicanos y colágenos de la matriz extracelular y activa otras MMP; el SNP marca un haplotipo del promotor (5A/6A) que cambia la expresión"
+    levers:
+      - "Prevención de tendinopatía independiente del genotipo: carga progresiva del tendón, control del volumen semanal, sueño y proteína suficientes"
+      - "Colágeno/gelatina + vitamina C antes del trabajo de tendón"
+    caveats: "Se incluye sólo como contexto del haplotipo tendinopatía junto a COL5A1; la dirección del efecto no está establecida, no tomes decisiones basadas en este SNP aislado."
+    refs: []
+
+  - id: MSTN_K153R
+    gene: MSTN
+    rsid: rs1805086
+    name: "Miostatina K153R"
+    effect_allele: C
+    other_allele: T
+    direction: beneficial
+    genotypes:
+      CC: {phenotype: "Arg153/Arg153 (muy raro): miostatina posiblemente menos activa; descrito en algunos casos de hipertrofia marcada", impact: 1}
+      CT: {phenotype: "Portador de 153R (~2-3 %): en algunos estudios, mayor respuesta hipertrófica al entrenamiento de fuerza", impact: 1}
+      TT: {phenotype: "Lys153/Lys153: genotipo habitual", impact: 0}
+    effect_size: "Estudios pequeños con resultados dispares; el alelo R es raro en europeos (~1.5 %) y frecuente en algunas poblaciones africanas"
+    evidence: D
+    mechanism: "La miostatina (GDF8) frena el crecimiento muscular vía ActRIIB/SMAD2-3; la variante 153R podría reducir su actividad inhibitoria"
+    levers:
+      - "Entrenamiento de fuerza progresivo 3-4 sesiones/semana + proteína 1.6-2.2 g/kg/d: lo que realmente determina la hipertrofia"
+      - "Creatina monohidrato 3-5 g/d"
+      - "Los 'inhibidores de miostatina' de venta como suplemento (follistatina de yema de huevo, epicatequina) no tienen evidencia clínica sólida"
+    caveats: "Evidencia muy limitada; la mayoría de la población será TT y el hallazgo carece de valor práctico."
+    refs: []
+
+  - id: AGT_M235T
+    gene: AGT
+    rsid: rs699
+    name: "Angiotensinógeno M235T (en hebra + A=Met235, G=Thr235)"
+    effect_allele: G
+    other_allele: A
+    direction: risk
+    genotypes:
+      AA: {phenotype: "Met/Met: angiotensinógeno plasmático más bajo", impact: 0}
+      AG: {phenotype: "Intermedio", impact: 0}
+      GG: {phenotype: "Thr235/Thr235: angiotensinógeno plasmático ~10-20 % más alto; tensión arterial ligeramente mayor y más sensibilidad a la sal; en deportistas se ha asociado a mayor respuesta hipertrófica de fuerza", impact: 1}
+    effect_size: "Diferencias de angiotensinógeno del 10-20 % entre homocigotos; efecto sobre presión arterial de 1-2 mmHg y OR de hipertensión ~1.2 en meta-análisis"
+    evidence: B
+    mechanism: "El angiotensinógeno es el sustrato limitante del sistema renina-angiotensina; Thr235 (en LD con una variante del promotor) aumenta su concentración plasmática"
+    levers:
+      - "Sal < 5 g/d y potasio dietético alto (verdura, fruta, legumbre): el genotipo Thr responde más a la restricción de sodio"
+      - "Tensión arterial domiciliaria periódica; ejercicio aeróbico regular"
+      - "Si hay hipertensión establecida, los IECA/ARA-II son la clase mecanísticamente lógica (decisión médica)"
+    caveats: "Efecto poblacional pequeño; la asociación con hipertrofia muscular es preliminar."
+    refs: []
+
+  - id: ADRB2_Gly16Arg
+    gene: ADRB2
+    rsid: rs1042713
+    name: "ADRB2 Arg16Gly (en hebra + A=Arg16, G=Gly16)"
+    effect_allele: G
+    other_allele: A
+    direction: mixed
+    genotypes:
+      AA: {phenotype: "Arg16/Arg16: menor regulación a la baja del receptor beta-2 con la estimulación mantenida; respuesta broncodilatadora aguda a salbutamol algo mayor", impact: 1}
+      AG: {phenotype: "Intermedio", impact: 0}
+      GG: {phenotype: "Gly16/Gly16: mayor downregulación del receptor con agonistas; respuesta lipolítica y vasodilatadora a catecolaminas algo distinta y posible menor eficacia del salbutamol de rescate con uso frecuente", impact: 1}
+    effect_size: "Diferencias claras in vitro en la internalización del receptor; en clínica, efectos pequeños sobre respuesta a beta-2 agonistas y sobre lipolisis inducida por ejercicio"
+    evidence: B
+    mechanism: "El receptor beta-2 adrenérgico media la broncodilatación, la lipolisis y la vasodilatación muscular durante el ejercicio; la posición 16 determina la regulación a la baja del receptor tras estimulación por agonistas"
+    levers:
+      - "Si usas salbutamol con frecuencia (asma o broncoespasmo de esfuerzo), coméntale a tu médico el uso repetido: el control debe basarse en corticoide inhalado, no en el rescate"
+      - "Palanca sobre lipolisis: entrenamiento aeróbico en ayunas y cafeína pre-entreno (revisa CYP1A2 en sleep_caffeine)"
+      - "Medición: variabilidad de frecuencia cardiaca y respuesta de FC al esfuerzo como fenotipo real"
+    caveats: "Interpretar junto a rs1042714 (haplotipo Arg16-Gln27 vs Gly16-Glu27); los efectos clínicos aislados son pequeños."
+    refs: []
+
+  - id: ADRB2_Gln27Glu
+    gene: ADRB2
+    rsid: rs1042714
+    name: "ADRB2 Gln27Glu (en hebra + C=Gln27, G=Glu27)"
+    effect_allele: G
+    other_allele: C
+    direction: mixed
+    genotypes:
+      CC: {phenotype: "Gln27/Gln27: genotipo de referencia", impact: 0}
+      CG: {phenotype: "Intermedio", impact: 0}
+      GG: {phenotype: "Glu27/Glu27: receptor más resistente a la regulación a la baja; asociado en algunas cohortes a mayor masa grasa y a distinta respuesta lipolítica al ejercicio", impact: 1}
+    effect_size: "Asociaciones con obesidad y respuesta al ejercicio de tamaño pequeño e inconsistentes entre poblaciones"
+    evidence: C
+    mechanism: "Segundo polimorfismo funcional del ADRB2, en fuerte desequilibrio de ligamiento con Arg16Gly; modula la desensibilización del receptor"
+    levers:
+      - "Mismas palancas que rs1042713; el haplotipo (Arg16-Gln27 / Gly16-Glu27) importa más que cada SNP suelto"
+      - "Composición corporal: déficit calórico moderado + fuerza + 10-12k pasos, con proteína alta"
+    caveats: "C/G es un par ambiguo; orientación verificada (VEP: G=Glu27, C=Gln27; SNPedia orientation=plus) y la frecuencia de Gln27 (~56 %) coincide con la descrita."
+    refs: []
+
+  - id: ADRB3_Trp64Arg
+    gene: ADRB3
+    rsid: rs4994
+    name: "ADRB3 Trp64Arg"
+    effect_allele: G
+    other_allele: A
+    direction: risk
+    genotypes:
+      AA: {phenotype: "Trp64/Trp64: función del receptor beta-3 de referencia", impact: 0}
+      AG: {phenotype: "Portador de Arg64 (~8 % de alelos): lipolisis en tejido adiposo visceral algo menor; asociado a menor pérdida de peso con dieta en algunos estudios", impact: 1}
+      GG: {phenotype: "Arg64/Arg64 (raro): fenotipo anterior más marcado", impact: 1}
+    effect_size: "Meta-análisis: diferencia de IMC ~0.2-0.3 kg/m2 y algo menos de pérdida de peso con intervención; efectos pequeños"
+    evidence: C
+    mechanism: "El receptor beta-3 adrenérgico media la lipolisis en tejido adiposo visceral y la termogénesis; Arg64 reduce la señalización dependiente de AMPc"
+    levers:
+      - "Entrenamiento combinado (fuerza + aeróbico) y déficit calórico sostenido: el genotipo no cambia la estrategia, sólo la pendiente"
+      - "Cafeína pre-entreno 3 mg/kg si la toleras (revisa CYP1A2 y ADORA2A en sleep_caffeine)"
+      - "Medición: perímetro de cintura y composición corporal cada 8-12 semanas"
+    caveats: "Efecto muy pequeño; no justifica ninguna dieta especial."
+    refs: []
+
+  - id: CKM_rs8111989
+    gene: CKM
+    rsid: rs8111989
+    name: "Creatina quinasa muscular (3'UTR)"
+    effect_allele: C
+    other_allele: T
+    direction: mixed
+    genotypes:
+      CC: {phenotype: "Asociado en algunos estudios a menor incremento de VO2max con el entrenamiento", impact: 1}
+      CT: {phenotype: "Intermedio", impact: 0}
+      TT: {phenotype: "Genotipo más frecuente; respuesta de VO2max al entrenamiento de referencia", impact: 0}
+    effect_size: "Diferencias en la mejora de VO2max con entrenamiento del orden de 1-3 mL/kg/min en cohortes pequeñas (HERITAGE y similares)"
+    evidence: D
+    mechanism: "La creatina quinasa muscular tampona el ATP en la contracción; la variante en la región 3'UTR podría alterar la expresión"
+    levers:
+      - "Creatina monohidrato 3-5 g/d (efecto independiente del genotipo, bien establecido)"
+      - "Polarización del entrenamiento (80 % zona 2 / 20 % alta intensidad) para maximizar VO2max"
+      - "Medición: VO2max o FTP/umbral cada 3-4 meses"
+    caveats: "Evidencia preliminar y en muestras pequeñas."
+    refs: []
+
+  - id: HIF1A_P582S
+    gene: HIF1A
+    rsid: rs11549465
+    name: "HIF1A Pro582Ser"
+    effect_allele: T
+    other_allele: C
+    direction: mixed
+    genotypes:
+      CC: {phenotype: "Pro582/Pro582: genotipo de referencia", impact: 0}
+      CT: {phenotype: "Portador de Ser582 (~10 % de alelos): HIF-1alfa más estable en normoxia; sobrerrepresentado en deportistas de potencia y asociado a mayor proporción de fibras tipo II en algunos estudios", impact: 1}
+      TT: {phenotype: "Ser582/Ser582 (raro): fenotipo anterior más marcado", impact: 1}
+    effect_size: "Asociación con perfil potencia/velocidad de tamaño pequeño; algunos estudios describen interacción con ACTN3 R577X"
+    evidence: C
+    mechanism: "HIF-1alfa dirige la respuesta transcripcional a la hipoxia (glucólisis, VEGF, EPO); Ser582 reduce la degradación de la proteína y aumenta su actividad transactivadora"
+    levers:
+      - "Si perfil de potencia: sprints, pliometría y fuerza máxima; trabajo glucolítico bien tolerado"
+      - "Entrenamiento en altitud o hipoxia intermitente: la respuesta interindividual es muy variable, mide antes de invertir tiempo"
+      - "Medición: test de Wingate o sprints repetidos vs test de umbral"
+    caveats: "Muestras pequeñas de deportistas de élite; poca transferencia a población general."
+    refs: ["PMID:20005538"]
+
+  - id: NOS3_prom_786
+    gene: NOS3
+    rsid: rs2070744
+    name: "eNOS -786 T>C (promotor)"
+    effect_allele: C
+    other_allele: T
+    direction: risk
+    genotypes:
+      CC: {phenotype: "Menor transcripción de eNOS: menos óxido nítrico basal, peor vasodilatación dependiente del endotelio y mayor tensión arterial media", impact: 1}
+      CT: {phenotype: "Intermedio", impact: 0}
+      TT: {phenotype: "Expresión de eNOS de referencia", impact: 0}
+    effect_size: "Reducción de la actividad del promotor de eNOS ~50 % in vitro para el alelo C; asociación con espasmo coronario e hipertensión de efecto pequeño en población general"
+    evidence: B
+    mechanism: "eNOS produce el óxido nítrico endotelial responsable de la vasodilatación y del aumento del flujo muscular durante el ejercicio; el SNP del promotor reduce su expresión"
+    levers:
+      - "Nitratos dietéticos: zumo de remolacha 400-800 mg de nitrato (~140-250 mL) 2-3 h antes del esfuerzo: aumenta el NO por la vía nitrato-nitrito independiente de eNOS (justo lo que compensa este genotipo)"
+      - "Verdura de hoja verde y rúcula a diario; no usar colutorio antiséptico (mata las bacterias orales que reducen nitrato a nitrito)"
+      - "Ejercicio aeróbico regular: el estímulo de shear stress es el mejor inductor de eNOS"
+      - "L-citrulina 6 g/d (más eficaz que la arginina para subir arginina plasmática)"
+      - "Medición: tensión arterial domiciliaria; rendimiento en test submáximo con y sin remolacha"
+    caveats: "Los suplementos de nitrato tienen efecto pequeño y variable; mide antes de asumir que te funcionan."
+    refs: []
+
+  - id: NOS3_E298D
+    gene: NOS3
+    rsid: rs1799983
+    name: "eNOS Glu298Asp (en hebra + G=Glu298, T=Asp298)"
+    effect_allele: T
+    other_allele: G
+    direction: risk
+    genotypes:
+      GG: {phenotype: "Glu298/Glu298: eNOS de referencia", impact: 0}
+      GT: {phenotype: "Portador de Asp298: proteína más susceptible de escisión; menor producción basal de NO", impact: 0}
+      TT: {phenotype: "Asp298/Asp298: menor actividad de eNOS y peor vasodilatación; asociado a hipertensión y a menor rendimiento en algunos estudios de resistencia", impact: 1}
+    effect_size: "Meta-análisis: OR de hipertensión ~1.1-1.3 para el alelo Asp; efectos sobre rendimiento pequeños"
+    evidence: B
+    mechanism: "La sustitución Glu298Asp está en el dominio oxigenasa de eNOS y favorece su escisión proteolítica, reduciendo la síntesis de NO"
+    levers:
+      - "Mismas palancas que rs2070744: nitratos dietéticos (remolacha, rúcula), L-citrulina 6 g/d, ejercicio aeróbico"
+      - "Control de la tensión arterial y del perfil lipídico (la disfunción endotelial se suma a otros factores)"
+    caveats: "En LD parcial con el SNP del promotor: valora los dos juntos como haplotipo de eNOS."
+    refs: []
+
+  - id: TRHR_lean_mass
+    gene: TRHR
+    rsid: rs7832552
+    name: "TRHR rs7832552 (locus GWAS de masa magra)"
+    effect_allele: T
+    other_allele: C
+    direction: beneficial
+    genotypes:
+      CC: {phenotype: "Masa magra algo menor de media", impact: 0}
+      CT: {phenotype: "Intermedio", impact: 0}
+      TT: {phenotype: "Masa magra corporal algo mayor de media", impact: 1}
+    effect_size: "Cada alelo T se asocia a ~0.1 kg más de masa magra (GWAS con replicación, p=4e-10): efecto real pero minúsculo a nivel individual"
+    evidence: B
+    mechanism: "El receptor de la hormona liberadora de tirotropina regula el eje tiroideo, que modula el recambio proteico y la masa muscular"
+    levers:
+      - "Lo que mueve la masa magra: fuerza progresiva 3-4 días/semana, proteína 1.6-2.2 g/kg/d repartida en 3-4 tomas, sueño 7-9 h"
+      - "Descartar hipotiroidismo si hay fatiga y pérdida de fuerza: TSH y T4 libre"
+      - "Medición: bioimpedancia o DEXA cada 6 meses; fuerza de agarre como marcador funcional"
+    caveats: "0.1 kg por alelo no es accionable; sirve como contexto, no como objetivo."
+    refs: ["PMID:19268274"]
+
+  - id: CNTF_null
+    gene: CNTF
+    rsid: rs1800169
+    name: "CNTF G>A (alelo nulo por splicing)"
+    effect_allele: A
+    other_allele: G
+    direction: mixed
+    genotypes:
+      AA: {phenotype: "Homocigoto nulo (~2 %): sin CNTF funcional; algunos estudios describen mayor masa/fuerza muscular, otros no encuentran efecto", impact: 1}
+      AG: {phenotype: "Portador (~15 % de alelos): resultados dispares sobre fuerza muscular", impact: 1}
+      GG: {phenotype: "CNTF funcional (genotipo habitual)", impact: 0}
+    effect_size: "Diferencias de fuerza descritas en cohortes pequeñas (a favor de los portadores en algunos estudios); sin replicación consistente"
+    evidence: D
+    mechanism: "El factor neurotrófico ciliar señaliza vía gp130/LIFR en músculo y sistema nervioso; el alelo nulo elimina la proteína funcional sin causar patología"
+    levers:
+      - "Sin palanca específica: fuerza progresiva, proteína y sueño"
+    caveats: "Evidencia contradictoria; se incluye como contexto informativo de baja prioridad."
+    refs: []
+
+  - id: MCT1_D490E
+    gene: SLC16A1
+    rsid: rs1049434
+    name: "MCT1 Asp490Glu (clásico T1470A; en hebra + A=Asp490, T=Glu490)"
+    effect_allele: T
+    other_allele: A
+    direction: risk
+    genotypes:
+      AA: {phenotype: "Asp490/Asp490: transporte de lactato al músculo eficiente; mejor aclaramiento de lactato en esfuerzos de alta intensidad", impact: 0}
+      AT: {phenotype: "Intermedio", impact: 0}
+      TT: {phenotype: "Glu490/Glu490: transporte de lactato reducido (hasta ~40-60 % menos en estudios funcionales); mayor acumulación de lactato sanguíneo tras esfuerzo intenso y recuperación más lenta", impact: 1}
+    effect_size: "Diferencias de lactato sanguíneo post-esfuerzo de hasta 20-30 % entre genotipos en estudios pequeños de deportistas"
+    evidence: C
+    mechanism: "MCT1 (SLC16A1) cotransporta lactato y protones hacia las fibras oxidativas y el corazón para su uso como combustible; la variante Glu490 reduce la capacidad de transporte"
+    levers:
+      - "Si TT: entrenamiento de umbral y series con recuperación activa para mejorar el aclaramiento (la densidad de MCT1 es muy entrenable)"
+      - "Recuperación activa a baja intensidad tras series duras en lugar de reposo pasivo"
+      - "Bicarbonato sódico 0.2-0.3 g/kg 60-90 min antes de esfuerzos de 1-8 min (tamponamiento extracelular; probar en entrenamiento por la tolerancia digestiva)"
+      - "Beta-alanina 4-6 g/d durante 4-10 semanas (carnosina muscular, tamponamiento intracelular)"
+      - "Medición: curva de lactato en test escalonado"
+    caveats: "ATENCIÓN: A/T es un par ambiguo. Alelos verificados en hebra + con Ensembl/VEP (A=Asp490, T=Glu490); la literatura usa la orientación del cDNA (hebra -), donde 'T' es Asp y 'A' es Glu, justo al revés en letras. Si tu fichero viniera de un chip que reportara la hebra opuesta, AA y TT estarían intercambiados."
+    refs: []
+
+  - id: GDF5_rs143383
+    gene: GDF5
+    rsid: rs143383
+    name: "GDF5 5'UTR +104 T/C (en hebra + A=T clásico de riesgo, G=C clásico)"
+    effect_allele: A
+    other_allele: G
+    direction: risk
+    genotypes:
+      AA: {phenotype: "Homocigoto de riesgo: menor expresión de GDF5 en cartílago y tendón; más riesgo de artrosis de rodilla y cadera, y posiblemente de tendinopatía", impact: 1}
+      AG: {phenotype: "Portador: riesgo intermedio", impact: 1}
+      GG: {phenotype: "Genotipo de referencia", impact: 0}
+    effect_size: "Meta-análisis: OR de artrosis de rodilla ~1.15-1.3 por alelo de riesgo; asociación replicada en poblaciones asiáticas y europeas"
+    evidence: A
+    mechanism: "El SNP está en la región 5'UTR de GDF5 (factor de crecimiento condrogénico) y reduce su transcripción, afectando al desarrollo y mantenimiento del cartílago articular"
+    levers:
+      - "Fuerza de cuádriceps e isquiotibiales 2-3 veces/semana: la intervención con mejor evidencia para prevenir y tratar la artrosis de rodilla"
+      - "Control del peso corporal: cada kg de menos reduce la carga articular de forma multiplicada al caminar"
+      - "Impacto controlado y progresivo (correr no daña la rodilla sana; los picos bruscos de volumen sí)"
+      - "Si ya hay artrosis sintomática: ejercicio supervisado y control del dolor; los condroprotectores orales tienen efecto pequeño o nulo"
+      - "Medición: fuerza de extensión de rodilla y dolor funcional (WOMAC) más que pruebas de imagen repetidas"
+    caveats: "Riesgo poblacional modesto; el alelo de riesgo es el más frecuente en europeos (~62 %), así que por sí solo no distingue mucho. Nomenclatura clásica en hebra -."
+    refs: ["PMID:17384641"]
