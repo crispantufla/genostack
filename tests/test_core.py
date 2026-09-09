@@ -159,3 +159,81 @@ def test_transient_and_quota_classification():
         assert TRANSIENT_RE.search(msg), msg
     assert QUOTA_RE.search("usage limit reached")
     assert not TRANSIENT_RE.search("400 invalid request")
+
+
+def test_clinvar_ignores_indel_di_calls():
+    """A D/I array call must never be matched to a ClinVar indel.
+
+    The chip only says "shorter/longer than my probe": several distinct pathogenic indels share one rsID and
+    the long allele is often the reference, so matching them reported homozygous CDKL5/MECP2/F8 frameshifts
+    in a healthy adult — and with the direction inverted (a deletion matched by "II", a duplication by "DD").
+    """
+    from genostack.config import DB_PATH
+    if not DB_PATH.exists():
+        pytest.skip("base local no construida (genostack fetch-data)")
+    import duckdb
+    from genostack.annotate import eval_clinvar, load_genome_into
+    g = Genome("t", "GRCh37", {}, 0, 0)
+    con = duckdb.connect(str(DB_PATH), read_only=True)
+    try:
+        di = con.execute("SELECT rsid FROM clinvar WHERE stars >= 2 AND vtype <> 'single nucleotide variant' LIMIT 20").fetchall()
+        g.calls.update({r[0]: Call("1", i, gt) for i, (r, gt) in enumerate(zip(di, ["II", "DD", "DI"] * 7))})
+        load_genome_into(con, g)
+        assert eval_clinvar(con) == []
+        assert getattr(eval_clinvar, "n_indel_skipped", 0) > 0
+    finally:
+        con.close()
+
+
+def test_gwas_skips_major_allele_when_row_lacks_frequency():
+    """Half the catalog has no risk-allele frequency; without a fallback the major-allele filter is blind.
+
+    rs3918226 (NOS3): the row that leaked said risk allele "C" with RAF null, while sibling rows put C at
+    ~0.92. A CC genotype is then the 92 %-common state, not a finding — it was reported as elevated blood
+    pressure risk for someone carrying zero copies of the actual risk allele (T, freq 0.08).
+    """
+    from genostack.config import DB_PATH
+    if not DB_PATH.exists():
+        pytest.skip("base local no construida (genostack fetch-data)")
+    import duckdb
+    from genostack.annotate import eval_gwas, load_genome_into
+    con = duckdb.connect(str(DB_PATH), read_only=True)
+    try:
+        leaky = con.execute("""SELECT count(*) FROM gwas
+                               WHERE rsid = 'rs3918226' AND risk_allele = 'C' AND raf IS NULL""").fetchone()[0]
+        if not leaky:
+            pytest.skip("el catálogo local no contiene la fila sin frecuencia usada por esta prueba")
+        g = Genome("t", "GRCh37", {"rs3918226": Call("7", 150704843, "CC")}, 1, 0)
+        load_genome_into(con, g)
+        assert [f.title for f in eval_gwas(con)] == []
+    finally:
+        con.close()
+
+
+def test_alphagenome_targets_only_unknown_mechanism():
+    """La predicción sólo debe gastarse donde el mecanismo no se conoce ya por la consecuencia."""
+    from genostack.alphagenome import pick_alt, worth_predicting
+    # una missense ya dice qué hace: no se predice
+    assert not worth_predicting("missense_variant")
+    assert not worth_predicting("stop_gained")
+    # lo no codificante es justo donde GWAS no dice ni sobre qué gen actúa
+    assert worth_predicting("intergenic_variant")
+    assert worth_predicting("intron_variant")
+    assert worth_predicting("regulatory_region_variant")
+    # el alelo alternativo es el que porta el usuario y no es el de referencia
+    assert pick_alt("AG", "A", ["G"]) == "G"
+    assert pick_alt("GG", "A", ["C", "G", "T"]) == "G"
+    assert pick_alt("AA", "A", ["G"]) is None          # homocigoto de referencia: nada que predecir
+
+
+def test_alphagenome_never_raises_evidence():
+    """Una predicción se muestra etiquetada, pero no toca el score ni el grado de evidencia."""
+    from genostack.report import _finding_line
+    f = Finding(source="gwas", rsid="rs10757278", gene="CDKN2B-AS1", genotype="GG",
+                title="Coronary artery disease", detail="OR 1.3", score=5.0, evidence="B")
+    before = (f.score, f.evidence, f.impact)
+    f.extra["alphagenome"] = {"summary": "↓ RNA_SEQ de CDKN2B en aorta (q=-0.91)", "effects": [], "consequence": "intergenic_variant"}
+    line = _finding_line(f)
+    assert (f.score, f.evidence, f.impact) == before
+    assert "🧪" in line and "no** observación" in line
+    assert "evidencia B" in line

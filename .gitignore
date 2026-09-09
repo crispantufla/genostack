@@ -6,3 +6,8 @@ __pycache__/
 tests/fixture_big.txt
 .pytest_cache/
 genostack-*.zip
+
+# datos personales: nunca al repo
+Informe_ADN_*.pdf
+*_informe*.md
+informe_*.md

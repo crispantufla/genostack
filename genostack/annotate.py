@@ -10,8 +10,8 @@ from dataclasses import dataclass, field
 
 import duckdb
 
-from .config import (CLINVAR_MIN_STARS, DB_PATH, GWAS_MIN_BETA_SD, GWAS_MIN_OR, GWAS_TRAIT_KEYWORDS,
-                     SNPEDIA_MIN_MAGNITUDE)
+from .config import (CLINVAR_MIN_STARS, DB_PATH, GWAS_MAX_PLAUSIBLE_OR, GWAS_MIN_BETA_SD, GWAS_MIN_OR,
+                     GWAS_STRONG_OR, GWAS_STRONG_OR_MIN_N, GWAS_TRAIT_KEYWORDS, SNPEDIA_MIN_MAGNITUDE)
 from .parsers import Genome, complement
 from .panel import PanelVariant, HaploRule, load_panel
 
@@ -163,23 +163,24 @@ def eval_clinvar(con: duckdb.DuckDBPyConnection) -> list[Finding]:
     """, [CLINVAR_MIN_STARS]).fetchall()
     out: list[Finding] = []
     best: dict[str, Finding] = {}
+    n_indel_skipped = 0
     for rsid, ugt, gene, name, clinsig, stars, review, phen, ref, alt, vtype, vid, nsub in rows:
         alt = (alt or "").upper()
         ref = (ref or "").upper()
+        if set(ugt) <= {"D", "I"}:
+            # Consumer arrays code indel sites as D/I relative to the probe's own definition, which says
+            # nothing about WHICH indel is present: several distinct ClinVar indels share one rsID, and the
+            # longer allele ("I") is often the reference. Matching them produced homozygous "pathogenic"
+            # calls in CDKL5/MECP2/F8 for a healthy adult — exactly backwards. They are not interpretable.
+            n_indel_skipped += 1
+            continue
         if vtype and vtype not in ("single nucleotide variant",):
-            # indels: arrays code them as D/I; accept "I"/"D" presence as carrier evidence only
-            if "D" in ugt or "I" in ugt:
-                copies = 1 if len(set(ugt)) == 2 else 2
-            else:
-                continue
-        else:
-            if len(alt) != 1:
-                continue
-            copies = _copies(ugt, alt)
-            if copies == 0:
-                continue
-            if _is_ambiguous(ref, alt) and copies == len(ugt):
-                pass  # cannot resolve strand; still report but flag
+            continue          # an indel/CNV/microsatellite cannot be read off an A/C/G/T array call
+        if len(alt) != 1 or len(ref) != 1:
+            continue
+        copies = _copies(ugt, alt)
+        if copies == 0:
+            continue
         cs = (clinsig or "").lower()
         if "pathogenic" in cs and "conflicting" not in cs:
             base = 6.0 if copies == 1 else 8.0
@@ -208,6 +209,7 @@ def eval_clinvar(con: duckdb.DuckDBPyConnection) -> list[Finding]:
         )
         if rsid not in best or f.score > best[rsid].score:
             best[rsid] = f
+    eval_clinvar.n_indel_skipped = n_indel_skipped   # surfaced in the report's limitations
     return list(best.values())
 
 
@@ -260,10 +262,20 @@ def _beta_keep(ob: float, ci: str, trait: str) -> tuple[bool, float]:
 
 
 def eval_gwas(con: duckdb.DuckDBPyConnection) -> list[Finding]:
+    # 47 % of catalog rows carry no risk-allele frequency, which used to blind the major-allele filter below
+    # (a "risk" allele present in 92 % of people was reported as a finding). Fill it in from the other rows
+    # of the same rsID + allele, which is the same quantity measured by a study that did report it.
     rows = con.execute("""
+        WITH freq AS (
+            SELECT rsid, risk_allele, median(raf) AS raf_med
+            FROM gwas WHERE raf IS NOT NULL GROUP BY 1, 2
+        )
         SELECT g.rsid, u.genotype, g.risk_allele, g.trait, g.mapped_trait, g.pvalue, g.or_beta, g.effect_type,
-               g.ci_text, g.gene, g.pubmedid, g.first_author, g.pub_date, g.sample_text, g.raf
-        FROM user_gt u JOIN gwas g ON g.rsid = u.rsid
+               g.ci_text, g.gene, g.pubmedid, g.first_author, g.pub_date, g.sample_text,
+               COALESCE(g.raf, f.raf_med) AS raf
+        FROM user_gt u
+        JOIN gwas g ON g.rsid = u.rsid
+        LEFT JOIN freq f ON f.rsid = g.rsid AND f.risk_allele = g.risk_allele
         WHERE g.or_beta IS NOT NULL AND g.risk_allele IN ('A','C','G','T')
     """).fetchall()
     best: dict[tuple[str, str], tuple[tuple, Finding]] = {}
@@ -281,6 +293,12 @@ def eval_gwas(con: duckdb.DuckDBPyConnection) -> list[Finding]:
             eff = 1 / ob if ob < 1 else ob
             if eff < GWAS_MIN_OR:
                 continue
+            # No common variant moves a complex trait this much. Values like a flat OR=100 repeated across
+            # dozens of rsIDs of one study are data-entry artefacts, and they headline the report if kept.
+            if eff > GWAS_MAX_PLAUSIBLE_OR:
+                continue
+            if eff > GWAS_STRONG_OR and _sample_n(stext) < GWAS_STRONG_OR_MIN_N:
+                continue   # a genuinely strong effect needs a well-powered study behind it
             mag_score = min(10.0, 3.0 + 2.0 * math.log2(eff))
             eff_text = f"OR {ob:g} por alelo {ra}" + (" (protector)" if ob < 1 else "")
         else:
@@ -323,6 +341,10 @@ def eval_gwas(con: duckdb.DuckDBPyConnection) -> list[Finding]:
 
 
 # ----------------------------------------------------------------------------- Pharmacogenomics (Open Targets / PharmGKB)
+# Many PharmGKB annotations describe the *reference* state ("do not carry a copy of...", "assigned normal
+# function"). Reporting them is noise: they say the person is normal, and they crowded out the real hits.
+_PGX_NORMAL_RE = re.compile(r"do(?:es)? not (?:have|carry)|assigned normal function|"
+                            r"normal (?:function|metaboli[sz]|activity) (?:by|as compared)", re.I)
 def _pgx_ref_allele(comparisons: list[str] | None) -> str | None:
     """Most frequent single-letter 'comparison' allele across annotations ~ reference allele."""
     from collections import Counter
@@ -359,6 +381,8 @@ def eval_pgx(con: duckdb.DuckDBPyConnection) -> list[Finding]:
         ra = ref.get(rsid)
         if ra and all(ch == ra for ch in ug):
             continue  # homozygous reference: the annotation describes the normal state
+        if _PGX_NORMAL_RE.search(ann or phen or ""):
+            continue  # the text itself says the person lacks the variant / has normal function
         g = grouped.setdefault(rsid, {"gene": sym or "", "gt": ugt, "levels": set(), "drugs": [], "texts": [], "cats": set(), "pmids": set()})
         g["levels"].add(level)
         for d in (drugs or []):
@@ -474,5 +498,6 @@ def annotate(genome: Genome, con: duckdb.DuckDBPyConnection) -> tuple[list[Findi
         "panel_covered": sum(1 for v in panel.variants if genome.get(v.rsid) is not None),
         "snpedia_available": has_snpedia,
         "n_alias_resolved": n_alias,
+        "n_clinvar_indels_skipped": getattr(eval_clinvar, "n_indel_skipped", 0),
     }
     return findings, stats

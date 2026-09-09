@@ -95,6 +95,14 @@ def _finding_row(f: Finding) -> dict:
         row["db_support"] = f.extra["support"][:5]
     if f.extra.get("freq"):
         row["population_freq"] = f.extra["freq"]
+    if f.extra.get("alphagenome"):
+        row["alphagenome_PREDICCION_no_observacion"] = {
+            "efecto_molecular_predicho": f.extra["alphagenome"]["summary"],
+            "detalle": f.extra["alphagenome"]["effects"],
+            "aviso": ("Predicción computacional de AlphaGenome a partir de la secuencia. NO es evidencia empírica, "
+                      "NO está validada clínicamente y NO puede elevar el grado de evidencia de ninguna intervención. "
+                      "Úsala sólo para razonar el mecanismo de una variante no codificante, y dilo explícitamente."),
+        }
     return row
 
 

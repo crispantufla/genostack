@@ -27,6 +27,9 @@ def main(argv: list[str] | None = None) -> None:
     a.add_argument("--concurrency", type=int, default=3, help="Sesiones ACP simultáneas")
     a.add_argument("--lang", default="es", choices=["es", "en"], help="Idioma del informe")
     a.add_argument("--no-save", action="store_true", help="No guardar copia .md junto al input")
+    a.add_argument("--alphagenome", action="store_true",
+                   help="Añadir predicción de efecto molecular (AlphaGenome) a los hallazgos no codificantes. "
+                        "Requiere ALPHAGENOME_API_KEY. Es predicción, no observación: nunca sube el grado de evidencia.")
     a.add_argument("--goals", default="health,energy,cognition,longevity",
                    help="Objetivos a ponderar (health,energy,cognition,longevity,performance,pharmaco)")
 
@@ -38,7 +41,8 @@ def main(argv: list[str] | None = None) -> None:
         from .pipeline import run_analysis
         asyncio.run(run_analysis(Path(args.file), agent_cmd=None if args.offline else args.agent,
                                  concurrency=args.concurrency, lang=args.lang, save=not args.no_save,
-                                 goals=[g.strip() for g in args.goals.split(",") if g.strip()]))
+                                 goals=[g.strip() for g in args.goals.split(",") if g.strip()],
+                                 use_alphagenome=args.alphagenome))
 
 
 if __name__ == "__main__":

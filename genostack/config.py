@@ -20,6 +20,9 @@ SNPEDIA_HIGHLIGHT_MAGNITUDE = 3.0
 CLINVAR_MIN_STARS = 2
 GWAS_MAX_P = 5e-8
 GWAS_MIN_OR = 1.3
+GWAS_MAX_PLAUSIBLE_OR = 10.0      # above this it is a catalog artefact, not biology
+GWAS_STRONG_OR = 5.0              # 5-10 is possible but demands a well-powered study
+GWAS_STRONG_OR_MIN_N = 20_000
 GWAS_MIN_BETA_SD = 0.10
 PANEL_MIN_IMPACT = 1
 

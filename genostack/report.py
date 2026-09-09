@@ -34,6 +34,9 @@ def _finding_line(f: Finding) -> str:
     out = head + body + meta
     if f.extra.get("freq") and f.extra["freq"].get("maf") is not None:
         out += f" · MAF global {f.extra['freq']['maf']}"
+    ag = f.extra.get("alphagenome")
+    if ag:
+        out += "  \n  🧪 _Predicción molecular (AlphaGenome, **no** observación): " + _esc(ag.get("summary", "")) + "_"
     if f.levers:
         out += "  \n  Palancas semilla: " + "; ".join(_esc(x) for x in f.levers[:6])
     if f.caveats and f.source in ("clinvar", "haplotype"):
@@ -58,7 +61,21 @@ def render_markdown(analysis: Analysis, research: list[ModuleResearch] | None, s
               f"**Objetivos ponderados:** {', '.join(analysis.goals)} · **Agente:** {meta.get('agent') or 'ninguno (modo offline)'}\n")
     if not stats.get("snpedia_available"):
         md.append("> ⚠ SNPedia no está en la base local (ejecuta `genostack fetch-data` completo para añadirla).\n")
-    md.append("> ⚠ **Limitaciones:** arrays de consumo (sin imputación, alta tasa de falsos positivos en variantes raras → confirmar ClinVar patogénicas con secuenciación clínica; sin CNV como GSTM1/GSTT1 null; sin tipado HLA real; SNPs A/T-C/G con orientación incierta se marcan). Esto no es consejo médico: discútelo con un profesional antes de actuar, especialmente fármacos y compuestos experimentales.\n")
+    lim = ("> ⚠ **Limitaciones:** arrays de consumo (sin imputación, alta tasa de falsos positivos en variantes raras → confirmar "
+           "ClinVar patogénicas con secuenciación clínica; sin CNV como GSTM1/GSTT1 null; sin tipado HLA real; SNPs A/T-C/G con "
+           "orientación incierta se marcan).")
+    n_ind = stats.get("n_clinvar_indels_skipped", 0)
+    if n_ind:
+        lim += (f" Se han **descartado {n_ind:,} coincidencias de ClinVar en sitios indel** (genotipos D/I del chip): el chip sólo "
+                "indica «más corta / más larga» respecto a su propia sonda, varias indels patogénicas distintas comparten un mismo "
+                "rsID y el alelo largo suele ser el de referencia, así que emparejarlas produce falsos positivos graves.")
+    if any(f.extra.get("alphagenome") for b in analysis.modules for f in b.all_findings()):
+        lim += (" Los hallazgos marcados con 🧪 llevan una **predicción de efecto molecular de AlphaGenome**: es una "
+                "estimación computacional a partir de la secuencia, no una observación, no está validada para uso "
+                "clínico y no eleva el grado de evidencia de nada. Sirve sólo para sugerir el mecanismo de variantes "
+                "no codificantes cuyo gen diana se desconoce.")
+    lim += " Esto no es consejo médico: discútelo con un profesional antes de actuar, especialmente fármacos y compuestos experimentales.\n"
+    md.append(lim)
 
     # ---- executive summary
     if synth and not synth.error:

@@ -20,6 +20,38 @@ from .score import rank
 console = Console()
 
 
+def _add_alphagenome(analysis, console) -> None:
+    """Predice el efecto molecular de los hallazgos cuyo mecanismo no se conoce ya.
+
+    Se anota en `extra` y viaja al agente y al informe SIEMPRE etiquetado como predicción: no altera
+    el score ni el grado de evidencia de nada.
+    """
+    from .alphagenome import predict
+    cand = [(f.rsid, f.genotype) for b in analysis.modules for f in b.findings
+            if f.source in ("gwas", "snpedia") and "," not in f.rsid and len(f.genotype) == 2]
+    cand = list(dict.fromkeys(cand))
+    if not cand:
+        console.print("  AlphaGenome: ningún hallazgo candidato (todos con mecanismo conocido)")
+        return
+    console.rule("[bold]Predicción molecular (AlphaGenome)")
+    console.print(f"  {len(cand)} variantes candidatas · predicción computacional, no observación")
+    try:
+        preds = predict(cand, progress=lambda n, tot, p: console.print(
+            f"    [{n}/{tot}] {p.rsid}: {p.summary(2)}"))
+    except RuntimeError as e:
+        console.print(f"[yellow]  AlphaGenome no disponible: {e!s:.180}[/]")
+        return
+    hit = 0
+    for b in analysis.modules:
+        for f in b.findings:
+            p = preds.get(f.rsid)
+            if p and p.effects:
+                f.extra["alphagenome"] = {"summary": p.summary(), "effects": p.effects[:4],
+                                          "consequence": p.consequence}
+                hit += 1
+    console.print(f"  {hit} hallazgos con predicción molecular añadida")
+
+
 def _profile_summary(analysis) -> str:
     """Compact whole-genome summary shared with every module prompt (so modules can see cross-module context)."""
     lines = []
@@ -36,7 +68,7 @@ def _profile_summary(analysis) -> str:
 
 
 async def run_analysis(file: Path, agent_cmd: str | None, concurrency: int = 3, lang: str = "es", save: bool = True,
-                       goals: list[str] | None = None) -> None:
+                       goals: list[str] | None = None, use_alphagenome: bool = False) -> None:
     goals = goals or ["health", "energy", "cognition", "longevity"]
     t0 = time.time()
     from .parsers import parse_raw
@@ -66,6 +98,9 @@ async def run_analysis(file: Path, agent_cmd: str | None, concurrency: int = 3, 
                     gene_ctx_by_module[b.id] = gene_context(con, b.genes[:20])
     finally:
         con.close()
+
+    if use_alphagenome:
+        _add_alphagenome(analysis, console)
 
     # online: allele frequencies for the prioritized rsids (cheap, informative)
     research = synth = None
